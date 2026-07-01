@@ -1,0 +1,34 @@
+<div class="bg-white p-8 rounded-xl shadow max-w-xl mx-auto text-center space-y-6">
+
+  <h2 class="text-2xl font-bold mb-1">Confirm Order</h2>
+  <p class="text-gray-600">Review and place wholesale order.</p>
+
+  <!-- Order Summary UI -->
+  <div class="text-left bg-gray-50 p-4 rounded-lg border space-y-2">
+      <div class="flex justify-between text-sm">
+        <span class="font-medium">Delivery Slot:</span>
+        <span>{{ deliverySlot }}</span>
+      </div>
+
+      <div class="flex justify-between text-sm">
+        <span class="font-medium">Payment Mode:</span>
+        <span>{{ paymentType }}</span>
+      </div>
+
+      <div class="flex justify-between text-sm">
+        <span class="font-medium">Total Qty:</span>
+        <span>{{ cart.cart().length }} items</span>
+      </div>
+
+      <div class="flex justify-between text-sm">
+        <span class="font-medium">Total Amount:</span>
+        <span class="font-semibold text-green-600 text-lg">₹ {{ cart.pricing.total }}</span>
+      </div>
+  </div>
+
+  <button
+    class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg w-full"
+    (click)="placeOrder()">
+    ✔ Place Order
+  </button>
+</div>

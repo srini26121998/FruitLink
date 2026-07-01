@@ -1,0 +1,5 @@
+.action-btn {
+  @apply py-2 rounded text-white font-medium
+         bg-[var(--accent-color)]
+         disabled:opacity-50;
+}

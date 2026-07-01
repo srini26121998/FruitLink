@@ -1,0 +1,34 @@
+<div class="p-4 space-y-4 max-w-md mx-auto">
+
+  <h2 class="text-lg font-semibold text-gray-800">
+    Proof of Delivery
+  </h2>
+
+  <!-- File input -->
+  <input
+    type="file"
+    accept="image/*"
+    capture="environment"
+    class="block w-full text-sm"
+    (change)="onFileSelected($event)" />
+
+  <!-- Preview -->
+  <img
+    *ngIf="photoPreview()"
+    [src]="photoPreview()"
+    class="rounded-lg border mt-3" />
+
+  <!-- Submit -->
+  <button
+    class="w-full action-btn"
+    (click)="submit()"
+    [disabled]="loading()">
+
+    Upload Proof
+  </button>
+
+  <p *ngIf="success()" class="text-green-600 text-sm text-center">
+    Proof uploaded successfully
+  </p>
+
+</div>

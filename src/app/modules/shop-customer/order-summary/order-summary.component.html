@@ -1,0 +1,80 @@
+<div class="p-6 space-y-6">
+
+  <div class="text-center space-y-2">
+    <div class="text-green-600 text-5xl">✔</div>
+    <h1 class="text-3xl font-bold">Order Placed Successfully!</h1>
+    <p class="text-gray-600">Your order has been confirmed</p>
+  </div>
+
+  <!-- Order details -->
+  <div class="p-6 bg-white border rounded-xl shadow space-y-4 max-w-2xl mx-auto">
+
+    <div class="flex justify-between text-lg">
+      <span>Order ID:</span>
+      <span class="font-bold text-blue-700">{{ order?.orderId }}</span>
+    </div>
+
+    <div class="flex justify-between text-lg">
+      <span>Order Date:</span>
+      <span>{{ order?.date | date:'medium' }}</span>
+    </div>
+
+    <div class="flex justify-between text-lg">
+      <span>Delivery Slot:</span>
+      <span class="font-semibold">{{ order?.slot }}</span>
+    </div>
+
+    <div class="flex justify-between text-lg">
+      <span>Payment Method:</span>
+      <span class="font-semibold">{{ order?.payment }}</span>
+    </div>
+
+  </div>
+
+  <!-- Items list -->
+  <div class="max-w-2xl mx-auto mt-6 bg-white p-6 border rounded-xl shadow">
+
+    <h2 class="text-2xl font-bold mb-4">Items</h2>
+
+    @for (item of order?.items; track item.id) {
+      <div class="flex justify-between border-b py-3">
+        <span>{{ item.name }}</span>
+        <span>{{ item.qty }} {{ item.unitLabel }}</span>
+      </div>
+    }
+
+    <div class="flex justify-between font-bold text-lg mt-4">
+      <span>Total Quantity:</span>
+      <span>{{ totalQty }} kg</span>
+    </div>
+
+  </div>
+
+  <!-- Final Payment -->
+  <div class="max-w-2xl mx-auto mt-6 bg-white p-6 border rounded-xl shadow space-y-3">
+
+    <h2 class="text-xl font-semibold mb-2">Final Amount</h2>
+
+    <div class="flex justify-between">
+      <span>Total Amount Paid:</span>
+      <span class="font-bold text-green-700">₹ {{ cart.pricing.total }}</span>
+    </div>
+
+  </div>
+
+  <div class="flex justify-center gap-4 mt-8">
+
+    <a routerLink="/shop/orders"
+       class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg shadow">
+      Track Order
+    </a>
+
+    <a routerLink="/shop/dashboard"
+       class="bg-green-600 text-white px-6 py-3 rounded-lg shadow">
+      Continue Shopping →
+    </a>
+
+  </div>
+<button class="btn-primary mt-4" (click)="downloadInvoice()">Download Invoice PDF</button>
+
+</div>

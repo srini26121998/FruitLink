@@ -1,0 +1,110 @@
+<div class="p-6 space-y-10">
+
+  <!-- ---------------- HEADER + FILTER ---------------- -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-bold">Payment Analytics</h2>
+
+    <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+      @for (f of filterOptions; track f) {
+        <button (click)="setFilter(f)"
+          [ngClass]="filter() === f 
+            ? 'bg-blue-600 text-white px-4 py-2 rounded-lg' 
+            : 'px-4 py-2 rounded-lg hover:bg-white'">
+          {{ f | titlecase }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- ---------------- SUMMARY CARDS ---------------- -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+
+    <div class="card">
+      <p class="text-sm text-gray-500">Total Payments</p>
+      <h1 class="text-xl font-bold">{{ summary().totalPayments }}</h1>
+    </div>
+
+    <div class="card">
+      <p class="text-sm text-gray-500">Successful</p>
+      <h1 class="text-green-600 text-xl font-bold">{{ summary().successful }}</h1>
+    </div>
+
+    <div class="card">
+      <p class="text-sm text-gray-500">Failed</p>
+      <h1 class="text-red-600 text-xl font-bold">{{ summary().failed }}</h1>
+    </div>
+
+    <div class="card">
+      <p class="text-sm text-gray-500">Refunded</p>
+      <h1 class="text-amber-600 text-xl font-bold">{{ summary().refunded }}</h1>
+    </div>
+
+    <div class="card">
+      <p class="text-sm text-gray-500">Total Revenue</p>
+      <h1 class="text-purple-600 text-xl font-bold">₹{{ summary().revenue | number }}</h1>
+    </div>
+
+  </div>
+
+  <!-- ---------------- DAILY TREND CHART ---------------- -->
+  <div class="card">
+    <div class="flex justify-between mb-3">
+      <h3 class="font-semibold text-lg">Daily Payment Trend</h3>
+      <span class="text-xs text-gray-500">Mock Data (API later)</span>
+    </div>
+
+    <apx-chart 
+      [series]="dailyChart().series"
+      [chart]="dailyChart().chart"
+      [xaxis]="dailyChart().xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- ---------------- PAYMENT METHODS CHART ---------------- -->
+  <div class="card">
+    <h3 class="font-semibold text-lg mb-3">Payment Methods (Count)</h3>
+
+    <apx-chart
+      [series]="paymentMethodChart().series"
+      [chart]="paymentMethodChart().chart"
+      [xaxis]="paymentMethodChart().xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- ---------------- METHOD REVENUE PIE ---------------- -->
+  <div class="card">
+    <h3 class="font-semibold text-lg mb-3">Payment Method Revenue Share</h3>
+
+    <apx-chart 
+      [series]="methodRevenuePie().series"
+      [chart]="methodRevenuePie().chart"
+      [labels]="methodRevenuePie().labels">
+    </apx-chart>
+  </div>
+
+  <!-- ---------------- TOP CUSTOMERS TABLE ---------------- -->
+  <div class="card">
+    <h3 class="font-semibold text-lg mb-3">Top Paying Customers</h3>
+
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Orders</th>
+          <th>Spent</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (c of topCustomers(); track c.customer) {
+          <tr>
+            <td>{{ c.customer }}</td>
+            <td>{{ c.orders }}</td>
+            <td>₹{{ c.spent | number }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

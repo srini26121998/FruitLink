@@ -1,0 +1,25 @@
+<div class="p-6 space-y-6">
+
+  <h1 class="text-3xl font-bold">Inventory Forecast Dashboard</h1>
+  <p class="text-gray-600">Weekly predicted demand based on shop orders.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    @for (f of forecast.forecastData(); track f.item) {
+      <div class="p-5 bg-white shadow rounded-xl border">
+        <h2 class="text-xl font-bold">{{ f.item }}</h2>
+        <p class="text-gray-600 mt-2">Expected: {{ f.expected }} kg</p>
+
+        <span class="px-3 py-1 mt-2 inline-block rounded text-sm"
+              [ngClass]="{
+                'bg-green-100 text-green-700': f.trend === 'up',
+                'bg-red-100 text-red-700': f.trend === 'down',
+                'bg-gray-100 text-gray-700': f.trend === 'stable'
+              }">
+          {{ f.trend | uppercase }}
+        </span>
+      </div>
+    }
+
+  </div>
+</div>

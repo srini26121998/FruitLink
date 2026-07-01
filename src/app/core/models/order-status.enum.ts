@@ -1,0 +1,10 @@
+export enum OrderStatus {
+  DRAFT = 'DRAFT',
+  PLACED = 'PLACED',
+  APPROVED = 'APPROVED',
+  PACKED = 'PACKED',
+  IN_TRANSIT = 'IN_TRANSIT',
+  ON_HOLD = 'ON_HOLD',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED'
+}

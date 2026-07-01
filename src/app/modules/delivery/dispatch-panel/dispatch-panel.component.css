@@ -1,0 +1,9 @@
+.status-badge {
+  @apply text-xs px-2 py-1 rounded bg-gray-100 text-gray-700;
+}
+
+.action-btn {
+  @apply py-2 rounded text-white font-medium
+         bg-[var(--primary-color)]
+         disabled:opacity-50;
+}

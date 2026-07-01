@@ -1,0 +1,46 @@
+<div class="p-6">
+
+  <app-page-header title="Admin Settings"></app-page-header>
+
+  <div class="space-y-6">
+
+    <!-- System Settings -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h3 class="font-semibold text-lg mb-4">System Settings</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold">Platform Name</label>
+          <input type="text" class="border rounded-lg px-4 py-2 w-full" value="FruitLink" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold">Support Email</label>
+          <input type="text" class="border rounded-lg px-4 py-2 w-full" value="support&#64;fruitlink.com" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Settings -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h3 class="font-semibold text-lg mb-4">Notification Settings</h3>
+
+      <label class="flex items-center gap-3 mb-2">
+        <input type="checkbox" checked class="w-5 h-5" />
+        <span>Enable Order Alerts</span>
+      </label>
+
+      <label class="flex items-center gap-3 mb-2">
+        <input type="checkbox" checked class="w-5 h-5" />
+        <span>Enable Payment Alerts</span>
+      </label>
+
+      <label class="flex items-center gap-3">
+        <input type="checkbox" class="w-5 h-5" />
+        <span>Enable Sound Alerts</span>
+      </label>
+    </div>
+
+  </div>
+
+</div>

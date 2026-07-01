@@ -1,0 +1,50 @@
+<div class="flex items-center justify-between w-full overflow-x-auto py-3 no-scrollbar">
+
+  @for(stepName of steps; track stepName; let i = $index) {
+
+    <div class="flex items-center cursor-pointer select-none"
+         (click)="clickable && changeStep(i+1)">
+
+      <!-- STEP CIRCLE -->
+      <div class="relative flex flex-col items-center">
+
+        <div 
+          class="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shadow transition-all duration-300"
+          [ngClass]="{
+            'bg-green-600' : step > i+1,
+            'bg-blue-600'  : step == i+1,
+            'bg-gray-300 text-gray-700' : step < i+1
+          }">
+
+          @if(step > i+1){ <span>✔</span> }
+          @else { {{ i+1 }} }
+
+        </div>
+
+        <!-- Label -->
+        <span class="mt-2 text-xs font-medium transition"
+              [ngClass]="{
+                'text-blue-600 font-semibold' : step == i+1,
+                'text-green-600'             : step > i+1,
+                'text-gray-500'              : step < i+1
+              }">
+          {{ stepName }}
+        </span>
+
+      </div>
+
+      <!-- LINE CONNECTOR -->
+      @if(i < steps.length -1){
+        <div class="mx-2 w-10 sm:w-20 h-1 rounded-full transition-all duration-300"
+             [ngClass]="{
+                'bg-green-600' : step > i+1,
+                'bg-blue-600'  : step == i+1,
+                'bg-gray-300'  : step < i+1
+             }"></div>
+      }
+      
+    </div>
+
+  }
+
+</div>

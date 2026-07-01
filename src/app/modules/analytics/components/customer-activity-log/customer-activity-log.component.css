@@ -1,0 +1,11 @@
+.card {
+  @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100;
+}
+
+.table th {
+  @apply text-left text-gray-600 font-medium py-2;
+}
+
+.table td {
+  @apply py-2;
+}

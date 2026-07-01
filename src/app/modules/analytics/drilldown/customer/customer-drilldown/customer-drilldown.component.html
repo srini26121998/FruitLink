@@ -1,0 +1,230 @@
+<div class="p-6 space-y-10" id="customer-drilldown-report">
+
+  <!-- ================= HEADER ================= -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-2xl font-bold">
+        {{ profile().businessName }}
+      </h2>
+      <p class="text-gray-500 text-sm mt-1">
+        Customer ID: {{ profile().id }} • Joined: {{ profile().joinedAt }}
+      </p>
+    </div>
+
+    <!-- FILTER -->
+    <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+      @for (f of filterOptions; track f) {
+        <button
+          (click)="setFilter(f)"
+          [ngClass]="filter() === f
+            ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
+            : 'px-4 py-2 rounded-lg hover:bg-white'">
+          {{ f | titlecase }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- ================= TAGS ================= -->
+  <div class="flex flex-wrap gap-2">
+    @for (tag of tags(); track tag) {
+      <span
+        class="px-3 py-1 rounded-full text-xs font-semibold"
+        [ngClass]="getChipColor(tag)">
+        {{ tag }}
+      </span>
+    }
+  </div>
+
+  <!-- ================= KPI SUMMARY ================= -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Total Spent</p>
+      <h2 class="text-2xl font-bold text-green-600">
+        ₹{{ kpis().totalSpent }}
+      </h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Total Orders</p>
+      <h2 class="text-2xl font-bold">
+        {{ kpis().totalOrders }}
+      </h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Avg Order Value</p>
+      <h2 class="text-2xl font-bold text-blue-600">
+        ₹{{ kpis().avgOrderValue }}
+      </h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Segment</p>
+      <h2
+        class="text-xl font-bold"
+        [ngClass]="getSegmentColor(rfm().segment)">
+        {{ rfm().segment }}
+      </h2>
+    </div>
+
+  </div>
+
+  <!-- ================= RFM SCORE ================= -->
+  <div class="card">
+    <h3 class="font-semibold mb-3">RFM Score</h3>
+
+    <div class="grid grid-cols-3 gap-6 text-center">
+
+      <div>
+        <p class="text-xs text-gray-500">Recency (Days)</p>
+        <h2
+          class="text-2xl font-bold"
+          [ngClass]="getRfmColor(rfm().recencyDays)">
+          {{ rfm().recencyDays }}
+        </h2>
+      </div>
+
+      <div>
+        <p class="text-xs text-gray-500">Frequency</p>
+        <h2
+          class="text-2xl font-bold"
+          [ngClass]="getRfmColor(rfm().frequencyOrders)">
+          {{ rfm().frequencyOrders }}
+        </h2>
+      </div>
+
+      <div>
+        <p class="text-xs text-gray-500">Monetary</p>
+        <h2
+          class="text-2xl font-bold"
+          [ngClass]="getRfmColor(rfm().monetaryValue)">
+          {{ rfm().monetaryValue }}
+        </h2>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= CHARTS ================= -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Revenue / CLV -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Revenue Trend</h3>
+      <apx-chart
+        [chart]="clvChart().chart"
+        [series]="clvChart().series"
+        [xaxis]="clvChart().xaxis">
+      </apx-chart>
+    </div>
+
+    <!-- Order Frequency -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Order Frequency</h3>
+      <apx-chart
+        [chart]="frequencyChart().chart"
+        [series]="frequencyChart().series"
+        [xaxis]="frequencyChart().xaxis">
+      </apx-chart>
+    </div>
+
+    <!-- AOV -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Average Order Value</h3>
+      <apx-chart
+        [chart]="aovChart().chart"
+        [series]="aovChart().series"
+        [xaxis]="aovChart().xaxis">
+      </apx-chart>
+    </div>
+
+  </div>
+
+  <!-- ================= PRODUCT AFFINITY ================= -->
+  <div class="card">
+    <h3 class="font-semibold mb-3">Product Affinity</h3>
+    <apx-chart
+      [chart]="affinityChart().chart"
+      [series]="affinityChart().series"
+      [labels]="affinityChart().labels">
+    </apx-chart>
+  </div>
+
+  <!-- ================= TOP PRODUCTS ================= -->
+  <div class="card">
+
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold">Top Purchased Products</h3>
+
+      <button
+        class="px-3 py-1 border rounded flex items-center gap-2 hover:bg-gray-50"
+        (click)="exportExcel()"
+        title="Export top products to Excel">
+        📊 Export Excel
+      </button>
+    </div>
+
+    <table class="w-full text-sm">
+      <thead class="border-b text-xs text-gray-500 uppercase">
+        <tr>
+          <th>Product</th>
+          <th>Quantity (Kg)</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (p of topProducts(); track p.productId) {
+          <tr class="border-b hover:bg-gray-50">
+            <td>{{ p.productName }}</td>
+            <td>{{ p.totalQuantityKg }}</td>
+            <td>₹{{ p.totalAmount }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- ================= ACTIVITY LOG ================= -->
+  <div class="card">
+
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold">Recent Activity</h3>
+
+      <button
+        class="px-3 py-1 border rounded flex items-center gap-2 hover:bg-gray-50"
+        (click)="exportPDF()"
+        title="Download full customer report as PDF">
+        📄 Download PDF
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      @for (a of activities(); track a.timestamp) {
+
+        <div class="border-b pb-2">
+          <p class="text-sm font-semibold">{{ a.type }}</p>
+          <p class="text-xs text-gray-500">{{ a.timestamp }}</p>
+
+          @if (a.description) {
+            <div class="text-sm mt-1">
+              {{ a.description }}
+            </div>
+          }
+
+          @if (a.amount) {
+            <div class="text-sm mt-1">
+              Amount: ₹{{ a.amount }}
+            </div>
+          }
+        </div>
+
+      }
+    </div>
+
+  </div>
+
+</div>

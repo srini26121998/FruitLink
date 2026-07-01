@@ -1,0 +1,20 @@
+.kpi-card {
+  @apply bg-white rounded-lg py-3 shadow-sm border;
+}
+
+.kpi-value {
+  @apply text-lg font-semibold text-gray-800;
+}
+
+.kpi-label {
+  @apply text-xs text-gray-500;
+}
+
+.status-badge {
+  @apply text-xs px-2 py-1 rounded bg-gray-100 text-gray-700;
+}
+
+.action-btn {
+  @apply text-sm px-3 py-1 rounded
+         bg-[var(--primary-color)] text-white;
+}

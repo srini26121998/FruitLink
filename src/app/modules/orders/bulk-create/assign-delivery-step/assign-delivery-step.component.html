@@ -1,0 +1,63 @@
+<div class="bg-white rounded-xl shadow-lg p-6">
+
+  <h2 class="text-2xl font-semibold mb-6">Assign Delivery</h2>
+
+  <!-- Delivery Staff -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium mb-2">Delivery Staff</label>
+
+    <div class="relative">
+      <select
+        class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 transition"
+        (change)="staff.set($event.target.value)">
+        <option value="">Select staff</option>
+        <option value="ravi">Ravi (Van 1)</option>
+        <option value="suresh">Suresh (Van 2)</option>
+        <option value="arjun">Arjun (Bike A)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Vehicle -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium mb-2">Vehicle</label>
+
+    <select
+      class="w-full border px-3 py-2 rounded-lg focus:ring-blue-500 focus:ring-2"
+      (change)="vehicle.set($event.target.value)">
+      <option value="">Select vehicle</option>
+      <option value="van1">Van 1</option>
+      <option value="van2">Van 2</option>
+      <option value="bikeA">Bike A</option>
+    </select>
+  </div>
+
+  <!-- Route -->
+  <div class="mb-6">
+    <label class="block text-sm font-medium mb-2">Route</label>
+
+    <select
+      class="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+      (change)="route.set($event.target.value)">
+      <option value="">Select route</option>
+      <option value="routeA">Route A - Anna Nagar</option>
+      <option value="routeB">Route B - T Nagar</option>
+      <option value="routeC">Route C - Koyambedu</option>
+    </select>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex justify-between mt-6">
+    <button class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+            (click)="back.emit()">
+      Back
+    </button>
+
+    <button
+      [disabled]="!staff() || !vehicle() || !route()"
+      class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+      (click)="next.emit()">
+      Continue
+    </button>
+  </div>
+</div>

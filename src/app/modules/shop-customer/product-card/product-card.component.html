@@ -1,0 +1,31 @@
+<div class="p-4 bg-white rounded-xl shadow">
+  <h3 class="font-semibold">{{ product.name }}</h3>
+
+  <div class="mt-2 flex gap-2 items-center">
+
+    <input type="number" min="1"
+      class="w-20 p-2 border rounded"
+      [value]="qty()"
+      (input)="qty.set($any($event.target).valueAsNumber)"
+    />
+
+    <select class="p-2 border rounded"
+      [value]="selectedUnit()"
+      (change)="selectedUnit.set($any($event.target).value)">
+      @for (u of (product.unitOptions ?? unitSvc.globalUnits); track u.id) {
+        <option [value]="u.id">{{ u.label }}</option>
+      }
+    </select>
+
+    <button class="px-3 py-2 bg-blue-600 text-white rounded"
+            (click)="addToCart()">
+      Add
+    </button>
+  </div>
+
+  <!-- Real-time slab pricing -->
+  <div class="mt-3 text-sm text-gray-700">
+    Rate: ₹{{ pricePerKg() }}/kg  
+    | Total: ₹{{ lineTotal() }}
+  </div>
+</div>

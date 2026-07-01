@@ -1,0 +1,72 @@
+<div class="p-6 space-y-8">
+
+  <h1 class="text-3xl font-bold">Admin Order Management</h1>
+
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse bg-white shadow rounded-xl overflow-hidden">
+    <thead class="bg-gray-100 text-left">
+      <tr>
+        <th class="p-4">Order ID</th>
+        <th class="p-4">Shop</th>
+        <th class="p-4">Qty</th>
+        <th class="p-4">Slot</th>
+        <th class="p-4">Status</th>
+        <th class="p-4">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (order of admin.orders(); track order.id) {
+        <tr class="border-b hover:bg-gray-50">
+
+          <td class="p-4 font-semibold">{{ order.id }}</td>
+
+          <td class="p-4">{{ order.shop }}</td>
+
+          <td class="p-4">{{ order.qty }} kg</td>
+
+          <td class="p-4">{{ order.slot }}</td>
+
+          <td class="p-4 font-semibold text-blue-600">
+            {{ statuses[order.status] }}
+          </td>
+
+          <td class="p-4 flex gap-3">
+
+            <!-- View Button -->
+            <button
+              class="px-4 py-2 bg-gray-200 rounded-lg"
+              [routerLink]="['/orders/details', order.id]">
+              View
+            </button>
+
+            <!-- Advance Button -->
+            <button
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg"
+              (click)="advance(order)"
+              [disabled]="order.status === 5">
+              Next →
+            </button>
+
+          </td>
+
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="mt-8 p-4 bg-gray-50 border rounded-xl">
+  <h2 class="text-xl font-semibold mb-3">Status Flow</h2>
+
+  <div class="flex gap-6">
+    @for (s of statuses; let i = $index; track i) {
+      <div>
+        <div class="w-6 h-6 rounded-full bg-blue-600 text-white
+                    flex items-center justify-center mb-2">
+          {{ i + 1 }}
+        </div>
+        <p>{{ s }}</p>
+      </div>
+    }
+  </div>
+</div>

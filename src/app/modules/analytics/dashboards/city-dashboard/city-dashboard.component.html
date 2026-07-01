@@ -1,0 +1,107 @@
+<div class="p-6 space-y-10">
+
+  <!-- ================= HEADER ================= -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-2xl font-bold">City Analytics</h2>
+
+    <!-- FILTER -->
+    <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+      @for (f of filterOptions; track f) {
+      <button (click)="setFilter(f)" class="px-4 py-2 rounded-lg"
+       [class.bg-blue-600]="filter() === f"
+        [class.text-white]="filter() === f">
+        {{ f }}
+      </button>
+      }
+
+    </div>
+  </div>
+  <tbody>
+    @for (r of rows(); track r.city) {
+    <tr class="border-b hover:bg-gray-50 cursor-pointer" (click)="openSalesDrilldown(r.city)">
+
+      <td class="py-2 font-medium">{{ r.city }}</td>
+      <td class="py-2 text-right">{{ formatNumber(r.orders) }}</td>
+      <td class="py-2 text-right">{{ formatNumber(r.customers) }}</td>
+      <td class="py-2 text-right">{{ formatNumber(r.quantityKg) }}</td>
+      <td class="py-2 text-right text-green-600">
+        {{ formatCurrency(r.revenue) }}
+      </td>
+
+    </tr>
+    }
+  </tbody>
+
+  <!-- ================= KPI CARDS ================= -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @for (r of rows(); track r.city) {
+    <div class="card">
+      <p class="text-xs text-gray-500">{{ r.city }}</p>
+      <p class="text-xl font-bold mt-1">{{ formatNumber(r.orders) }} Orders</p>
+      <p class="text-sm text-green-600 mt-1">
+        {{ formatCurrency(r.revenue) }}
+      </p>
+    </div>
+    }
+  </div>
+
+  <!-- ================= CHARTS ================= -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Revenue Chart -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Revenue by City</h3>
+      <apx-chart [chart]="revenueChart().chart" [series]="revenueChart().series" [xaxis]="revenueChart().xaxis">
+      </apx-chart>
+    </div>
+
+    <!-- Orders Chart -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Orders by City</h3>
+      <apx-chart [chart]="orderChart().chart" [series]="orderChart().series" [xaxis]="orderChart().xaxis">
+      </apx-chart>
+    </div>
+
+    <!-- Customer Share -->
+    <div class="card">
+      <h3 class="font-semibold mb-3">Customer Share</h3>
+      <apx-chart [chart]="customerPie().chart" [series]="customerPie().series" [labels]="customerPie().labels">
+      </apx-chart>
+    </div>
+
+  </div>
+
+  <!-- ================= CITY TABLE ================= -->
+  <div class="card">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-semibold">City-wise Performance</h3>
+    </div>
+
+    <table class="w-full text-sm">
+      <thead class="border-b text-gray-500 text-xs uppercase">
+        <tr>
+          <th class="text-left py-2">City</th>
+          <th class="text-right py-2">Orders</th>
+          <th class="text-right py-2">Customers</th>
+          <th class="text-right py-2">Quantity (Kg)</th>
+          <th class="text-right py-2">Revenue</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (r of rows(); track r.city) {
+        <tr class="border-b hover:bg-gray-50">
+          <td class="py-2 font-medium">{{ r.city }}</td>
+          <td class="py-2 text-right">{{ formatNumber(r.orders) }}</td>
+          <td class="py-2 text-right">{{ formatNumber(r.customers) }}</td>
+          <td class="py-2 text-right">{{ formatNumber(r.quantityKg) }}</td>
+          <td class="py-2 text-right text-green-600">
+            {{ formatCurrency(r.revenue) }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

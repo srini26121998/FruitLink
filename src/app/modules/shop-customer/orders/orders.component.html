@@ -1,0 +1,37 @@
+<div class="p-6 max-w-4xl mx-auto">
+
+  <h2 class="text-2xl font-semibold mb-6">My Orders</h2>
+
+  <div class="border rounded-xl bg-white shadow">
+
+    <table class="w-full text-left">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-3">Order ID</th>
+          <th class="p-3">Date</th>
+          <th class="p-3">Total</th>
+          <th class="p-3">Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (o of orders; track o.id) {
+          <tr class="border-t">
+            <td class="p-3 font-medium">{{ o.id }}</td>
+            <td class="p-3">{{ o.date }}</td>
+            <td class="p-3">₹{{ o.total }}</td>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-lg text-white"
+                [class.bg-green-600]="o.status === 'Delivered'"
+                [class.bg-yellow-600]="o.status === 'Out for Delivery'">
+                {{ o.status }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

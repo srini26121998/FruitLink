@@ -1,0 +1,42 @@
+<div class="p-6 bg-white rounded-xl shadow space-y-4">
+
+  <h2 class="text-xl font-bold text-green-700">Add New Permission</h2>
+
+  <p *ngIf="success()" class="text-sm text-green-700">{{ success() }}</p>
+
+  <div class="grid grid-cols-2 gap-4">
+
+    <input
+      class="border p-2 rounded"
+      placeholder="Permission ID"
+      [formControl]="id"
+    />
+
+    <input
+      class="border p-2 rounded"
+      placeholder="Label"
+      [formControl]="label"
+    />
+
+    <input
+      class="border p-2 rounded"
+      placeholder="Resource (e.g. orders)"
+      [formControl]="resource"
+    />
+
+    <input
+      class="border p-2 rounded"
+      placeholder="Action (e.g. create)"
+      [formControl]="action"
+    />
+
+  </div>
+
+  <button
+    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+    (click)="addPermission()"
+  >
+    Add Permission
+  </button>
+
+</div>

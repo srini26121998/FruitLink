@@ -1,0 +1,155 @@
+<div class="p-6 space-y-10">
+
+  <!-- HEADER -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-xl font-bold">
+        Product Sales – {{ shopName() }}
+      </h2>
+      <p class="text-gray-500 text-sm mt-1">
+        Drilldown view for shop-level product performance
+      </p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      
+      <!-- FILTERS -->
+      <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+        @for (f of filterOptions; track f) {
+          <button
+            (click)="setFilter(f)"
+            [ngClass]="filter() === f
+              ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
+              : 'px-4 py-2 rounded-lg hover:bg-white'"
+          >
+            {{ f | titlecase }}
+          </button>
+        }
+      </div>
+
+      <!-- Export -->
+      <button
+        class="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+        (click)="exportExcel()"
+      >
+        Excel
+      </button>
+      <button
+        class="px-4 py-2 rounded border hover:bg-gray-100"
+        (click)="exportPDF()"
+      >
+        PDF
+      </button>
+
+      <!-- Back -->
+      <button
+        class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+        (click)="goBack()"
+      >
+        Back
+      </button>
+
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SUMMARY KPI CARDS
+  ===================================================== -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <kpi-card
+      label="Total Products"
+      [value]="summary().totalProducts"
+      [previous]="summary().previousProducts">
+    </kpi-card>
+
+    <kpi-card
+      label="Total Revenue"
+      prefix="₹"
+      [value]="summary().totalRevenue"
+      [previous]="summary().previousRevenue">
+    </kpi-card>
+
+    <kpi-card
+      label="Top Seller"
+      [value]="summary().highestSelling">
+    </kpi-card>
+
+    <kpi-card
+      label="Top Revenue Product"
+      [value]="summary().topRevenueProduct">
+    </kpi-card>
+
+  </div>
+
+  <!-- =====================================================
+       PRODUCT PIE CHART (Percentage Share)
+  ===================================================== -->
+  <div class="card">
+    <h3 class="font-semibold mb-4">Product Share (Pie)</h3>
+
+    <apx-chart
+      [chart]="productPieChart().chart"
+      [series]="productPieChart().series"
+      [labels]="productPieChart().labels"
+    ></apx-chart>
+  </div>
+
+  <!-- =====================================================
+       SALES TREND
+  ===================================================== -->
+  <div class="card">
+    <h3 class="font-semibold mb-4">Sales Trend (Monthly)</h3>
+
+    <apx-chart
+      [chart]="trendChart().chart"
+      [series]="trendChart().series"
+      [xaxis]="trendChart().xaxis"
+    ></apx-chart>
+  </div>
+
+  <!-- =====================================================
+       REVENUE BAR CHART
+  ===================================================== -->
+  <div class="card">
+    <h3 class="font-semibold mb-4">Revenue by Product</h3>
+
+    <apx-chart
+      [chart]="revenueChart().chart"
+      [series]="revenueChart().series"
+      [xaxis]="revenueChart().xaxis"
+    ></apx-chart>
+  </div>
+
+  <!-- =====================================================
+       PRODUCT TABLE
+  ===================================================== -->
+  <div class="card">
+    <h3 class="font-semibold mb-3">Product Sales Breakdown</h3>
+
+    <div class="overflow-x-auto">
+      <table class="table w-full text-sm">
+        <thead class="border-b text-gray-500 text-xs uppercase">
+          <tr>
+            <th class="py-2 pr-4">Product</th>
+            <th class="py-2 pr-4">Orders</th>
+            <th class="py-2 pr-4">Revenue</th>
+            <th class="py-2 pr-4">Share %</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (p of products(); track p.product) {
+            <tr class="border-b last:border-0 hover:bg-gray-50">
+              <td class="py-2 pr-4 font-medium">{{ p.product }}</td>
+              <td class="py-2 pr-4">{{ p.orders }}</td>
+              <td class="py-2 pr-4 font-semibold">₹ {{ p.revenue }}</td>
+              <td class="py-2 pr-4">{{ p.percentage }}%</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

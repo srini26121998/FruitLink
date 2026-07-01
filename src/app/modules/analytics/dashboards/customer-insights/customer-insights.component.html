@@ -1,0 +1,178 @@
+
+<!-- Page Header -->
+<app-page-header
+  title="Customer Insights"
+  subtitle="Customer growth, retention & value analytics">
+</app-page-header>
+
+<!-- =====================================================
+     FILTER BAR
+     ===================================================== -->
+<div class="flex gap-3 mb-6">
+  <button
+    class="btn"
+    [class.active]="filter() === 'today'"
+    (click)="onFilterChange('today')">Today</button>
+
+  <button
+    class="btn"
+    [class.active]="filter() === 'week'"
+    (click)="onFilterChange('week')">Week</button>
+
+  <button
+    class="btn"
+    [class.active]="filter() === 'month'"
+    (click)="onFilterChange('month')">Month</button>
+
+  <button
+    class="btn"
+    [class.active]="filter() === 'year'"
+    (click)="onFilterChange('year')">Year</button>
+</div>
+
+<!-- =====================================================
+     KPI CARDS
+     ===================================================== -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+  <kpi-card
+    title="Total Customers"
+    [value]="kpis().totalCustomers">
+  </kpi-card>
+
+  <kpi-card
+    title="Active Customers"
+    [value]="kpis().activeCustomers"
+    suffix="%">
+  </kpi-card>
+
+  <kpi-card
+    title="New Customers"
+    [value]="kpis().newCustomers">
+  </kpi-card>
+
+  <kpi-card
+    title="Churn Rate"
+    [value]="kpis().churnRate"
+    suffix="%">
+  </kpi-card>
+
+  <kpi-card
+    title="Revenue"
+    [value]="kpis().totalRevenue"
+    prefix="₹">
+  </kpi-card>
+
+  <kpi-card
+    title="Avg Order Frequency"
+    [value]="kpis().avgOrderFrequencyDays"
+    suffix=" days">
+  </kpi-card>
+
+  <kpi-card
+    title="High Value Customers"
+    [value]="kpis().highValueCustomers">
+  </kpi-card>
+
+  <kpi-card
+    title="At Risk Customers"
+    [value]="kpis().atRiskCustomers">
+  </kpi-card>
+</div>
+
+<!-- =====================================================
+     GROWTH & REVENUE CHARTS
+     ===================================================== -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+  <!-- Customer Growth -->
+  <div class="card">
+    <h3 class="card-title">Customer Growth</h3>
+    <apx-chart
+  [series]="customerGrowthChart().series"
+  [chart]="customerGrowthChart().chart"
+  [xaxis]="customerGrowthChart().xaxis"
+  [stroke]="customerGrowthChart().stroke"
+  [grid]="customerGrowthChart().grid"
+  [dataLabels]="customerGrowthChart().dataLabels">
+</apx-chart>
+
+  </div>
+
+  <!-- Revenue Trend -->
+  <div class="card">
+    <h3 class="card-title">Revenue Trend</h3>
+   <apx-chart
+  [series]="revenueChart().series"
+  [chart]="revenueChart().chart"
+  [xaxis]="revenueChart().xaxis"
+  [stroke]="revenueChart().stroke"
+  [grid]="revenueChart().grid"
+  [dataLabels]="revenueChart().dataLabels">
+</apx-chart>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     ORDER FREQUENCY & SEGMENTS
+     ===================================================== -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+  <!-- Order Frequency -->
+  <div class="card">
+    <h3 class="card-title">Order Frequency</h3>
+   <apx-chart
+  [series]="frequencyChart().series"
+  [chart]="frequencyChart().chart"
+  [xaxis]="frequencyChart().xaxis"
+  [stroke]="frequencyChart().stroke"
+  [grid]="frequencyChart().grid"
+  [dataLabels]="frequencyChart().dataLabels">
+</apx-chart>
+
+  </div>
+
+  <!-- Customer Segments -->
+  <div class="card">
+    <h3 class="card-title">Customer Segments</h3>
+   <apx-chart
+  [series]="segmentChart().series"
+  [chart]="segmentChart().chart"
+  [labels]="segmentChart().labels">
+</apx-chart>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     TOP CUSTOMERS (DRILLDOWN ENTRY)
+     ===================================================== -->
+<div class="card">
+  <h3 class="card-title">Top Customers</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Orders</th>
+        <th>Quantity (Kg)</th>
+        <th>Revenue</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let customer of topCustomers()"
+        class="cursor-pointer hover:bg-gray-50"
+        (click)="openCustomerDrilldown(customer)">
+        <td>{{ customer.customerName }}</td>
+        <td>{{ customer.totalOrders }}</td>
+        <td>{{ customer.totalQuantityKg }}</td>
+        <td>₹{{ customer.totalSpent }}</td>
+        <td>{{ customer.riskLevel }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

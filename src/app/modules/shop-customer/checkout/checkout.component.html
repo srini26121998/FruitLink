@@ -1,0 +1,60 @@
+
+
+<div class="p-6 space-y-6">
+
+  <h1 class="text-3xl font-bold">Checkout</h1>
+
+  <!-- ITEMS -->
+  <div class="bg-white p-6 border rounded-xl shadow space-y-4">
+    <h2 class="text-xl font-semibold">Order Review</h2>
+
+    @for(item of cart.cart();track item.id){
+      <div class="flex justify-between border-b py-2 text-lg">
+        <p>{{ item.name }} ({{ item.qty }} {{ item.unitLabel }})</p>
+        <p>₹ {{ item.lineTotal }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- DELIVERY SLOT -->
+  <div class="bg-white p-6 border rounded-xl shadow space-y-4">
+    <h2 class="text-xl font-semibold">Delivery Slot</h2>
+    <div class="grid grid-cols-2 gap-4">
+      @for(s of deliverySlots;track s){
+        <button
+          class="p-3 border rounded-lg"
+          [ngClass]="{'bg-blue-600 text-white':selectedSlot===s}"
+          (click)="selectedSlot=s">{{s}}</button>
+      }
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="bg-white p-6 border rounded-xl shadow space-y-4">
+    <h2 class="text-xl font-semibold">Payment</h2>
+    @for(p of paymentModes;track p){
+      <label class="flex gap-3 items-center text-lg">
+        <input type="radio" name="pay" [value]="p" (change)="selectedPayment=p"/>
+        {{p}}
+      </label>
+    }
+  </div>
+
+  <!-- PRICE SUMMARY -->
+  <div class="bg-white p-6 border rounded-xl shadow space-y-3 text-lg">
+    <div class="flex justify-between"><span>Subtotal:</span><span>₹ {{cart.pricing.subtotal}}</span></div>
+    <div class="flex justify-between text-green-600"><span>Discount:</span><span>- ₹ {{cart.pricing.discount}}</span></div>
+    <div class="flex justify-between"><span>Delivery Fee:</span><span>₹ {{cart.pricing.delivery}}</span></div>
+    <div class="border-t pt-3 flex justify-between text-xl font-bold">
+      <span>Total Payable:</span>
+      <span>₹ {{cart.pricing.total}}</span>
+    </div>
+  </div>
+
+  <button class="w-full bg-green-600 text-white px-4 py-4 rounded-lg text-xl mt-6 disabled:bg-gray-500"
+    [disabled]="!selectedSlot || !selectedPayment"
+    (click)="confirmOrder()">Confirm Order ✔</button>
+
+</div>
+
+

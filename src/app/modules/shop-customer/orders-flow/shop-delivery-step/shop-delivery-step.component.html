@@ -1,0 +1,42 @@
+<div class="bg-white p-6 rounded-xl shadow max-w-3xl mx-auto space-y-4">
+
+  <h2 class="text-xl font-bold">Delivery Details</h2>
+
+  <form class="grid gap-3" (ngSubmit)="submit()">
+
+    <input class="input" placeholder="Shop Name" formControlName="shopName">
+    <input class="input" placeholder="Contact Person" formControlName="contactPerson">
+    <input class="input" placeholder="Phone" formControlName="phone">
+
+    <textarea class="input" rows="2" placeholder="Address Line" formControlName="addressLine"></textarea>
+    <input class="input" placeholder="Landmark" formControlName="landmark">
+
+    <div class="grid grid-cols-2 gap-3">
+      <input class="input" placeholder="City" formControlName="city">
+      <input class="input" placeholder="Pincode" formControlName="pincode">
+    </div>
+
+    <input class="input" placeholder="GST Number (Optional)" formControlName="gstNo">
+
+    <label class="font-medium mt-2">Delivery Slot</label>
+    <div class="flex gap-2 flex-wrap">
+      @for(s of slots; track s){
+        <button type="button"
+          class="px-4 py-2 rounded border"
+          [class.bg-blue-600]="form.value.slot===s"
+          [class.text-white]="form.value.slot===s"
+          (click)="form.patchValue({slot:s})">
+          {{s}}
+        </button>
+      }
+    </div>
+
+    <textarea class="input mt-2" rows="2" placeholder="Notes" formControlName="notes"></textarea>
+
+    <div class="flex justify-between mt-4">
+      <button type="button" class="btn-secondary" (click)="back.emit()">← Back</button>
+      <button type="submit" class="btn-primary">Next →</button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,70 @@
+<div class="p-6">
+
+  <h1 class="text-2xl font-semibold mb-6">FruitLink Admin Dashboard</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+    <!-- Today Sales -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <p class="text-gray-500 text-sm">Today Sales</p>
+      <h2 class="text-3xl font-semibold mt-2">₹{{ dash.salesStats().today | number }}</h2>
+    </div>
+
+    <!-- This Week -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <p class="text-gray-500 text-sm">This Week</p>
+      <h2 class="text-3xl font-semibold mt-2">₹{{ dash.salesStats().thisWeek | number }}</h2>
+    </div>
+
+    <!-- This Month -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <p class="text-gray-500 text-sm">This Month</p>
+      <h2 class="text-3xl font-semibold mt-2">₹{{ dash.salesStats().thisMonth | number }}</h2>
+    </div>
+
+    <!-- Total Shops -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <p class="text-gray-500 text-sm">Active Shops</p>
+      <h2 class="text-3xl font-semibold mt-2">{{ dash.salesStats().totalShops }}</h2>
+    </div>
+
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-xl font-semibold mb-4">Weekly Orders Trend</h2>
+    <apx-chart
+      [series]="weeklyOrdersChart.series"
+      [chart]="weeklyOrdersChart.chart"
+      [xaxis]="weeklyOrdersChart.xaxis"
+      [colors]="weeklyOrdersChart.colors">
+    </apx-chart>
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-xl font-semibold mb-4">Top Selling Fruits & Vegetables</h2>
+    <apx-chart
+      [series]="topFruitsChart.series"
+      [chart]="topFruitsChart.chart"
+      [labels]="topFruitsChart.labels"
+      [colors]="topFruitsChart.colors">
+    </apx-chart>
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+    <h2 class="text-xl font-semibold mb-4">Revenue Trend (Weekly)</h2>
+    <apx-chart
+      [series]="revenueTrendChart.series"
+      [chart]="revenueTrendChart.chart"
+      [xaxis]="revenueTrendChart.xaxis"
+      [colors]="revenueTrendChart.colors"
+      [stroke]="revenueTrendChart.stroke">
+    </apx-chart>
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow">
+    <h2 class="text-xl font-semibold mb-4">Delivery Performance</h2>
+    <apx-chart
+      [series]="deliveryPerformanceChart.series"
+      [chart]="deliveryPerformanceChart.chart"
+      [labels]="deliveryPerformanceChart.labels"
+      [colors]="deliveryPerformanceChart.colors">
+    </apx-chart>
+  </div>
+
+</div>

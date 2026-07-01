@@ -1,0 +1,392 @@
+Folder PATH listing
+Volume serial number is 000000D7 68B3:29D6
+E:\MKWEBTECH\FRUITLINK-FRONTEND\SRC\APP
+³   app.component.css
+³   app.component.html
+³   app.component.spec.ts
+³   app.component.ts
+³   app.config.ts
+³   app.routes.ts
+³   
+ÃÄÄÄmodules
+³   ÃÄÄÄadmin
+³   ³   ÀÄÄÄdashboard
+³   ³           dashboard.component.css
+³   ³           dashboard.component.html
+³   ³           dashboard.component.spec.ts
+³   ³           dashboard.component.ts
+³   ³           
+³   ÃÄÄÄanalytics
+³   ³   ÃÄÄÄadmin-dashboard
+³   ³   ³       admin-dashboard.component.css
+³   ³   ³       admin-dashboard.component.html
+³   ³   ³       admin-dashboard.component.spec.ts
+³   ³   ³       admin-dashboard.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄinventory
+³   ³   ³       inventory.component.css
+³   ³   ³       inventory.component.html
+³   ³   ³       inventory.component.spec.ts
+³   ³   ³       inventory.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄshop-dashboard
+³   ³           shop-dashboard.component.css
+³   ³           shop-dashboard.component.html
+³   ³           shop-dashboard.component.spec.ts
+³   ³           shop-dashboard.component.ts
+³   ³           
+³   ÃÄÄÄaudit-logs
+³   ³   ÀÄÄÄlist
+³   ³           list.component.css
+³   ³           list.component.html
+³   ³           list.component.spec.ts
+³   ³           list.component.ts
+³   ³           
+³   ÃÄÄÄauth
+³   ³   ÃÄÄÄforgot-password
+³   ³   ³       forgot-password.component.css
+³   ³   ³       forgot-password.component.html
+³   ³   ³       forgot-password.component.spec.ts
+³   ³   ³       forgot-password.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄlogin
+³   ³   ³       login.component.css
+³   ³   ³       login.component.html
+³   ³   ³       login.component.spec.ts
+³   ³   ³       login.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄotp-login
+³   ³           otp-login.component.css
+³   ³           otp-login.component.html
+³   ³           otp-login.component.spec.ts
+³   ³           otp-login.component.ts
+³   ³           
+³   ÃÄÄÄdelivery
+³   ³   ÃÄÄÄgps-tracking
+³   ³   ³       gps-tracking.component.css
+³   ³   ³       gps-tracking.component.html
+³   ³   ³       gps-tracking.component.spec.ts
+³   ³   ³       gps-tracking.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄroute-optimization
+³   ³           route-optimization.component.css
+³   ³           route-optimization.component.html
+³   ³           route-optimization.component.spec.ts
+³   ³           route-optimization.component.ts
+³   ³           
+³   ÃÄÄÄfruits
+³   ³   ÃÄÄÄadd
+³   ³   ³       add.component.css
+³   ³   ³       add.component.html
+³   ³   ³       add.component.spec.ts
+³   ³   ³       add.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄedit
+³   ³   ³       edit.component.css
+³   ³   ³       edit.component.html
+³   ³   ³       edit.component.spec.ts
+³   ³   ³       edit.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄlist
+³   ³           list.component.css
+³   ³           list.component.html
+³   ³           list.component.spec.ts
+³   ³           list.component.ts
+³   ³           
+³   ÃÄÄÄhelpdesk
+³   ³   ³   helpdesk.service.spec.ts
+³   ³   ³   helpdesk.service.ts
+³   ³   ³   
+³   ³   ÃÄÄÄfaq
+³   ³   ³       faq.component.css
+³   ³   ³       faq.component.html
+³   ³   ³       faq.component.spec.ts
+³   ³   ³       faq.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄlist
+³   ³   ³       list.component.css
+³   ³   ³       list.component.html
+³   ³   ³       list.component.spec.ts
+³   ³   ³       list.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄticket-details
+³   ³           ticket-details.component.css
+³   ³           ticket-details.component.html
+³   ³           ticket-details.component.spec.ts
+³   ³           ticket-details.component.ts
+³   ³           
+³   ÃÄÄÄmaster-data
+³   ³   ÃÄÄÄcities
+³   ³   ³       cities.component.css
+³   ³   ³       cities.component.html
+³   ³   ³       cities.component.spec.ts
+³   ³   ³       cities.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄfruit-categories
+³   ³   ³       fruit-categories.component.css
+³   ³   ³       fruit-categories.component.html
+³   ³   ³       fruit-categories.component.spec.ts
+³   ³   ³       fruit-categories.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄshop-types
+³   ³           shop-types.component.css
+³   ³           shop-types.component.html
+³   ³           shop-types.component.spec.ts
+³   ³           shop-types.component.ts
+³   ³           
+³   ÃÄÄÄnotifications
+³   ³   ÃÄÄÄlist
+³   ³   ³       list.component.css
+³   ³   ³       list.component.html
+³   ³   ³       list.component.spec.ts
+³   ³   ³       list.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄpanel
+³   ³           panel.component.css
+³   ³           panel.component.html
+³   ³           panel.component.spec.ts
+³   ³           panel.component.ts
+³   ³           
+³   ÃÄÄÄorders
+³   ³   ÃÄÄÄapprove
+³   ³   ³       approve.component.css
+³   ³   ³       approve.component.html
+³   ³   ³       approve.component.spec.ts
+³   ³   ³       approve.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄdelivery-update
+³   ³   ³       delivery-update.component.css
+³   ³   ³       delivery-update.component.html
+³   ³   ³       delivery-update.component.spec.ts
+³   ³   ³       delivery-update.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄdetails
+³   ³   ³       details.component.css
+³   ³   ³       details.component.html
+³   ³   ³       details.component.spec.ts
+³   ³   ³       details.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄlist
+³   ³           list.component.css
+³   ³           list.component.html
+³   ³           list.component.spec.ts
+³   ³           list.component.ts
+³   ³           
+³   ÃÄÄÄpayments
+³   ³   ÃÄÄÄcheckout
+³   ³   ³       checkout.component.css
+³   ³   ³       checkout.component.html
+³   ³   ³       checkout.component.spec.ts
+³   ³   ³       checkout.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄdetails
+³   ³   ³       details.component.css
+³   ³   ³       details.component.html
+³   ³   ³       details.component.spec.ts
+³   ³   ³       details.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄhistory
+³   ³   ³       history.component.css
+³   ³   ³       history.component.html
+³   ³   ³       history.component.spec.ts
+³   ³   ³       history.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄlist
+³   ³   ³       list.component.css
+³   ³   ³       list.component.html
+³   ³   ³       list.component.spec.ts
+³   ³   ³       list.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄsuccess
+³   ³           success.component.css
+³   ³           success.component.html
+³   ³           success.component.spec.ts
+³   ³           success.component.ts
+³   ³           
+³   ÃÄÄÄprofile
+³   ³       profile.component.css
+³   ³       profile.component.html
+³   ³       profile.component.spec.ts
+³   ³       profile.component.ts
+³   ³       
+³   ÃÄÄÄreports
+³   ³   ÃÄÄÄmonthly
+³   ³   ³       monthly.component.css
+³   ³   ³       monthly.component.html
+³   ³   ³       monthly.component.spec.ts
+³   ³   ³       monthly.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpending-payments
+³   ³   ³       pending-payments.component.css
+³   ³   ³       pending-payments.component.html
+³   ³   ³       pending-payments.component.spec.ts
+³   ³   ³       pending-payments.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄshop-frequency
+³   ³   ³       shop-frequency.component.css
+³   ³   ³       shop-frequency.component.html
+³   ³   ³       shop-frequency.component.spec.ts
+³   ³   ³       shop-frequency.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄtop-fruits
+³   ³   ³       top-fruits.component.css
+³   ³   ³       top-fruits.component.html
+³   ³   ³       top-fruits.component.spec.ts
+³   ³   ³       top-fruits.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄweekly
+³   ³   ³       weekly.component.css
+³   ³   ³       weekly.component.html
+³   ³   ³       weekly.component.spec.ts
+³   ³   ³       weekly.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄyearly
+³   ³           yearly.component.css
+³   ³           yearly.component.html
+³   ³           yearly.component.spec.ts
+³   ³           yearly.component.ts
+³   ³           
+³   ÃÄÄÄroles
+³   ³   ÃÄÄÄcreate-role
+³   ³   ³       create-role.component.css
+³   ³   ³       create-role.component.html
+³   ³   ³       create-role.component.spec.ts
+³   ³   ³       create-role.component.ts
+³   ³   ³       
+³   ³   ÃÄÄÄpermission-matrix
+³   ³   ³       permission-matrix.component.css
+³   ³   ³       permission-matrix.component.html
+³   ³   ³       permission-matrix.component.spec.ts
+³   ³   ³       permission-matrix.component.ts
+³   ³   ³       
+³   ³   ÀÄÄÄrole-list
+³   ³           role-list.component.css
+³   ³           role-list.component.html
+³   ³           role-list.component.spec.ts
+³   ³           role-list.component.ts
+³   ³           
+³   ÃÄÄÄsettings
+³   ³       settings.component.css
+³   ³       settings.component.html
+³   ³       settings.component.spec.ts
+³   ³       settings.component.ts
+³   ³       
+³   ÀÄÄÄshop
+³       ÃÄÄÄcart
+³       ³       cart.component.css
+³       ³       cart.component.html
+³       ³       cart.component.spec.ts
+³       ³       cart.component.ts
+³       ³       
+³       ÃÄÄÄcheckout
+³       ³       checkout.component.css
+³       ³       checkout.component.html
+³       ³       checkout.component.spec.ts
+³       ³       checkout.component.ts
+³       ³       
+³       ÃÄÄÄdashboard
+³       ³       dashboard.component.css
+³       ³       dashboard.component.html
+³       ³       dashboard.component.spec.ts
+³       ³       dashboard.component.ts
+³       ³       
+³       ÃÄÄÄfruits
+³       ³       fruits.component.css
+³       ³       fruits.component.html
+³       ³       fruits.component.spec.ts
+³       ³       fruits.component.ts
+³       ³       
+³       ÃÄÄÄnotifications
+³       ³       notifications.component.css
+³       ³       notifications.component.html
+³       ³       notifications.component.spec.ts
+³       ³       notifications.component.ts
+³       ³       
+³       ÃÄÄÄorder-details
+³       ³       order-details.component.css
+³       ³       order-details.component.html
+³       ³       order-details.component.spec.ts
+³       ³       order-details.component.ts
+³       ³       
+³       ÃÄÄÄorders
+³       ³       orders.component.css
+³       ³       orders.component.html
+³       ³       orders.component.spec.ts
+³       ³       orders.component.ts
+³       ³       
+³       ÃÄÄÄpayments-history
+³       ³       payments-history.component.css
+³       ³       payments-history.component.html
+³       ³       payments-history.component.spec.ts
+³       ³       payments-history.component.ts
+³       ³       
+³       ÃÄÄÄservices
+³       ³       shop.service.spec.ts
+³       ³       shop.service.ts
+³       ³       
+³       ÀÄÄÄsupport
+³               support.component.css
+³               support.component.html
+³               support.component.spec.ts
+³               support.component.ts
+³               
+ÀÄÄÄshared
+    ÃÄÄÄcomponents
+    ³   ÃÄÄÄbreadcrumb
+    ³   ³       breadcrumb.component.css
+    ³   ³       breadcrumb.component.html
+    ³   ³       breadcrumb.component.spec.ts
+    ³   ³       breadcrumb.component.ts
+    ³   ³       
+    ³   ÃÄÄÄchange-password
+    ³   ³       change-password.component.css
+    ³   ³       change-password.component.html
+    ³   ³       change-password.component.spec.ts
+    ³   ³       change-password.component.ts
+    ³   ³       
+    ³   ÃÄÄÄchange-photo
+    ³   ³       change-photo.component.css
+    ³   ³       change-photo.component.html
+    ³   ³       change-photo.component.spec.ts
+    ³   ³       change-photo.component.ts
+    ³   ³       
+    ³   ÃÄÄÄfooter
+    ³   ³       footer.component.css
+    ³   ³       footer.component.html
+    ³   ³       footer.component.spec.ts
+    ³   ³       footer.component.ts
+    ³   ³       
+    ³   ÃÄÄÄheader
+    ³   ³       header.component.css
+    ³   ³       header.component.html
+    ³   ³       header.component.spec.ts
+    ³   ³       header.component.ts
+    ³   ³       
+    ³   ÃÄÄÄnotification-panel
+    ³   ³       notification-panel.component.css
+    ³   ³       notification-panel.component.html
+    ³   ³       notification-panel.component.spec.ts
+    ³   ³       notification-panel.component.ts
+    ³   ³       
+    ³   ÃÄÄÄpage-header
+    ³   ³       page-header.component.css
+    ³   ³       page-header.component.html
+    ³   ³       page-header.component.spec.ts
+    ³   ³       page-header.component.ts
+    ³   ³       
+    ³   ÃÄÄÄquick-actions
+    ³   ³       quick-actions.component.css
+    ³   ³       quick-actions.component.html
+    ³   ³       quick-actions.component.spec.ts
+    ³   ³       quick-actions.component.ts
+    ³   ³       
+    ³   ÀÄÄÄsidebar
+    ³           sidebar.component.css
+    ³           sidebar.component.html
+    ³           sidebar.component.spec.ts
+    ³           sidebar.component.ts
+    ³           
+    ÀÄÄÄservices
+            sidebar.service.spec.ts
+            sidebar.service.ts
+            

@@ -1,0 +1,66 @@
+<div class="bg-white p-6 rounded-xl shadow max-w-xl mx-auto space-y-6">
+
+  <h2 class="text-xl font-bold">Payment Method</h2>
+
+  <form [formGroup]="form" class="space-y-4">
+
+    <!-- Payment Type Buttons -->
+    @for(p of paymentModes; track p) {
+      <label 
+        class="flex items-center gap-3 p-3 rounded-lg cursor-pointer border transition hover:bg-gray-50"
+        [class.border-blue-600]="form.value.payment===p">
+
+        <input type="radio" formControlName="payment" [value]="p" class="w-4 h-4 text-blue-600">
+        <span class="font-medium">{{ p }}</span>
+      </label>
+    }
+
+    <!-- UPI -->
+    @if(form.value.payment==='UPI'){
+      <div>
+        <label class="text-sm font-medium mb-1">UPI ID</label>
+        <input formControlName="upiId" placeholder="name@upi"
+               class="border p-2 rounded w-full focus:ring ring-blue-300">
+      </div>
+    }
+
+    <!-- Wallet -->
+    @if(form.value.payment==='Wallet'){
+      <div>
+        <label class="text-sm font-medium mb-1">Wallet Number</label>
+        <input formControlName="walletNumber" maxlength="10"
+               class="border p-2 rounded w-full focus:ring ring-blue-300">
+      </div>
+    }
+
+    <!-- Credit -->
+    @if(form.value.payment==='Credit'){
+      <div class="bg-yellow-50 p-3 rounded border text-sm">
+        <b>Outstanding:</b> ₹{{ outstandingBalance }} <br>
+        <span class="text-gray-600">Pay later within credit period.</span>
+      </div>
+
+      <label class="block text-sm mt-2 font-medium">Credit Days</label>
+      <select formControlName="creditDays"
+              class="border p-2 rounded w-full focus:ring ring-blue-300">
+        <option value="" disabled>Select days</option>
+        @for(d of creditAllowedDays; track d){
+          <option [value]="d">{{ d }} Days</option>
+        }
+      </select>
+    }
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between pt-5">
+      <button type="button" (click)="back.emit()"
+        class="px-5 py-2 border rounded hover:bg-gray-100">← Back</button>
+
+      <button type="button" (click)="submit()"
+        [disabled]="form.invalid"
+        class="px-5 py-2 bg-green-600 text-white rounded disabled:bg-gray-300">
+        Continue →
+      </button>
+    </div>
+
+  </form>
+</div>

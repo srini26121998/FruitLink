@@ -1,0 +1,69 @@
+<div class="p-6">
+
+  <app-page-header title="My Profile"></app-page-header>
+
+  <div class="bg-white p-6 rounded-xl shadow grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- AVATAR -->
+    <div class="flex flex-col items-center">
+      <img 
+        src="https://ui-avatars.com/api/?name=Mario&size=120&background=0D8ABC&color=fff"
+        class="w-32 h-32 rounded-full shadow mb-4" />
+
+      <button 
+        class="bg-primary text-white px-4 py-2 rounded-lg"
+        (click)="openPhotoModal()">
+        Change Photo
+      </button>
+    </div>
+
+    <!-- PROFILE FORM -->
+    <div class="col-span-2 space-y-4">
+
+      <div>
+        <label class="block text-sm font-semibold">Full Name</label>
+        <input type="text" value="Mario" class="border rounded-lg px-4 py-2 w-full" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold">Email</label>
+        <input type="text" value="admin&#64;fruitlink.com" class="border rounded-lg px-4 py-2 w-full" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold">Mobile</label>
+        <input type="text" value="9094881471" class="border rounded-lg px-4 py-2 w-full" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold">Role</label>
+        <input type="text" disabled value="Admin" class="border px-4 py-2 bg-gray-100 rounded-lg w-full" />
+      </div>
+
+      <button class="bg-primary text-white px-6 py-2 rounded-lg mt-4">
+        Save Changes
+      </button>
+
+      <button 
+        (click)="openChangePassword()"
+        class="text-primary underline">
+        Change Password
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- PASSWORD MODAL -->
+  <app-change-password 
+    *ngIf="showPasswordModal"
+    (close)="closeChangePassword()">
+  </app-change-password>
+
+  <!-- PHOTO MODAL -->
+  <app-change-photo 
+    *ngIf="showPhotoModal"
+    (close)="closePhotoModal()">
+  </app-change-photo>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="bg-white p-6 rounded-xl shadow max-w-md mx-auto">
+
+  <h2 class="text-xl font-semibold mb-4">Change Profile Photo</h2>
+
+  <!-- Preview Section -->
+  <div class="flex flex-col items-center gap-4">
+
+    <img 
+      *ngIf="previewUrl; else defaultPhoto"
+      [src]="previewUrl"
+      class="w-32 h-32 rounded-full object-cover shadow"
+    />
+
+    <ng-template #defaultPhoto>
+      <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-4xl">
+        👤
+      </div>
+    </ng-template>
+
+    <!-- Upload Button -->
+    <button 
+      class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      (click)="triggerFileInput(photoInput)"
+    >
+      Upload New Photo
+    </button>
+
+    <!-- Hidden File Input -->
+    <input type="file" #photoInput class="hidden" accept="image/*"
+           (change)="onFileSelect($event)" />
+
+  </div>
+
+</div>

@@ -1,0 +1,88 @@
+/* 🌈 FILTER CHIPS */
+.filter-chip {
+    @apply px-4 py-2 rounded-full text-sm border border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all cursor-pointer shadow-sm;
+}
+
+.active-chip {
+    @apply bg-primary text-white border-primary shadow-md;
+}
+
+/* 🌟 CARD STYLE */
+.rec-card {
+    @apply p-6 bg-white border rounded-xl shadow-md transition-all cursor-pointer;
+}
+
+.rec-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ✨ SPARKLINE */
+.sparkline-container {
+    @apply h-12 rounded-xl relative overflow-hidden bg-primary/5;
+}
+
+.sparkline-fill {
+    @apply absolute inset-0 bg-primary/10;
+}
+
+.sparkline-line {
+    @apply absolute bottom-0 w-full bg-primary;
+    height: calc(var(--value) * 1%);
+    transition: height .4s ease-in-out;
+}
+
+/* ADD BUTTON */
+.add-btn {
+    @apply mt-4 w-full py-2 rounded-lg text-white bg-primary hover:bg-primary/90 transition-all;
+}
+
+/* 📌 STICKY BAR */
+.sticky-bar {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-xl transition-all duration-500 ease-out translate-y-[75%] rounded-t-2xl backdrop-blur-md;
+}
+
+
+.sticky-header {
+    @apply flex justify-between items-center cursor-pointer;
+}
+
+.sticky-scroll {
+    @apply flex gap-4 overflow-x-auto mt-4 pb-2;
+}
+
+
+.sticky-bar.open {
+    transform: translateY(0%);
+}
+
+.sticky-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* QUICK ITEMS */
+.quick-card {
+    @apply min-w-[130px] bg-gray-50 rounded-xl border p-4 shadow-sm hover:shadow-md transition;
+}
+
+.quick-add {
+    @apply mt-2 text-xs px-3 py-1 rounded bg-primary text-white;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+@keyframes sparkline {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: var(--tw-width);
+    }
+}
+
+.animate-sparkline {
+    animation: sparkline 1s ease-out forwards;
+}

@@ -1,0 +1,51 @@
+<div class="p-4">
+
+  <h2 class="text-2xl font-bold text-primary mb-6">Weekly Sales Report</h2>
+
+  <!-- Filters -->
+  <div class="flex justify-between mb-6">
+    <input 
+      type="date" 
+      class="border rounded-lg px-3 py-2"
+    />
+    <button class="bg-primary text-white px-4 py-2 rounded-lg">
+      Download Report
+    </button>
+  </div>
+
+  <!-- Chart -->
+  <div class="bg-white rounded-xl shadow p-6 mb-6">
+    <h3 class="font-semibold mb-4">Weekly Sales Chart</h3>
+    <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+      [Weekly Sales Chart Placeholder]
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h3 class="font-semibold mb-4">Daily Sales Breakdown</h3>
+
+    <table class="w-full border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-sm font-semibold">Day</th>
+          <th class="px-4 py-2 text-sm font-semibold">Total Orders</th>
+          <th class="px-4 py-2 text-sm font-semibold">Sales (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b">
+          <td class="px-4 py-2">Monday</td>
+          <td class="px-4 py-2">20</td>
+          <td class="px-4 py-2">₹ 4,200</td>
+        </tr>
+        <tr class="border-b">
+          <td class="px-4 py-2">Tuesday</td>
+          <td class="px-4 py-2">18</td>
+          <td class="px-4 py-2">₹ 3,800</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

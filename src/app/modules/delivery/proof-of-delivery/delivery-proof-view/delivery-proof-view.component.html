@@ -1,0 +1,28 @@
+<div class="p-4 max-w-md mx-auto">
+
+  <h2 class="text-lg font-semibold text-gray-800 mb-3">
+    Delivery Proof
+  </h2>
+
+  <p *ngIf="loading()" class="text-gray-500">
+    Loading proof…
+  </p>
+
+  <div *ngIf="proof()">
+
+    <img
+      [src]="proof()!.photoUrl"
+      class="rounded-lg border mb-3" />
+
+    <p class="text-sm text-gray-600">
+      Delivered at:
+      {{ proof()!.deliveredAt | date:'short' }}
+    </p>
+
+  </div>
+
+  <p *ngIf="!loading() && !proof()" class="text-gray-500">
+    No proof available
+  </p>
+
+</div>

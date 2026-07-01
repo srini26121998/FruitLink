@@ -1,0 +1,68 @@
+<div class="p-4">
+
+  <h2 class="text-2xl font-bold text-primary mb-6">Payments</h2>
+
+  <!-- Filters -->
+  <div class="flex justify-between mb-4">
+    <input 
+      type="text" 
+      placeholder="Search by order/shop..."
+      class="border rounded-lg px-3 py-2 w-1/2"
+    />
+
+    <select class="border rounded-lg px-3 py-2">
+      <option>All</option>
+      <option>Success</option>
+      <option>Pending</option>
+      <option>Failed</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white p-6 rounded-xl shadow">
+
+    <table class="w-full border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-sm font-semibold">Payment ID</th>
+          <th class="px-4 py-2 text-sm font-semibold">Order ID</th>
+          <th class="px-4 py-2 text-sm font-semibold">Shop</th>
+          <th class="px-4 py-2 text-sm font-semibold">Amount</th>
+          <th class="px-4 py-2 text-sm font-semibold">Status</th>
+          <th class="px-4 py-2 text-sm font-semibold">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="border-b">
+          <td class="px-4 py-2">PAY101</td>
+          <td class="px-4 py-2">#ORD1001</td>
+          <td class="px-4 py-2">Juice Hub</td>
+          <td class="px-4 py-2">₹ 1,250</td>
+          <td class="px-4 py-2">
+            <span class="bg-green-100 text-green-600 px-2 py-1 text-xs rounded">Success</span>
+          </td>
+          <td class="px-4 py-2">
+            <a routerLink="/payments/details" class="text-primary hover:underline text-sm">View</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="px-4 py-2">PAY102</td>
+          <td class="px-4 py-2">#ORD1002</td>
+          <td class="px-4 py-2">Cool Sip Station</td>
+          <td class="px-4 py-2">₹ 980</td>
+          <td class="px-4 py-2">
+            <span class="bg-yellow-100 text-yellow-600 px-2 py-1 text-xs rounded">Pending</span>
+          </td>
+          <td class="px-4 py-2">
+            <a routerLink="/payments/details" class="text-primary hover:underline text-sm">View</a>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

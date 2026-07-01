@@ -1,0 +1,15 @@
+<input type="text" class="border p-2 rounded w-full"
+       placeholder="Search product..."
+       [value]="search()"
+       (input)="search.set($any($event.target).value)" />
+
+@if(search().length>0){
+<div class="border p-2 shadow rounded bg-white absolute w-56 max-h-48 overflow-auto">
+  @for(p of filtered(); track p.id){
+  <div class="p-2 hover:bg-gray-200 cursor-pointer"
+       (click)="pick(p.id)">
+    {{ p.name }}
+  </div>
+  }
+</div>
+}

@@ -1,0 +1,70 @@
+<div class="p-4 space-y-6">
+
+  <div class="flex justify-between items-center">
+    <h1 class="text-xl font-semibold text-gray-800">
+      Delivery Ops Dashboard
+    </h1>
+
+    <button
+      class="text-sm px-3 py-1 rounded text-white
+             bg-[var(--primary-color)]"
+      (click)="refresh()">
+      Refresh
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <p *ngIf="loading()" class="text-gray-500">
+    Loading live status…
+  </p>
+
+  <!-- KPI Cards -->
+  <div *ngIf="snapshot()" class="grid grid-cols-2 md:grid-cols-5 gap-3">
+
+    <div class="kpi-card">
+      <p class="kpi-value">{{ snapshot()!.pendingDispatch }}</p>
+      <p class="kpi-label">Pending Dispatch</p>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-value">{{ snapshot()!.outForDelivery }}</p>
+      <p class="kpi-label">Out for Delivery</p>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-value">{{ snapshot()!.deliveredToday }}</p>
+      <p class="kpi-label">Delivered Today</p>
+    </div>
+
+    <div class="kpi-card text-red-600">
+      <p class="kpi-value">{{ snapshot()!.delayedDeliveries }}</p>
+      <p class="kpi-label">Delayed</p>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-value">{{ snapshot()!.activeDrivers }}</p>
+      <p class="kpi-label">Active Drivers</p>
+    </div>
+
+  </div>
+
+  <!-- Alerts -->
+  <div *ngIf="snapshot()">
+    <h2 class="text-sm font-semibold text-gray-700 mb-2">
+      Alerts
+    </h2>
+
+    <div
+      *ngFor="let alert of snapshot()!.alerts"
+      class="p-3 rounded border mb-2"
+      [class.border-red-400]="alert.severity === 'HIGH'"
+      [class.border-yellow-400]="alert.severity === 'MEDIUM'">
+
+      <p class="text-sm text-gray-800">
+        {{ alert.message }}
+      </p>
+
+    </div>
+  </div>
+
+</div>

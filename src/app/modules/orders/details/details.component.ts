@@ -1,0 +1,74 @@
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { OrderAdminService } from '../services/order-admin.service';
+
+@Component({
+  selector: 'app-order-details',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './details.component.html'
+})
+export class OrderDetailsComponent {
+  private route = inject(ActivatedRoute);
+  private admin = inject(OrderAdminService);
+
+  orderId = this.route.snapshot.paramMap.get('id')!;
+  order = this.admin.getOrderById(this.orderId);
+  logs = this.admin.getOrderLogs(this.orderId);
+  statuses = this.admin.statuses;
+
+  // --------- SAFE TOTAL CALCULATIONS (NO HTML reduce) ----------
+
+  get hasItems(): boolean {
+    return !!this.order && Array.isArray(this.order.items) && this.order.items.length > 0;
+  }
+
+  get subtotal(): number {
+    if (!this.hasItems) return 0;
+    return this.order.items.reduce((total: number, item: any) => {
+      return total + (item.lineTotal ?? 0);
+    }, 0);
+  }
+
+  get gst(): number {
+    return this.subtotal * 0.05;
+  }
+
+  get discount(): number {
+    return this.order?.discount ?? 0;
+  }
+
+  get payable(): number {
+    return this.subtotal + this.gst - this.discount;
+  }
+
+  // ------------------------------------------------------------
+
+  advance() {
+    if (!this.order) return;
+    if (this.order.status < 5) {
+      this.admin.updateOrderStatus(this.order.id, this.order.status + 1);
+      this.order = this.admin.getOrderById(this.orderId);
+
+      this.logs.push({
+        text: this.statuses[this.order.status],
+        by: 'Admin',
+        time: new Date().toLocaleString()
+      });
+    }
+  }
+
+  changeStatus(event: any) {
+    if (!this.order) return;
+    const newStatus = parseInt(event.target.value, 10);
+    this.admin.updateOrderStatus(this.order.id, newStatus);
+    this.order = this.admin.getOrderById(this.orderId);
+
+    this.logs.push({
+      text: 'Status manually updated to ' + this.statuses[newStatus],
+      by: 'Admin',
+      time: new Date().toLocaleString()
+    });
+  }
+}

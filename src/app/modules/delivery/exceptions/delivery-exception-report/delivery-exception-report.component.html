@@ -1,0 +1,40 @@
+<div class="p-4 space-y-4 max-w-md mx-auto">
+
+  <h2 class="text-lg font-semibold">
+    Delivery Exception
+  </h2>
+
+  <select
+    class="w-full border rounded p-2"
+    (change)="reason.set($any($event.target).value)">
+    <option value="">Select reason</option>
+    <option value="SHOP_CLOSED">Shop Closed</option>
+    <option value="CUSTOMER_UNAVAILABLE">Customer Unavailable</option>
+    <option value="PAYMENT_ISSUE">Payment Issue</option>
+    <option value="ADDRESS_NOT_FOUND">Address Not Found</option>
+  </select>
+
+  <textarea
+    class="w-full border rounded p-2"
+    placeholder="Additional notes"
+    (input)="notes.set($any($event.target).value)">
+  </textarea>
+
+  <button
+    class="w-full action-btn bg-red-600"
+    (click)="submitException()"
+    [disabled]="loading()">
+
+    Report Exception
+
+  </button>
+
+  <p *ngIf="success()" class="text-green-600 text-sm text-center">
+    Exception reported successfully
+  </p>
+
+  <p *ngIf="error()" class="text-red-600 text-sm text-center">
+    {{ error() }}
+  </p>
+
+</div>

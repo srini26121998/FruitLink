@@ -1,0 +1,126 @@
+<div class="max-w-3xl mx-auto bg-white shadow p-6 rounded-lg print:p-0 print:shadow-none print:m-0">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center pb-4 border-b">
+      <div>
+        <h1 class="text-xl font-bold text-green-700">FruitLink Wholesale Invoice</h1>
+        <p class="text-xs text-gray-600">Fresh Fruits & Vegetables Supplier</p>
+      </div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded print:hidden"
+              (click)="printInvoice()">🖨 Print / Save PDF</button>
+  </div>
+
+  <!-- Business Details -->
+  <div class="mt-4 text-sm leading-5">
+    <p><b>Company:</b> FruitLink Distributors</p>
+    <p><b>Phone:</b> +91 98765 43210</p>
+    <p><b>Address:</b> Chennai – Koyambedu Market</p>
+  </div>
+
+  <!-- Customer -->
+  <div class="mt-4 text-sm bg-gray-50 p-4 rounded">
+    <p><b>Shop:</b> {{ order.shopName ?? 'N/A' }}</p>
+    <p><b>Delivery Address:</b> {{ order.address ?? 'N/A' }}</p>
+    <p><b>Mobile:</b> {{ order.mobile ?? '-' }}</p>
+    <p><b>Delivery Boy:</b> {{ order.deliveryBoy ?? '-' }}</p>
+  </div>
+
+  <!-- Details -->
+  <div class="grid grid-cols-2 gap-3 text-sm mt-4">
+    <p><b>Invoice No:</b> {{ order.orderId }}</p>
+    <p><b>Date:</b> {{ order.date | date:'medium' }}</p>
+    <p><b>Payment Mode:</b> {{ order.payment }}</p>
+    <p><b>Delivery Slot:</b> {{ order.slot }}</p>
+  </div>
+
+  <!-- Items -->
+  <table class="w-full mt-6 border text-sm">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="p-2 border w-40">Item</th>
+        <th class="p-2 border w-20 text-right">Qty</th>
+        <th class="p-2 border w-20 text-right">Rate/Kg</th>
+        <th class="p-2 border w-28 text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(item of order.items; track item.id){
+      <tr>
+        <td class="border p-2">{{ item.name }}</td>
+        <td class="border p-2 text-right">{{ item.qty }} {{ item.unitLabel }}</td>
+        <td class="border p-2 text-right">₹ {{ item.pricePerKg }}</td>
+        <td class="border p-2 text-right font-semibold">₹ {{ item.lineTotal }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Totals -->
+  <div class="mt-6 text-sm space-y-1">
+    <div class="flex justify-between"><span>Total Quantity</span> <b>{{ totalQty }} Kg</b></div>
+
+    <!-- Optional future pricing -->
+    <div class="flex justify-between" *ngIf="order?.pricing?.delivery > 0">
+      <span>Delivery Charge</span> <span>₹ {{ order.pricing.delivery }}</span>
+    </div>
+
+    <div class="flex justify-between" *ngIf="order?.pricing?.tax > 0">
+      <span>Tax</span> <span>₹ {{ order.pricing.tax }}</span>
+    </div>
+
+    <div class="flex justify-between text-lg font-bold border-t pt-2">
+      <span>Grand Total</span> <span>₹ {{ order.pricing.total }}</span>
+    </div>
+
+    <!-- Credit Mode Support -->
+    <div class="flex justify-between text-red-600" *ngIf="order.payment=='Credit'">
+      <span>Outstanding Balance</span> <b>₹ {{ order.outstanding ?? 0 }}</b>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="text-center mt-6 print:mt-4">
+    <p class="font-semibold mb-1">Scan & Pay (UPI)</p>
+    <img src="assets/upi-qr.png" class="h-32 mx-auto border p-2 rounded">
+  </div>
+
+  <!-- Terms -->
+  <div class="mt-6 text-xs text-center text-gray-600 leading-5">
+    <p>No GST applicable on Fresh Fruits & Vegetables</p>
+    <p>Payment within 7 days for credit purchases.</p>
+    <p>Contact support for billing issues within 24 hrs.</p>
+  </div>
+
+  <!-- Payment/Ledger Options -->
+<div class="print:hidden mt-5 flex gap-3">
+  <button class="bg-blue-600 text-white px-4 py-2 rounded"
+          (click)="downloadPDF()">⬇ Download PDF</button>
+
+  <button class="bg-green-600 text-white px-4 py-2 rounded"
+          (click)="printInvoice()">🖨 Print</button>
+
+  <!-- 🔥 Add Payment Entry Ledger Button -->
+  <button class="bg-yellow-600 text-white px-4 py-2 rounded"
+          (click)="openPaymentModal()">➕ Add Payment</button>
+</div>
+
+<!-- Modal -->
+@if(showModal){
+  <app-ledger-payment-modal 
+      [invoiceId]="order.orderId" 
+      [outstanding]="order.pricing.total"
+      (close)="showModal=false"
+      (paymentAdded)="savePayment($event)">
+  </app-ledger-payment-modal>
+}
+
+
+  <!-- Signature -->
+  <div class="flex justify-end mt-10 pr-10 print:mt-6">
+    <div class="text-right">
+      <div class="border-b border-gray-500 w-40 mx-auto"></div>
+      <p class="text-sm mt-1">Authorized Signature</p>
+    </div>
+  </div>
+
+</div>

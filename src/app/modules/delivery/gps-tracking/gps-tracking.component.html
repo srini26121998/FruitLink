@@ -1,0 +1,154 @@
+<div class="p-4 md:p-6 bg-gray-50 min-h-screen">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+      GPS Tracking & Live Dispatch
+    </h2>
+    <div class="text-sm text-gray-500 bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+      </span>
+      System Active
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-160px)] min-h-[600px]">
+    
+    <!-- LEFT: Driver List (Sidebar) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full overflow-hidden">
+      <div class="p-4 border-b border-gray-100 bg-gray-50/50">
+        <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-3">Active Fleet ({{locations().length}})</h3>
+        <!-- Search/Filter Placeholder -->
+        <div class="relative">
+          <input type="text" placeholder="Search drivers..." class="w-full text-sm pl-9 pr-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar">
+        <div 
+          *ngFor="let d of locations()" 
+          class="relative p-3 rounded-xl border transition-all duration-200 cursor-pointer group"
+          [ngClass]="{'border-primary bg-primary/5 shadow-md': selectedDriver()?.driver === d.driver, 'border-transparent hover:border-gray-200 hover:bg-gray-50': selectedDriver()?.driver !== d.driver}"
+          (click)="selectDriver(d)"
+        >
+          <div class="flex items-start justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-200 flex items-center justify-center font-bold text-gray-600 shadow-inner shrink-0">
+                {{d.driver.charAt(0)}}
+              </div>
+              <div>
+                <div class="font-semibold text-gray-800 text-sm leading-tight">{{ d.driver }}</div>
+                <div class="flex items-center gap-1.5 mt-1">
+                  <span class="w-1.5 h-1.5 rounded-full" 
+                    [ngClass]="{
+                      'bg-green-500': d.status === 'Delivering' || d.status === 'On Delivery',
+                      'bg-yellow-500': d.status === 'Idle'
+                    }"></span>
+                  <span class="text-xs text-gray-500 font-medium">{{ d.status }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- Arrow icon for selection indication -->
+            <svg class="w-4 h-4 text-primary opacity-0 -translate-x-2 transition-all duration-300" [ngClass]="{'opacity-100 translate-x-0': selectedDriver()?.driver === d.driver, 'group-hover:opacity-50 group-hover:translate-x-0': selectedDriver()?.driver !== d.driver}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Map Section -->
+    <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-gray-100 h-full relative overflow-hidden flex flex-col">
+      
+      <!-- Top Bar of Map -->
+      <div class="absolute top-4 left-4 right-4 z-10 flex gap-4 pointer-events-none">
+        
+        <div *ngIf="selectedDriver()" class="bg-white/95 backdrop-blur-md px-5 py-3 rounded-xl shadow-lg border border-gray-100 pointer-events-auto flex items-center gap-4 animate-fade-in flex-1">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <div>
+            <div class="text-xs text-gray-500 font-medium uppercase tracking-wider">Tracking Agent</div>
+            <div class="font-bold text-gray-800 text-lg leading-tight">{{ selectedDriver()?.driver }}</div>
+          </div>
+          
+          <div class="ml-auto flex items-center gap-6">
+            <div class="text-right hidden sm:block">
+              <div class="text-xs text-gray-500 font-medium">Status</div>
+              <div class="font-semibold text-green-600 text-sm">{{ selectedDriver()?.status }}</div>
+            </div>
+            <div class="h-8 w-px bg-gray-200 hidden sm:block"></div>
+            <div class="text-right hidden sm:block">
+              <div class="text-xs text-gray-500 font-medium">Coordinates</div>
+              <div class="font-mono text-xs text-gray-700">{{ selectedDriver()?.lat | number:'1.4-4' }}, {{ selectedDriver()?.lng | number:'1.4-4' }}</div>
+            </div>
+            <button class="bg-primary hover:bg-primary/90 text-white p-2 rounded-lg transition-colors shadow-sm focus:ring-2 focus:ring-primary/50 focus:outline-none">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="!selectedDriver()" class="bg-white/95 backdrop-blur-md px-6 py-4 rounded-xl shadow-lg border border-gray-100 pointer-events-auto flex items-center gap-3 animate-pulse">
+           <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+           <span class="text-sm font-medium text-gray-600">Select a driver from the list to begin live tracking.</span>
+        </div>
+      </div>
+
+      <!-- Map Background Pattern / Placeholder -->
+      <div class="flex-1 w-full bg-slate-100 relative map-grid-pattern">
+        
+        <!-- Animated Radar/GPS Marker for selected driver -->
+        <div *ngIf="selectedDriver()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          
+          <div class="relative flex items-center justify-center">
+            <!-- Pulsing rings -->
+            <div class="absolute w-32 h-32 bg-primary/20 rounded-full animate-ping-slow"></div>
+            <div class="absolute w-16 h-16 bg-primary/30 rounded-full animate-pulse"></div>
+            
+            <!-- Pin -->
+            <div class="relative z-10 w-10 h-10 -mt-10">
+              <svg class="w-10 h-10 text-primary drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full mt-[-6px]"></div>
+            </div>
+
+            <!-- Agent tag below pin -->
+            <div class="absolute top-4 bg-white px-2 py-1 rounded shadow-md border border-gray-100 text-xs font-bold text-gray-700 whitespace-nowrap z-20">
+              {{ selectedDriver()?.driver }}
+            </div>
+          </div>
+          
+        </div>
+
+        <div *ngIf="!selectedDriver()" class="absolute inset-0 flex items-center justify-center text-gray-400">
+           <!-- Subtle background element when empty -->
+           <svg class="w-32 h-32 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+        </div>
+      </div>
+      
+      <!-- Bottom UI Bar on Map (e.g., Timeline or Stats) -->
+      <div *ngIf="selectedDriver()" class="h-20 bg-white border-t border-gray-100 flex items-center justify-between px-6 z-10">
+        <div class="flex gap-8">
+           <div>
+             <div class="text-[10px] uppercase text-gray-400 font-bold tracking-wider mb-1">Estimated Arrival</div>
+             <div class="text-sm font-semibold text-gray-800">14 Mins</div>
+           </div>
+           <div>
+             <div class="text-[10px] uppercase text-gray-400 font-bold tracking-wider mb-1">Distance Left</div>
+             <div class="text-sm font-semibold text-gray-800">3.2 km</div>
+           </div>
+           <div>
+             <div class="text-[10px] uppercase text-gray-400 font-bold tracking-wider mb-1">Current Speed</div>
+             <div class="text-sm font-semibold text-gray-800">45 km/h</div>
+           </div>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button routerLink="/delivery/route-optimization" class="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">Route Details</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

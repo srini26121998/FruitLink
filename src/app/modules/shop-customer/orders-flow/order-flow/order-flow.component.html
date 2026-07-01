@@ -1,0 +1,20 @@
+<div class="bg-white p-4 rounded-xl shadow mb-6 sticky top-0 z-10">
+  <app-order-stepper 
+    [steps]="['Products','Cart','Delivery','Payment','Confirm']" 
+    [step]="step">
+  </app-order-stepper>
+</div>
+
+<div class="animate-[fade_.3s_ease-in-out]">
+
+  @if(step===1){ <app-shop-products-step (next)="next($event)"/> }
+
+  @if(step===2){ <app-shop-cart-step (next)="next()" (back)="back()"/> }
+
+  @if(step===3){ <app-shop-delivery-step (next)="next($event)" (back)="back()"/> }
+
+  @if(step===4){ <app-shop-payment-step (next)="next($event)" (back)="back()"/> }
+
+  @if(step===5){ <app-shop-confirm-step [fullData]="data"/> }
+
+</div>

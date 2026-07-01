@@ -1,0 +1,89 @@
+<div class="p-6 space-y-10">
+
+  <!-- HEADER -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-bold">Inventory Analytics</h2>
+
+    <!-- Filters -->
+    <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+      @for (f of filterOptions; track f) {
+        <button
+          (click)="setFilter(f)"
+          [ngClass]="filter() === f
+            ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
+            : 'px-4 py-2 rounded-lg hover:bg-white'"
+        >
+          {{ f | titlecase }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- KPI SUMMARY -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Total Items</p>
+      <h2 class="text-2xl font-bold">{{ summary().totalItems }}</h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Low Stock</p>
+      <h2 class="text-2xl font-bold text-amber-600">{{ summary().lowStock }}</h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Out of Stock</p>
+      <h2 class="text-2xl font-bold text-red-600">{{ summary().outOfStock }}</h2>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Stock Value</p>
+      <h2 class="text-2xl font-bold text-green-600">₹{{ summary().stockValue }}</h2>
+    </div>
+  </div>
+
+  <!-- STOCK LEVEL CHART -->
+  <div class="card">
+    <h3 class="font-semibold mb-3">Stock Levels</h3>
+    <apx-chart
+      [series]="stockChart().series"
+      [chart]="stockChart().chart"
+      [xaxis]="stockChart().xaxis"
+    ></apx-chart>
+  </div>
+
+  <!-- CATEGORY + RESTOCK TREND -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="card">
+      <h3 class="font-semibold mb-3">Stock By Category</h3>
+      <apx-chart
+        [series]="categoryChart().series"
+        [chart]="categoryChart().chart"
+        [labels]="categoryChart().labels"
+      ></apx-chart>
+    </div>
+
+    <div class="card">
+      <h3 class="font-semibold mb-3">Restock Trend</h3>
+      <apx-chart
+        [series]="restockChart().series"
+        [chart]="restockChart().chart"
+        [xaxis]="restockChart().xaxis"
+      ></apx-chart>
+    </div>
+
+  </div>
+
+  <!-- WAREHOUSE DISTRIBUTION -->
+  <div class="card">
+    <h3 class="font-semibold mb-3">Warehouse Distribution</h3>
+    <apx-chart
+      [series]="warehouseChart().series"
+      [chart]="warehouseChart().chart"
+      [xaxis]="warehouseChart().xaxis"
+    ></apx-chart>
+  </div>
+
+</div>

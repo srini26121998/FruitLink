@@ -1,0 +1,155 @@
+/* ---------------------------------------------------------
+   GLOBAL ANIMATIONS
+--------------------------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slideUp {
+  animation: slideUp 0.35s ease-out;
+}
+
+@keyframes pulseScale {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.animate-pulseScale {
+  animation: pulseScale 0.9s infinite ease-in-out;
+}
+
+/* ---------------------------------------------------------
+   STICKY CART + STICKY RECOMMENDATIONS BAR
+--------------------------------------------------------- */
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  animation: slideUp 0.35s ease-out;
+}
+
+/* Recommendation horizontal bar */
+.sticky-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  scrollbar-width: none;
+}
+.sticky-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------------------------------------------------------
+   RECOMMENDATION CARDS
+--------------------------------------------------------- */
+.recommend-card {
+  min-width: 180px;
+  max-width: 200px;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.25s ease;
+}
+.recommend-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* Confidence Badge */
+.confidence-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* High-Medium-Low confidence colors */
+.conf-high { background: #16a34a25; color: #15803d; }
+.conf-mid { background: #0ea5e925; color: #0369a1; }
+.conf-low { background: #f59e0b25; color: #b45309; }
+
+/* ---------------------------------------------------------
+   ADD BUTTON / QTY BUTTONS
+--------------------------------------------------------- */
+.add-btn {
+  transition: all 0.25s ease;
+}
+.add-btn:active {
+  transform: scale(0.95);
+}
+
+/* ---------------------------------------------------------
+   SEARCH HIGHLIGHT
+--------------------------------------------------------- */
+.highlight {
+  background-color: #fde047;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ---------------------------------------------------------
+   SKELETON LOADERS FOR RECOMMENDATIONS
+--------------------------------------------------------- */
+.skeleton-box {
+  background: linear-gradient(90deg, #e5e7eb 0%, #f3f4f6 50%, #e5e7eb 100%);
+  background-size: 200%;
+  animation: skeletonLoading 1.2s infinite ease;
+}
+
+@keyframes skeletonLoading {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+.skeleton-card {
+  width: 170px;
+  height: 120px;
+  border-radius: 12px;
+}
+
+/* ---------------------------------------------------------
+   MOBILE RESPONSIVENESS
+--------------------------------------------------------- */
+@media (max-width: 768px) {
+  .recommend-card {
+    min-width: 150px;
+    max-width: 170px;
+  }
+
+  .sticky-bar {
+    padding: 0.8rem 1rem;
+  }
+
+  .quick-action-btn {
+    padding: 0.6rem 1rem;
+    font-size: 15px;
+  }
+}
+
+/* ---------------------------------------------------------
+   REPEAT ORDER ITEM ROW HOVER
+--------------------------------------------------------- */
+.item-row:hover {
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+/* Yellow hover animation for smart recommendation */
+.smart-highlight {
+  background: #fffbeb;
+  animation: fadeIn 0.4s ease-out;
+}

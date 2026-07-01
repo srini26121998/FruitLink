@@ -1,0 +1,75 @@
+<div class="p-5 max-w-3xl mx-auto">
+
+  <h2 class="text-2xl font-bold mb-5">Support</h2>
+
+  <!-- Support Form -->
+  <div class="bg-white p-6 rounded-xl shadow mb-8">
+
+    <h3 class="text-lg font-semibold mb-4">Raise a Support Ticket</h3>
+
+    <!-- Subject -->
+    <select [(ngModel)]="subject"
+            class="border w-full p-3 rounded-lg mb-4">
+      <option value="">Select Subject</option>
+      <option value="Delivery Issue">Delivery Issue</option>
+      <option value="Payment Issue">Payment Issue</option>
+      <option value="Quality Issue">Product Quality Issue</option>
+      <option value="General Help">General Help</option>
+    </select>
+
+    <!-- Message -->
+    <textarea [(ngModel)]="message"
+              rows="4"
+              placeholder="Describe your issue here..."
+              class="border w-full p-3 rounded-lg mb-4"></textarea>
+
+    <!-- File Upload -->
+    <input type="file"
+           (change)="onFileSelect($event)"
+           class="mb-4">
+
+    <!-- Submit -->
+    <button
+      (click)="submitTicket()"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-bold w-full py-3 rounded-lg">
+      Submit Ticket
+    </button>
+
+  </div>
+
+  <!-- Ticket List -->
+  <div class="bg-white p-6 rounded-xl shadow">
+
+    <h3 class="text-lg font-semibold mb-4">Your Tickets</h3>
+
+    <div *ngIf="ticketList.length === 0" class="text-gray-500">
+      No previous support tickets found.
+    </div>
+
+    <div *ngFor="let t of ticketList"
+         class="border-b py-4">
+
+      <div class="flex justify-between items-center mb-2">
+        <h4 class="font-semibold">{{ t.subject }}</h4>
+
+        <!-- Status Badge -->
+        <span class="px-3 py-1 rounded-full text-sm font-semibold"
+          [class.bg-yellow-100]="t.status == 'Pending'"
+          [class.text-yellow-700]="t.status == 'Pending'"
+          [class.bg-green-100]="t.status == 'Resolved'"
+          [class.text-green-700]="t.status == 'Resolved'">
+          {{ t.status }}
+        </span>
+      </div>
+
+      <p class="text-gray-600 text-sm">{{ t.message }}</p>
+
+      <p class="text-gray-400 text-xs mt-2">
+        {{ t.date | date:'medium' }}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

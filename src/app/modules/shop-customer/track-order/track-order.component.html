@@ -1,0 +1,50 @@
+<div class="p-6 space-y-6 max-w-2xl mx-auto">
+
+  <h1 class="text-3xl font-bold text-center">Track Your Order</h1>
+
+  <p class="text-center text-gray-600">
+    Order ID: <span class="font-semibold">{{ orderId }}</span>
+  </p>
+<div class="mt-8 space-y-6">
+
+  @for (s of statusFlow; let i = index; track i) {
+
+    <div class="flex items-center gap-4">
+
+      <div class="w-6 h-6 rounded-full flex items-center justify-center
+        text-white text-sm"
+        [ngClass]="{
+          'bg-green-600': current() >= i,
+          'bg-gray-400': current() < i
+        }">
+        {{ i + 1 }}
+      </div>
+
+      <p [ngClass]="{
+        'font-semibold text-green-600': current() >= i,
+        'text-gray-500': current() < i
+      }">
+        {{ s }}
+      </p>
+    </div>
+
+  }
+
+</div>
+<div class="mt-8 bg-gray-100 h-48 rounded-xl flex items-center justify-center">
+  <p class="text-gray-500">Live GPS Map Coming Soon</p>
+</div>
+<div class="flex justify-center gap-4 mt-8">
+
+  <button class="bg-blue-600 text-white px-6 py-3 rounded-lg"
+          (click)="refresh()">
+    Refresh Status
+  </button>
+
+  <button class="bg-green-600 text-white px-6 py-3 rounded-lg"
+          routerLink="/shop/dashboard">
+    Back to Dashboard
+  </button>
+
+</div>
+</div>

@@ -1,0 +1,107 @@
+<div class="p-6 space-y-10">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-bold">Delivery Analytics</h2>
+
+    <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+      @for(option of filterOptions; track option) {
+        <button (click)="setFilter(option)"
+                class="px-4 py-2 rounded-lg"
+                [ngClass]="filter() === option ? 'bg-blue-600 text-white' : 'hover:bg-white'">
+          {{ option | titlecase }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div class="card">Total <h1>{{ summary().totalDeliveries }}</h1></div>
+    <div class="card">Delivered <h1 class="text-green-600">{{ summary().delivered }}</h1></div>
+    <div class="card">Transit <h1 class="text-amber-600">{{ summary().inTransit }}</h1></div>
+    <div class="card">Pending <h1 class="text-red-500">{{ summary().pending }}</h1></div>
+    <div class="card">Failed <h1 class="text-purple-600">{{ summary().failed }}</h1></div>
+  </div>
+
+  <!-- Performance -->
+  <div class="card">
+    <h3 class="font-semibold mb-3 text-lg">Delivery Performance</h3>
+    <apx-chart
+      [series]="deliveryChart().series"
+      [chart]="deliveryChart().chart"
+      [xaxis]="deliveryChart().xaxis">
+    </apx-chart>
+
+    <apx-chart
+      [series]="failedChart().series"
+      [chart]="failedChart().chart"
+      [xaxis]="failedChart().xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- Avg Delivery Time -->
+  <div class="card">
+    <h3 class="font-semibold mb-3 text-lg">Average Delivery Time</h3>
+    <apx-chart
+      [series]="avgTimeChart().series"
+      [chart]="avgTimeChart().chart"
+      [xaxis]="avgTimeChart().xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- City Chart -->
+  <div class="card">
+    <h3 class="font-semibold mb-3 text-lg">Deliveries by City</h3>
+
+    <!-- PIE -->
+    <apx-chart
+      [series]="cityShareChart().series"
+      [chart]="cityShareChart().chart"
+      [labels]="cityShareChart().labels">
+    </apx-chart>
+
+    <!-- BAR LIST -->
+    <div class="mt-6">
+      @for(city of cities(); track city.city) {
+        <div class="mb-2">
+          <div class="flex justify-between text-sm">
+            <span>{{ city.city }}</span>
+            <span>{{ getCityPercent(city.deliveries) }}%</span>
+          </div>
+
+          <div class="bg-gray-200 h-2 rounded">
+            <div class="bg-blue-600 h-2 rounded"
+                 [style.width.%]="getCityPercent(city.deliveries)">
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+  </div>
+
+  <!-- Drivers -->
+  <div class="card">
+    <h3 class="font-semibold mb-3 text-lg">Driver Ranking</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Completed</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(d of drivers(); track d.driver) {
+          <tr>
+            <td>{{ d.driver }}</td>
+            <td>{{ d.completed }}</td>
+            <td>{{ d.rating }} ⭐</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

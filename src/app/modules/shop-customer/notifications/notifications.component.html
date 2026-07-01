@@ -1,0 +1,52 @@
+<div class="p-5">
+
+  <h2 class="text-2xl font-bold mb-5">Notifications</h2>
+
+  <!-- Empty State -->
+  <div *ngIf="notifications.length === 0"
+       class="text-center text-gray-500 text-lg">
+    No notifications yet.
+  </div>
+
+  <!-- Notification List -->
+  <div class="space-y-4" *ngIf="notifications.length > 0">
+
+    <div 
+      *ngFor="let n of notifications"
+      class="p-4 rounded-xl shadow bg-white flex items-start gap-4 border-l-4"
+      [class.border-blue-500]="n.type == 'order'"
+      [class.border-green-500]="n.type == 'payment'"
+      [class.border-yellow-500]="n.type == 'delivery'"
+      [class.opacity-70]="n.read">
+
+      <!-- Icon -->
+      <div>
+        <div 
+          class="w-10 h-10 rounded-full flex items-center justify-center text-white"
+          [class.bg-blue-500]="n.type == 'order'"
+          [class.bg-green-500]="n.type == 'payment'"
+          [class.bg-yellow-500]="n.type == 'delivery'">
+          <span class="text-xl">
+            <!-- simple emoji icons -->
+            {{ n.type == 'order' ? '📦' : '' }}
+            {{ n.type == 'payment' ? '💳' : '' }}
+            {{ n.type == 'delivery' ? '🚚' : '' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Notification Content -->
+      <div class="flex-1">
+        <h4 class="text-lg font-semibold">{{ n.title }}</h4>
+        <p class="text-gray-600">{{ n.message }}</p>
+
+        <p class="text-gray-400 text-sm mt-1">
+          {{ n.time }}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

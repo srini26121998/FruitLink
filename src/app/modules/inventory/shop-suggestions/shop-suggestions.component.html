@@ -1,0 +1,34 @@
+<div class="p-6 space-y-6">
+
+  <h1 class="text-3xl font-bold">Suggested Refill Items</h1>
+  <p class="text-gray-600">Based on your last week orders.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    @for (s of suggestion.suggestions(); track s.itemId) {
+
+    <div class="p-4 rounded-xl shadow bg-white border">
+
+      <h2 class="text-xl font-bold capitalize">
+        {{ getItemName(s.itemId) }}
+      </h2>
+
+      <p class="text-gray-600 mb-2">Suggested: <b>{{ s.suggestedQty }}</b> kg</p>
+
+      <span class="px-3 py-1 rounded text-sm" [ngClass]="{
+                'bg-green-100 text-green-700': s.trend === 'up',
+                'bg-red-100 text-red-700': s.trend === 'down',
+                'bg-gray-100 text-gray-700': s.trend === 'stable'
+              }">
+        {{ s.trend | uppercase }}
+      </span>
+
+      <button class="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-lg">
+        Add to Cart
+      </button>
+    </div>
+
+    }
+  </div>
+
+</div>

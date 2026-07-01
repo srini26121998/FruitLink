@@ -1,0 +1,39 @@
+<div class="p-4 space-y-4">
+
+  <h2 class="text-lg font-semibold">
+    Delivery Exceptions
+  </h2>
+
+  <p *ngIf="loading()" class="text-sm text-gray-500">
+    Loading exceptions…
+  </p>
+
+  <div
+    *ngFor="let exception of exceptions()"
+    class="border rounded p-3 space-y-1">
+
+    <p class="font-semibold text-red-600">
+      {{ exception.reason }}
+    </p>
+
+    <p class="text-sm text-gray-700">
+      Order ID: {{ exception.orderId }}
+    </p>
+
+    <p class="text-xs text-gray-500">
+      Reported:
+      {{ exception.reportedAt | date:'short' }}
+    </p>
+
+    <span
+      class="inline-block text-xs px-2 py-0.5 rounded"
+      [class.bg-yellow-100]="!exception.resolved"
+      [class.bg-green-100]="exception.resolved">
+
+      {{ exception.resolved ? 'Resolved' : 'Pending' }}
+
+    </span>
+
+  </div>
+
+</div>

@@ -1,0 +1,156 @@
+<div class="p-6 space-y-10" id="product-analytics-screen">
+
+  <!-- HEADER -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-xl font-bold">Product Analytics</h2>
+
+    <div class="flex gap-3 items-center">
+
+      <!-- Filter Buttons -->
+      <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
+        @for(opt of filterOptions; track opt){
+          <button (click)="setFilter(opt)"
+            [ngClass]="filter()==opt 
+              ? 'bg-blue-600 text-white px-4 py-2 rounded-lg' 
+              : 'px-4 py-2 rounded-lg hover:bg-white'">
+            {{ opt | titlecase }}
+          </button>
+        }
+      </div>
+
+      <!-- Export Buttons -->
+      <button class="px-4 py-2 bg-green-600 text-white rounded" (click)="exportExcel()">
+        Excel
+      </button>
+      <button class="px-4 py-2 border rounded" (click)="exportPDF()">
+        PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI SUMMARY -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <kpi-card label="Total Products"
+              [value]="summary().totalProducts"
+              [previous]="120">
+    </kpi-card>
+
+    <kpi-card label="Low Stock Items"
+              [value]="summary().lowStockCount"
+              textColor="text-red-600">
+    </kpi-card>
+
+    <kpi-card label="Top Selling Product"
+              [value]="summary().highestSelling">
+    </kpi-card>
+
+    <kpi-card label="Top Revenue Product"
+              [value]="summary().topRevenueProduct">
+    </kpi-card>
+
+  </div>
+
+  <!-- CATEGORY PIE CHART -->
+  <div class="card">
+    <h3 class="font-semibold mb-4 text-lg">Category Share</h3>
+
+    <apx-chart
+      [chart]="categoryChart().chart"
+      [series]="categoryChart().series"
+      [labels]="categoryChart().labels">
+    </apx-chart>
+  </div>
+
+  <!-- MONTHLY REVENUE TREND -->
+  <div class="card">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold text-lg">Monthly Revenue Trend</h3>
+      <span class="text-xs text-gray-500">Mock Data • API later</span>
+    </div>
+
+    <apx-chart 
+      [chart]="revenueTrendChart().chart"
+      [series]="revenueTrendChart().series"
+      [xaxis]="revenueTrendChart().xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- REVENUE HEATMAP -->
+  <div class="card">
+    <h3 class="font-semibold text-lg mb-4">Revenue Heatmap</h3>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      @for(h of heatmap(); track h.category){
+      <div class="p-4 rounded text-white text-center shadow"
+           [style.background]="h.revenue>40000?'#1e3a8a':h.revenue>30000?'#2563eb':
+                              h.revenue>20000?'#3b82f6':'#60a5fa'">
+        <h4 class="font-bold">{{h.category}}</h4>
+        <p>₹{{h.revenue}}</p>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- TOP SELLING PRODUCTS -->
+  <div class="card">
+    
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold text-lg">Top Selling Products</h3>
+
+      <input placeholder="Search product…"
+             (input)="search.set($any($event.target).value)"
+             class="px-3 py-1 border rounded text-sm w-40">
+    </div>
+
+    <table class="table w-full">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty Sold</th>
+          <th>Revenue</th>
+          <th>Profit%</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(p of filteredProducts(); track p.name){
+        <tr>
+          <td>{{p.name}}</td>
+          <td>{{p.quantity}}</td>
+          <td>₹{{p.revenue}}</td>
+          <td>{{p.profitMargin}}%</td>
+        </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+
+  <!-- STOCK STATUS -->
+  <div class="card">
+    <h3 class="font-semibold text-lg mb-4">Stock Status</h3>
+
+    <table class="table">
+      <thead>
+        <tr><th>Fruit</th><th>Available</th><th>Reorder at</th><th>Status</th></tr>
+      </thead>
+
+      <tbody>
+        @for(s of stockStatus(); track s.fruit){
+        <tr>
+          <td>{{s.fruit}}</td>
+          <td>{{s.inStock}}</td>
+          <td>{{s.reorderLevel}}</td>
+
+          <td [ngClass]="s.inStock <= s.reorderLevel ? 'text-red-600' : 'text-green-600'">
+            {{ s.inStock <= s.reorderLevel ? 'Reorder Needed' : 'Good' }}
+          </td>
+        </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

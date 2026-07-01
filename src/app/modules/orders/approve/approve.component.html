@@ -1,0 +1,24 @@
+<div class="p-4">
+
+  <h2 class="text-2xl font-bold text-primary mb-6">Approve / Reject Order</h2>
+
+  <div class="bg-white p-6 rounded-xl shadow max-w-xl">
+
+    <div class="mb-4">
+      <p class="font-semibold">Order ID: <span class="text-primary">#ORD1201</span></p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex gap-4">
+      <button class="bg-green-600 text-white px-4 py-2 rounded-lg" (click)="approve()">
+        Approve Order
+      </button>
+
+      <button class="bg-red-600 text-white px-4 py-2 rounded-lg" (click)="reject()">
+        Reject Order
+      </button>
+    </div>
+
+  </div>
+
+</div>

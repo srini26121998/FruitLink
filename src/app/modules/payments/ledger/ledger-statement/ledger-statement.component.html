@@ -1,0 +1,63 @@
+<div class="p-6 space-y-6">
+
+  <div class="flex items-center gap-3">
+    <button (click)="goBack()" title="Go Back" class="p-1.5 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors shadow-sm border border-gray-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+    </button>
+    <h1 class="text-xl font-bold text-green-700 mb-0">Ledger Statement</h1>
+  </div>
+  <p class="text-gray-500">Customer: <b>{{ customer.name }}</b> ({{ shopId }})</p>
+
+  <div class="bg-white p-4 rounded-xl shadow">
+    <p class="text-sm text-gray-500">Outstanding Balance</p>
+    <h2 class="text-3xl text-red-600 font-bold">₹ {{ customer.outstanding }}</h2>
+  </div>
+
+  <button 
+    class="px-5 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium transition-colors"
+    (click)="download()">
+    📄 Download Ledger PDF
+  </button>
+
+  <div class="overflow-x-auto bg-white rounded-xl shadow mt-5">
+    <table class="w-full text-sm">
+      <thead class="border-b bg-gray-50">
+        <tr>
+          <th class="p-2 text-left">Date</th>
+          <th class="p-2 text-left">Type</th>
+          <th class="p-2 text-left">Amount</th>
+          <th class="p-2 text-left">Remarks</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(entry of customer.entries; track entry.id) {
+        <tr class="border-b">
+          <td class="p-2">{{ entry.date | date:'short' }}</td>
+          <td class="p-2 font-medium"
+              [class.text-red-600]="entry.type=='debit'"
+              [class.text-green-600]="entry.type=='credit'">
+              {{ entry.type | uppercase }}
+          </td>
+          <td class="p-2">₹ {{ entry.amount }}</td>
+          <td class="p-2">{{ entry.remarks || '-' }}</td>
+        </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="p-4 text-center text-gray-500 py-8">
+              <div class="flex flex-col items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                </svg>
+                <span>No data found</span>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,0 +1,86 @@
+<div class="p-6 max-w-7xl mx-auto">
+  
+  <!-- Header Section -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div>
+      <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+        <a routerLink="/roles/role-list" class="hover:text-green-600 flex items-center transition-colors">
+          <span class="material-icons text-sm mr-1">arrow_back</span>
+          Roles
+        </a>
+        <span>/</span>
+        <span class="text-gray-900 font-medium">Permissions Matrix</span>
+      </div>
+      <h2 class="text-3xl font-bold text-gray-900 flex items-center gap-3">
+        <span class="material-icons text-green-600 text-4xl">admin_panel_settings</span>
+        {{ role?.name }}
+        <span class="text-lg font-normal text-gray-500 ml-2 mt-1">Permissions</span>
+      </h2>
+      <p class="text-gray-500 mt-2 text-sm">Configure granular access control and permissions for this role across all modules.</p>
+    </div>
+    
+    <!-- Actions -->
+    <div class="flex gap-3">
+      <button class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 flex items-center gap-2 transition-all">
+        <span class="material-icons text-sm">refresh</span> Reset
+      </button>
+      <button class="px-4 py-2 rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 flex items-center gap-2 transition-all" routerLink="/roles/role-list">
+        <span class="material-icons text-sm">save</span> Save Changes
+      </button>
+    </div>
+  </div>
+
+  <!-- Note for Super Admin -->
+  <div *ngIf="role?.permissions?.includes('*')" class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-8 rounded-r-lg flex gap-3 shadow-sm">
+    <span class="material-icons text-amber-500">warning</span>
+    <div>
+      <h3 class="text-amber-800 font-bold">Super Admin Role</h3>
+      <p class="text-amber-700 text-sm mt-1">This role has unrestricted access to all modules and features. Individual permissions cannot be disabled.</p>
+    </div>
+  </div>
+
+  <!-- Matrix Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    
+    <div *ngFor="let group of permissionGroups" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col">
+      
+      <!-- Group Header -->
+      <div class="px-5 py-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600">
+            <span class="material-icons">{{ group.icon }}</span>
+          </div>
+          <h3 class="font-bold text-gray-800">{{ group.name }}</h3>
+        </div>
+      </div>
+
+      <!-- Permissions List -->
+      <div class="p-2 flex-1 flex flex-col gap-1">
+        <div *ngFor="let p of group.permissions" 
+             class="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-150">
+          
+          <div class="flex flex-col pr-4">
+            <span class="text-sm font-semibold text-gray-700">{{ p.label }}</span>
+            <span class="text-xs text-gray-400 font-mono mt-0.5">{{ p.id }}</span>
+          </div>
+
+          <label class="relative inline-flex items-center cursor-pointer shrink-0" 
+                 [class.opacity-50]="role?.permissions?.includes('*')"
+                 [title]="role?.permissions?.includes('*') ? 'Cannot modify Super Admin permissions' : ''">
+            <input 
+              type="checkbox" 
+              class="sr-only peer"
+              [checked]="isChecked(p.id)"
+              [disabled]="role?.permissions?.includes('*')"
+              (change)="toggle(p.id)">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+          </label>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

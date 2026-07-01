@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import "leaflet/dist/leaflet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active-link {
+  @apply bg-green-100 text-green-700 font-semibold;
+}
+
+.active-icon {
+  @apply text-green-700;
+}
+
+.left-indicator {
+  @apply absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r;
+}
+
+.left-border {
+  @apply absolute left-0 top-0 h-full w-1 bg-green-600 rounded-r;
+}
+
+:root {
+  /* Brand Colors */
+  --primary-color: #32C36C;   /* FruitLink Green */
+  --accent-color:  #E91E63;   /* FruitLink Pink */
+
+  /* Sidebar Theme Defaults */
+  --sidebar-bg: #ffffff;
+  --sidebar-hover: rgba(233, 30, 99, 0.12);   /* accent/12 */
+  --sidebar-active-bg: rgba(50, 195, 108, 0.15); /* primary/15 */
+  --sidebar-text: #1f2937;     /* gray-800 */
+  --sidebar-text-muted: #6b7280; /* gray-500 */
+}
+
+.status-btn {
+  @apply text-white py-3 rounded-lg font-medium text-sm transition active:scale-95;
+}
+
+/* Thin Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; 
+}

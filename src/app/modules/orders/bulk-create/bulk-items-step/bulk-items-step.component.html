@@ -1,0 +1,116 @@
+<div class="p-6 bg-white shadow rounded-xl max-w-6xl mx-auto">
+
+  <h2 class="text-xl font-bold mb-4">Bulk Order — Add Items</h2>
+
+  @if(loading()) {
+    <div class="py-10 text-center text-gray-500 text-lg">Loading products...</div>
+  } @else {
+
+  <table class="w-full border rounded overflow-hidden text-sm">
+    <thead class="bg-gray-200 font-semibold">
+      <tr>
+        <th class="p-2">Product</th>
+        <th class="p-2">Qty</th>
+        <th class="p-2">Unit</th>
+        <th class="p-2">Disc%</th>
+        <th class="p-2">Rate/Kg</th>
+        <th class="p-2">Total</th>
+        <th class="p-2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for(row of items(); track row.id; let i = $index) {
+      <tr class="border-b">
+
+        <!-- Product -->
+        <td class="p-2">
+          <select class="border p-2 rounded w-40"
+                  [value]="row.productId"
+                  (change)="update(i,'productId',$any($event.target).value)">
+            <option value="">Select Product</option>
+            @for(p of products(); track p.id) {
+              <option [value]="p.id">{{ p.name }}</option>
+            }
+          </select>
+        </td>
+
+        <!-- Qty -->
+        <td class="p-2">
+          <input type="number" min="1"
+                 class="border p-2 rounded w-20"
+                 [value]="row.qty"
+                 (input)="update(i,'qty',$any($event.target).valueAsNumber)">
+        </td>
+
+        <!-- Unit -->
+        <td class="p-2">
+          <select class="border p-2 rounded w-28"
+                  [value]="row.unitId"
+                  (change)="update(i,'unitId',$any($event.target).value)">
+            @for(u of unitSvc.globalUnits; track u.id) {
+              <option [value]="u.id">{{ u.label }}</option>
+            }
+          </select>
+        </td>
+
+        <!-- Discount -->
+        <td class="p-2">
+          <input type="number" min="0" max="100"
+                 class="border p-2 rounded w-20"
+                 [value]="row.discount ?? 0"
+                 (input)="update(i,'discount',$any($event.target).valueAsNumber)">
+        </td>
+
+        <!-- Rate -->
+        <td class="p-2 text-green-700 font-semibold">
+          {{ getRate(i) }}
+        </td>
+
+        <!-- Total -->
+        <td class="p-2 font-bold">
+          {{ getLineTotal(i) }} /-
+        </td>
+
+        <td class="p-2 text-red-600">
+          <button (click)="remove(i)">✕</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Add Row -->
+  <button class="mt-3 bg-gray-300 px-3 py-2 rounded"
+          (click)="addRow()">
+      + Add Item
+  </button>
+
+
+  <!-- Template Save / Load UI -->
+  <div class="mt-6 flex justify-between items-center">
+
+    <button class="bg-blue-600 text-white px-4 py-2 rounded"
+            (click)="saveTemplate()">
+      💾 Save as Template
+    </button>
+
+    <select class="border p-2 rounded"
+            (change)="loadTemplate($any($event.target).value)">
+      <option value="">Load Template</option>
+
+      @for(t of templates.all; track t.id) {
+        <option [value]="t.id">{{ t.name }}</option>
+      }
+    </select>
+
+  </div>
+
+  <!-- Final Grand Total -->
+  <div class="mt-6 text-right text-xl font-bold">
+    Grand Total :
+    <span class="text-green-600">₹{{ grandTotal() }}</span>
+  </div>
+
+}
+</div>

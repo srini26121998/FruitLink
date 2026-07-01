@@ -1,0 +1,50 @@
+<div class="p-6 bg-white shadow rounded-xl w-full max-w-3xl mx-auto">
+
+  <h2 class="font-bold text-lg mb-4">Price Tiers (Slab Pricing)</h2>
+
+  <table class="w-full border rounded overflow-hidden">
+    <thead class="bg-gray-100 font-semibold text-sm">
+      <tr>
+        <th class="p-2 text-left">Min</th>
+        <th class="p-2 text-left">Max</th>
+        <th class="p-2 text-left">₹/Kg</th>
+        <th class="p-2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (t of tiers(); track t.id; let i = $index) {
+      <tr class="border-b">
+
+        <td class="p-2">
+          <input class="border p-2 rounded w-20"
+                 [value]="t.min"
+                 (input)="update(i,'min',$any($event.target).valueAsNumber)">
+        </td>
+
+        <td class="p-2">
+          <input class="border p-2 rounded w-20"
+                 [value]="t.max"
+                 (input)="update(i,'max',$any($event.target).valueAsNumber)">
+        </td>
+
+        <td class="p-2">
+          <input class="border p-2 rounded w-24"
+                 [value]="t.pricePerKg"
+                 (input)="update(i,'pricePerKg',$any($event.target).valueAsNumber)">
+        </td>
+
+        <td class="p-2">
+          <button class="text-red-500" (click)="deleteRow(i)">✕</button>
+        </td>
+
+      </tr>}
+    </tbody>
+  </table>
+
+  <button class="mt-3 bg-gray-200 px-3 py-2 rounded" (click)="addRow()">+ Add Tier</button>
+
+  <button class="mt-3 ml-3 bg-green-600 text-white px-4 py-2 rounded"
+          (click)="save()">Save</button>
+
+</div>

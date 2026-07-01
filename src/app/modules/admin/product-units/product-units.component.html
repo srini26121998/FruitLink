@@ -1,0 +1,20 @@
+<div class="p-6 space-y-4">
+  <h1 class="text-2xl font-bold">Global Unit Definitions</h1>
+
+  <table class="w-full bg-white rounded shadow">
+    <thead class="bg-gray-100">
+      <tr><th class="p-3">ID</th><th class="p-3">Label</th><th class="p-3">Kg Equivalent</th></tr>
+    </thead>
+    <tbody>
+      @for (u of units; track u.id) {
+        <tr class="border-b">
+          <td class="p-3">{{ u.id }}</td>
+          <td class="p-3">{{ u.label }}</td>
+          <td class="p-3">{{ u.conversionToKg }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <p class="text-sm text-gray-500">(To edit / add units, wire this UI with API and persist in database.)</p>
+</div>

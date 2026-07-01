@@ -1,0 +1,84 @@
+<div class="p-6 space-y-6">
+
+  <h1 class="text-3xl font-bold mb-4">
+    Welcome, {{ dash.shopInfo().owner }} 👋
+  </h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Shop Info Card -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h2 class="font-semibold text-lg">{{ dash.shopInfo().shopName }}</h2>
+      <p class="text-gray-600 mt-1">Next Delivery:</p>
+      <p class="font-medium text-blue-600">{{ dash.shopInfo().nextDelivery }}</p>
+    </div>
+
+    <!-- Orders Summary -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <p class="text-gray-600">This Week Orders</p>
+      <h2 class="text-3xl font-bold">{{ dash.orderStats().thisWeekOrders }}</h2>
+    </div>
+
+    <!-- Monthly Spend -->
+    <div class="bg-white p-6 rounded-xl shadow">
+      <p class="text-gray-600">Monthly Spend</p>
+      <h2 class="text-3xl font-bold">₹{{ dash.shopInfo().monthlySpend }}</h2>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+    <a routerLink="/shop/fruits"
+       class="bg-blue-600 text-white p-4 rounded-xl text-center shadow hover:bg-blue-700">
+      Order Now
+    </a>
+
+    <a routerLink="/shop/orders"
+       class="bg-green-600 text-white p-4 rounded-xl text-center shadow hover:bg-green-700">
+      My Orders
+    </a>
+
+    <a routerLink="/shop/notifications"
+       class="bg-yellow-500 text-white p-4 rounded-xl text-center shadow hover:bg-yellow-600">
+      Notifications
+    </a>
+
+    <a routerLink="/shop/support"
+       class="bg-red-600 text-white p-4 rounded-xl text-center shadow hover:bg-red-700">
+      Support
+    </a>
+
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    @for (o of dash.offers(); track o.title) {
+      <div class="text-white p-4 rounded-xl shadow {{ o.color }}">
+        <h3 class="font-semibold text-lg">{{ o.title }}</h3>
+        <p class="opacity-90">{{ o.desc }}</p>
+      </div>
+    }
+
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow">
+    <h2 class="text-xl font-semibold mb-4">Weekly Purchase Trend</h2>
+
+    <apx-chart
+      [series]="weeklyChart.series"
+      [chart]="weeklyChart.chart"
+      [xaxis]="weeklyChart.xaxis"
+      [stroke]="weeklyChart.stroke"
+      [colors]="weeklyChart.colors"
+      [fill]="weeklyChart.fill">
+    </apx-chart>
+  </div>
+  <div class="bg-white p-6 rounded-xl shadow">
+    <h2 class="text-xl font-semibold mb-4">Top Purchased Items</h2>
+
+    <apx-chart
+      [series]="topItemsChart.series"
+      [chart]="topItemsChart.chart"
+      [labels]="topItemsChart.labels"
+      [colors]="topItemsChart.colors">
+    </apx-chart>
+  </div>
+
+</div>

@@ -1,0 +1,15 @@
+aside { transition: width .3s ease, transform .3s ease; }
+
+nav {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+.material-icons {
+  font-size:22px;
+  width:22px;
+  text-align:center;
+}

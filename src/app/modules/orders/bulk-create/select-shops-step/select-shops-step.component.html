@@ -1,0 +1,43 @@
+<div class="bg-white p-6 rounded-xl shadow max-w-4xl mx-auto">
+
+  <h2 class="text-xl font-bold mb-4">Select Shops</h2>
+
+  <div class="overflow-auto border rounded">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="p-3">
+            <input type="checkbox" (change)="toggleAll($event)">
+          </th>
+          <th class="p-3">Shop</th>
+          <th class="p-3">Area</th>
+          <th class="p-3">Last Order</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for(shop of shops(); track shop.id) {
+        <tr class="border-t">
+          
+          <td class="p-3">
+            <input type="checkbox"
+              [(ngModel)]="selected()[shop.id]"
+              (ngModelChange)="toggleOne(shop.id,$event)">
+          </td>
+
+          <td class="p-3 font-semibold">{{ shop.name }}</td>
+          <td class="p-3 text-gray-600">{{ shop.area }}</td>
+          <td class="p-3 text-gray-500">{{ shop.lastOrder }}</td>
+
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex justify-between mt-6">
+    <button class="px-6 py-2 bg-gray-300 rounded" (click)="back.emit()">Back</button>
+    <button class="px-6 py-2 bg-blue-600 text-white rounded" (click)="goNext()">Next</button>
+  </div>
+
+</div>

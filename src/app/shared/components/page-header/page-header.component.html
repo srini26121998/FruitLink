@@ -1,0 +1,23 @@
+<div class="flex items-center justify-between mb-6">
+
+  <!-- LEFT SECTION -->
+  <div>
+    <h1 class="text-2xl font-bold text-gray-800">{{ title }}</h1>
+    <p *ngIf="subtitle" class="text-gray-500 text-sm mt-1">
+      {{ subtitle }}
+    </p>
+  </div>
+
+  <!-- RIGHT ACTION BUTTON -->
+  <button
+    *ngIf="actionLabel"
+    (click)="actionCallback?.()"
+    class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition"
+  >
+    <span *ngIf="actionIcon">{{ actionIcon }}</span>
+    {{ actionLabel }}
+  </button>
+
+</div>
+
+<hr class="border-gray-200" />

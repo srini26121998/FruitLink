@@ -1,0 +1,17 @@
+<div class="fixed top-5 right-5 z-50 flex flex-col gap-3">
+
+  <div *ngFor="let t of notifications"
+       class="w-80 px-4 py-3 rounded-lg shadow-lg text-white animate-slide-fade"
+       [ngClass]="{
+          'bg-green-600': t.type === 'success',
+          'bg-red-600': t.type === 'error',
+          'bg-yellow-500': t.type === 'warning',
+          'bg-blue-600': t.type === 'info'
+       }">
+
+    <div class="font-medium text-sm">
+      {{ t.message }}
+    </div>
+  </div>
+
+</div>

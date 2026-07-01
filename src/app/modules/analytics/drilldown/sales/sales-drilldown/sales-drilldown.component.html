@@ -1,0 +1,140 @@
+<div class="p-6 space-y-8" id="sales-drilldown-report">
+
+  <!-- ================= HEADER ================= -->
+  <div class="flex justify-between items-center">
+    <h2 class="text-2xl font-bold">Sales Drilldown</h2>
+
+    <div class="flex gap-2">
+      <button
+        class="px-4 py-2 border rounded hover:bg-gray-50"
+        (click)="exportCSV()">
+        Export Excel
+      </button>
+
+      <button
+        class="px-4 py-2 border rounded hover:bg-gray-50"
+        (click)="exportPDF()">
+        Download PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= KPI CARDS ================= -->
+  <div class="grid grid-cols-2 lg:grid-cols-7 gap-4">
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Orders</p>
+      <h3 class="text-xl font-bold">
+        {{ formatNumber(kpis().totalOrders) }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Revenue</p>
+      <h3 class="text-xl font-bold text-green-600">
+        {{ formatCurrency(kpis().totalRevenue) }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Quantity (Kg)</p>
+      <h3 class="text-xl font-bold">
+        {{ formatNumber(kpis().totalQuantityKg) }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Avg Order Value</p>
+      <h3 class="text-xl font-bold">
+        {{ formatCurrency(kpis().avgOrderValue) }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Items / Order</p>
+      <h3 class="text-xl font-bold">
+        {{ kpis().avgItemsPerOrder }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Active Customers</p>
+      <h3 class="text-xl font-bold">
+        {{ formatNumber(kpis().activeCustomers) }}
+      </h3>
+    </div>
+
+    <div class="card">
+      <p class="text-xs text-gray-500">Repeat %</p>
+      <h3 class="text-xl font-bold text-blue-600">
+        {{ kpis().repeatCustomerRate }}%
+      </h3>
+    </div>
+
+  </div>
+
+  <!-- ================= SALES TABLE ================= -->
+  <div class="card">
+
+    <h3 class="font-semibold mb-4">Sales Orders</h3>
+
+    <table class="w-full text-sm">
+      <thead class="border-b text-xs uppercase text-gray-500">
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>City</th>
+          <th>Customer</th>
+          <th>Products</th>
+          <th>Qty (Kg)</th>
+          <th>Value</th>
+          <th>Payment</th>
+          <th>Delivery</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (row of rows(); track row.orderId) {
+          <tr class="border-b hover:bg-gray-50">
+
+            <td class="font-medium">{{ row.orderId }}</td>
+            <td>{{ row.orderDate }}</td>
+            <td>{{ row.city }}</td>
+            <td>{{ row.customerName }}</td>
+            <td class="text-center">{{ row.productCount }}</td>
+            <td class="text-center">{{ formatNumber(row.quantityKg) }}</td>
+
+            <td class="text-green-600">
+              {{ formatCurrency(row.orderValue) }}
+            </td>
+
+            <!-- PAYMENT STATUS -->
+            <td>
+              <span
+                class="font-semibold"
+                [class.text-green-600]="row.paymentStatus === 'PAID'"
+                [class.text-yellow-600]="row.paymentStatus === 'PARTIAL'"
+                [class.text-red-600]="row.paymentStatus === 'PENDING'">
+                {{ row.paymentStatus }}
+              </span>
+            </td>
+
+            <!-- DELIVERY STATUS -->
+            <td>
+              <span
+                class="font-semibold"
+                [class.text-green-600]="row.deliveryStatus === 'DELIVERED'"
+                [class.text-blue-600]="row.deliveryStatus === 'IN_TRANSIT'"
+                [class.text-red-600]="row.deliveryStatus === 'CANCELLED'">
+                {{ row.deliveryStatus }}
+              </span>
+            </td>
+
+          </tr>
+        }
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

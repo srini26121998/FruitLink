@@ -1,0 +1,11 @@
+.kpi-card {
+  @apply bg-white border rounded-lg p-3 text-center;
+}
+
+.kpi-value {
+  @apply text-lg font-semibold;
+}
+
+.kpi-label {
+  @apply text-xs text-gray-500;
+}
