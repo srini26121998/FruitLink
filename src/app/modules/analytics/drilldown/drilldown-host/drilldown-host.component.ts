@@ -31,7 +31,7 @@ import { CityDrilldownComponent } from '../city/city-drilldown/city-drilldown.co
       }
 
       @default {
-        <div class="p-6 text-red-600 font-semibold">
+        <div class="p-2 text-red-600 font-semibold">
           Invalid drilldown type
         </div>
       }

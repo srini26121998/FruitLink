@@ -1,8 +1,8 @@
-<div class="p-6 space-y-10">
+<div class="p-2 space-y-4">
 
   <!-- Header -->
   <div class="flex justify-between items-center">
-    <h2 class="text-xl font-bold">Shop Analytics</h2>
+    <h2 class="text-base font-medium">Shop Analytics</h2>
 
     <div class="flex items-center gap-3">
       <!-- Filters -->
@@ -11,8 +11,8 @@
           <button
             (click)="setFilter(f)"
             [ngClass]="filter() === f
-              ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
-              : 'px-4 py-2 rounded-lg hover:bg-white'"
+              ? 'bg-green-600 text-white px-2 py-2 rounded-lg'
+              : 'px-2 py-2 rounded-lg hover:bg-white'"
           >
             {{ f | titlecase }}
           </button>
@@ -21,13 +21,13 @@
 
       <!-- Export -->
       <button
-        class="px-4 py-2 rounded bg-green-600 text-white hover:bg-green-700"
+        class="px-2 py-2 rounded bg-green-600 text-white hover:bg-green-700"
         (click)="exportExcel()"
       >
         Excel
       </button>
       <button
-        class="px-4 py-2 rounded border hover:bg-gray-100"
+        class="px-2 py-2 rounded border hover:bg-gray-100"
         (click)="exportPDF()"
       >
         PDF
@@ -36,11 +36,11 @@
   </div>
 
   <!-- Everything below gets exported in PDF -->
-  <div id="shop-analytics-report" class="space-y-10">
+  <div id="shop-analytics-report" class="space-y-4">
 
     <!-- KPI Cards -->
     <!-- KPI CARDS -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
 
     <kpi-card
       label="Total Shops"
@@ -74,7 +74,7 @@
 
   <!-- SHOP TREND -->
   <div class="card">
-    <h3 class="font-semibold mb-3">Active Shops Trend</h3>
+    <h3 class="font-medium mb-3">Active Shops Trend</h3>
 
     <apx-chart
       [chart]="shopTrendChart().chart"
@@ -87,11 +87,11 @@
   </div>
 
     <!-- Growth Analytics -->
-    <div class="grid md:grid-cols-3 gap-4">
+    <div class="grid md:grid-cols-3 gap-2">
 
       <div class="card">
         <p class="text-gray-500 text-sm">MoM Growth</p>
-        <h2 class="text-2xl font-bold mt-1" [ngClass]="getGrowthColor(growth().mom)">
+        <h2 class="text-base font-medium mt-1" [ngClass]="getGrowthColor(growth().mom)">
           {{ growth().mom }}%
         </h2>
         <p class="text-xs text-gray-400 mt-1">Month-over-Month revenue change</p>
@@ -99,7 +99,7 @@
 
       <div class="card">
         <p class="text-gray-500 text-sm">YoY Growth</p>
-        <h2 class="text-2xl font-bold mt-1" [ngClass]="getGrowthColor(growth().yoy)">
+        <h2 class="text-base font-medium mt-1" [ngClass]="getGrowthColor(growth().yoy)">
           {{ growth().yoy }}%
         </h2>
         <p class="text-xs text-gray-400 mt-1">Year-over-Year performance</p>
@@ -107,7 +107,7 @@
 
       <div class="card">
         <p class="text-gray-500 text-sm">Active Shop Rate</p>
-        <h2 class="text-2xl font-bold mt-1 text-blue-600">
+        <h2 class="text-base font-medium mt-1 text-blue-600">
           {{ growth().activeRate }}%
         </h2>
         <p class="text-xs text-gray-400 mt-1">Percentage of active shops</p>
@@ -116,7 +116,7 @@
 
    <!-- Orders Trend Chart -->
 <div class="card">
-  <h3 class="font-semibold mb-4">Orders Trend</h3>
+  <h3 class="font-medium mb-2">Orders Trend</h3>
 
   <apx-chart
     [chart]="shopTrendChart().chart"
@@ -130,7 +130,7 @@
 
     <!-- Revenue Comparison -->
     <div class="card">
-      <h3 class="font-semibold mb-4">Shop Revenue Comparison</h3>
+      <h3 class="font-medium mb-2">Shop Revenue Comparison</h3>
       <apx-chart
         [chart]="revenueChart().chart"
         [series]="revenueChart().series"
@@ -141,7 +141,7 @@
     <!-- Top Shops Table -->
     <div class="card">
       <div class="flex justify-between items-center mb-3">
-        <h3 class="font-semibold">Top Shops (click → Product Analytics)</h3>
+        <h3 class="font-medium">Top Shops (click → Product Analytics)</h3>
         <input
           type="text"
           class="border px-3 py-1 rounded text-sm"
@@ -177,7 +177,7 @@
 
     <!-- Shops by City (Bar Fill %) -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Shops by City</h3>
+      <h3 class="font-medium mb-3">Shops by City</h3>
 
       @for (c of city(); track c.city) {
         <div class="mb-3">
@@ -198,12 +198,12 @@
 
     <!-- Revenue Heatmap -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Revenue Heatmap (City-wise)</h3>
+      <h3 class="font-medium mb-3">Revenue Heatmap (City-wise)</h3>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
         @for (h of heatmap(); track h.city) {
           <div
-            class="p-4 rounded-lg text-center text-white shadow"
+            class="p-2 rounded-lg text-center text-white shadow"
             [style.background]="
               h.revenue > 50000
                 ? '#1d4ed8'
@@ -212,7 +212,7 @@
                 : '#3b82f6'
             "
           >
-            <h4 class="font-bold">{{ h.city }}</h4>
+            <h4 class="font-medium">{{ h.city }}</h4>
             <p class="text-sm mt-1">₹{{ h.revenue }}</p>
           </div>
         }

@@ -22,10 +22,10 @@ import { ConfirmStepComponent } from '../confirm-step/confirm-step.component';
     ConfirmStepComponent
   ],
   template: `
-  <div class="p-6">
+  <div class="p-2">
     <app-order-stepper [step]="step()" [steps]="steps"></app-order-stepper>
 
-    <div class="mt-6">
+    <div class="mt-2">
       @switch(step()) {
         @case(1) { <app-select-date-step (next)="next()"/> }
         @case(2) { <app-select-shops-step (next)="next()" (back)="back()"/> }

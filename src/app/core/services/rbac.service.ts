@@ -32,18 +32,22 @@ export class RbacService {
         'orders.view', 'orders.create', 'orders.approve',
         'orders.delivery.update', 'orders.details.view',
 
-        // Fruits
+        // Fruits / Products
         'fruits.view', 'fruits.add', 'fruits.edit', 'fruits.delete',
+        'products.view', 'products.create', 'products.edit', 'products.delete',
 
         // Reports
+        'reports.view',
         'reports.weekly', 'reports.monthly', 'reports.yearly',
         'reports.topfruits', 'reports.pendingpayments', 'reports.shopfrequency',
 
         // Delivery
         'delivery.view', 'delivery.gps', 'delivery.routeopt',
+        'delivery.status.manage',
 
         // Shop
         'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
+        'shop.monitor',
 
         // Payments
         'payments.view', 'payments.details.view', 'payments.checkout', 'payments.history.view',
@@ -68,7 +72,10 @@ export class RbacService {
 
         // Profile & Settings
         'profile.view', 'profile.update',
-        'settings.view', 'settings.update'
+        'settings.view', 'settings.update',
+
+        // Shop Management
+        'shop.management.view', 'shop.management.create', 'shop.management.edit'
       ]
     },
 
@@ -76,13 +83,58 @@ export class RbacService {
           ⭐ SHOP MANAGER
     ============================ */
     {
-      id: 'shop',
+      id: 'shop_manager',
       name: 'Shop Manager',
       permissions: [
         'dashboard.view',
+        'shop.dashboard.view',
+
+        // Daily Orders
+        'orders.view', 'orders.create', 'orders.details.view',
+        'orders.history.view',
+        'orders.track.view',
+        'orders.print.delivery',
+
+        // Shop self-serve
         'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
-        'orders.view', 'orders.create',
-        'payments.history.view'
+
+        // Payments
+        'payments.history.view',
+
+        // Profile
+        'profile.view', 'profile.update'
+      ]
+    },
+
+    /* ============================
+          ⭐ BRANCH MANAGER
+    ============================ */
+    {
+      id: 'branch_manager',
+      name: 'Branch Manager',
+      permissions: [
+        'dashboard.view',
+        'shop.dashboard.view',
+
+        // Full Orders Access (like shop manager + approve)
+        'orders.view', 'orders.create', 'orders.approve',
+        'orders.details.view', 'orders.history.view',
+        'orders.track.view', 'orders.print.delivery',
+
+        // Shop Management
+        'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
+        'shop.monitor',
+        'shop.management.view',
+
+        // Reports (limited)
+        'reports.view',
+        'reports.weekly', 'reports.monthly',
+
+        // Payments
+        'payments.view', 'payments.history.view',
+
+        // Profile
+        'profile.view', 'profile.update'
       ]
     },
 
@@ -163,6 +215,13 @@ export class RbacService {
 
   hasRole(role: string): boolean {
     return this.user()?.role === role;
+  }
+
+  /** Check if user has ANY of the given roles */
+  hasAnyRole(roles: string[]): boolean {
+    const userRole = this.user()?.role;
+    if (!userRole) return false;
+    return roles.includes(userRole);
   }
 
   /** Role → Permission Map for Permission Matrix */

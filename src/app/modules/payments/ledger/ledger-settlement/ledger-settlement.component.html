@@ -1,4 +1,4 @@
-<div class="p-6 max-w-xl mx-auto space-y-6">
+<div class="p-2 max-w-xl mx-auto space-y-2">
 
   <div class="flex items-center gap-3">
     <button (click)="goBack()" title="Go Back" class="p-1.5 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors shadow-sm border border-gray-200">
@@ -6,14 +6,14 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
       </svg>
     </button>
-    <h1 class="text-xl font-bold mb-0">Add Settlement: {{ shopId }}</h1>
+    <h1 class="text-base font-medium mb-0">Add Settlement: {{ shopId }}</h1>
   </div>
 
   <p class="text-gray-600">Outstanding: 
     <span class="font-bold text-red-600">₹ {{ outstanding }}</span>
   </p>
 
-  <form [formGroup]="form" class="space-y-4">
+  <form [formGroup]="form" class="space-y-2">
 
     <input type="number" formControlName="amount"
            placeholder="Enter payment amount"
@@ -24,7 +24,7 @@
               placeholder="Remarks"></textarea>
 
     <button (click)="submit()" 
-            class="w-full bg-green-600 text-white px-4 py-3 rounded text-lg disabled:bg-gray-400"
+            class="w-full bg-green-600 text-white px-2 py-3 rounded text-lg disabled:bg-green-600"
             [disabled]="form.invalid">
       ✔ Save Settlement
     </button>

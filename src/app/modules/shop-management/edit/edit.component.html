@@ -1,1 +1,142 @@
-<p>edit works!</p>
+<div class="p-2 md:p-4 max-w-4xl mx-auto">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <!-- Header -->
+    <div class="mb-2 flex items-center gap-2">
+      <button (click)="cancel()" class="p-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      </button>
+      <div>
+        <h2 class="text-base font-medium text-gray-900 tracking-tight">Edit Shop Details</h2>
+        <p class="text-gray-500 mt-1 text-sm">Update the information and settings for {{ shopId }}</p>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <form [formGroup]="shopForm" (ngSubmit)="onSubmit()">
+        <div class="p-2 space-y-2">
+          
+          <!-- Section: Basic Information -->
+          <div>
+            <h3 class="text-base font-medium text-gray-900 mb-2 pb-2 border-b border-gray-100">Basic Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Shop Name *</label>
+                <input type="text" formControlName="name" placeholder="e.g. Fresh Mart Downtown" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('name')?.invalid && shopForm.get('name')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('name')?.invalid && shopForm.get('name')?.touched">
+                <p *ngIf="shopForm.get('name')?.invalid && shopForm.get('name')?.touched" class="text-red-500 text-xs mt-1">Shop name is required (min 3 chars).</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Shop Type *</label>
+                <select formControlName="type" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white transition-shadow">
+                  <option value="Supermarket">Supermarket</option>
+                  <option value="Grocery">Grocery / Kirana</option>
+                  <option value="Wholesale">Wholesale</option>
+                  <option value="Retail">Retail</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                <select formControlName="status" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white transition-shadow">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Suspended">Suspended</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Assigned Salesman *</label>
+                <input type="text" formControlName="assignedSalesman" placeholder="e.g. Amit Kumar" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('assignedSalesman')?.invalid && shopForm.get('assignedSalesman')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('assignedSalesman')?.invalid && shopForm.get('assignedSalesman')?.touched">
+                <p *ngIf="shopForm.get('assignedSalesman')?.invalid && shopForm.get('assignedSalesman')?.touched" class="text-red-500 text-xs mt-1">Assigned Salesman is required.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Contact Details -->
+          <div>
+            <h3 class="text-base font-medium text-gray-900 mb-2 pb-2 border-b border-gray-100">Contact Details</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Owner Name *</label>
+                <input type="text" formControlName="ownerName" placeholder="e.g. Rahul Sharma" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('ownerName')?.invalid && shopForm.get('ownerName')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('ownerName')?.invalid && shopForm.get('ownerName')?.touched">
+                <p *ngIf="shopForm.get('ownerName')?.invalid && shopForm.get('ownerName')?.touched" class="text-red-500 text-xs mt-1">Owner name is required.</p>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                <input type="text" formControlName="phone" placeholder="+91 9876543210" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('phone')?.invalid && shopForm.get('phone')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('phone')?.invalid && shopForm.get('phone')?.touched">
+                <p *ngIf="shopForm.get('phone')?.invalid && shopForm.get('phone')?.touched" class="text-red-500 text-xs mt-1">Valid phone number is required.</p>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                <input type="email" formControlName="email" placeholder="shop@example.com" 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('email')?.invalid && shopForm.get('email')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('email')?.invalid && shopForm.get('email')?.touched">
+                <p *ngIf="shopForm.get('email')?.invalid && shopForm.get('email')?.touched" class="text-red-500 text-xs mt-1">Valid email address is required.</p>
+              </div>
+              
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Full Business Address *</label>
+                <textarea formControlName="address" rows="3" placeholder="Enter complete address..." 
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none transition-shadow"
+                  [class.border-red-300]="shopForm.get('address')?.invalid && shopForm.get('address')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('address')?.invalid && shopForm.get('address')?.touched"></textarea>
+                <p *ngIf="shopForm.get('address')?.invalid && shopForm.get('address')?.touched" class="text-red-500 text-xs mt-1">Address is required.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Financial Settings -->
+          <div>
+            <h3 class="text-base font-medium text-gray-900 mb-2 pb-2 border-b border-gray-100">Financial Settings</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Credit Limit (₹) *</label>
+                <input type="number" formControlName="creditLimit" placeholder="e.g. 50000" min="0"
+                  class="w-full px-2 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-shadow"
+                  [class.border-red-300]="shopForm.get('creditLimit')?.invalid && shopForm.get('creditLimit')?.touched"
+                  [class.focus:ring-red-500]="shopForm.get('creditLimit')?.invalid && shopForm.get('creditLimit')?.touched">
+                <p *ngIf="shopForm.get('creditLimit')?.invalid && shopForm.get('creditLimit')?.touched" class="text-red-500 text-xs mt-1">Valid credit limit is required.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="px-2 py-2 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-2">
+          <button type="button" (click)="cancel()" [disabled]="isSubmitting" class="px-2 py-2.5 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50">
+            Cancel
+          </button>
+          <button type="submit" [disabled]="shopForm.invalid || isSubmitting" class="px-2 py-2.5 bg-green-600 border border-transparent text-white text-sm font-medium rounded-lg hover:bg-green-600 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+            <svg *ngIf="isSubmitting" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <span *ngIf="!isSubmitting">Save Changes</span>
+            <span *ngIf="isSubmitting">Saving...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</div>

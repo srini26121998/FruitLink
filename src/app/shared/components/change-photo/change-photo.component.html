@@ -1,9 +1,9 @@
-<div class="bg-white p-6 rounded-xl shadow max-w-md mx-auto">
+<div class="bg-white p-2 rounded-xl shadow max-w-md mx-auto">
 
-  <h2 class="text-xl font-semibold mb-4">Change Profile Photo</h2>
+  <h2 class="text-base font-medium mb-2">Change Profile Photo</h2>
 
   <!-- Preview Section -->
-  <div class="flex flex-col items-center gap-4">
+  <div class="flex flex-col items-center gap-2">
 
     <img 
       *ngIf="previewUrl; else defaultPhoto"
@@ -19,7 +19,7 @@
 
     <!-- Upload Button -->
     <button 
-      class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      class="px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-600 transition"
       (click)="triggerFileInput(photoInput)"
     >
       Upload New Photo

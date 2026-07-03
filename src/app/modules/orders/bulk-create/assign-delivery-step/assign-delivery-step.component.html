@@ -1,9 +1,9 @@
-<div class="bg-white rounded-xl shadow-lg p-6">
+<div class="bg-white rounded-xl shadow-lg p-2">
 
-  <h2 class="text-2xl font-semibold mb-6">Assign Delivery</h2>
+  <h2 class="text-base font-medium mb-2">Assign Delivery</h2>
 
   <!-- Delivery Staff -->
-  <div class="mb-6">
+  <div class="mb-2">
     <label class="block text-sm font-medium mb-2">Delivery Staff</label>
 
     <div class="relative">
@@ -19,7 +19,7 @@
   </div>
 
   <!-- Vehicle -->
-  <div class="mb-6">
+  <div class="mb-2">
     <label class="block text-sm font-medium mb-2">Vehicle</label>
 
     <select
@@ -33,7 +33,7 @@
   </div>
 
   <!-- Route -->
-  <div class="mb-6">
+  <div class="mb-2">
     <label class="block text-sm font-medium mb-2">Route</label>
 
     <select
@@ -47,15 +47,15 @@
   </div>
 
   <!-- Buttons -->
-  <div class="flex justify-between mt-6">
-    <button class="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+  <div class="flex justify-between mt-2">
+    <button class="px-2 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-green-600"
             (click)="back.emit()">
       Back
     </button>
 
     <button
       [disabled]="!staff() || !vehicle() || !route()"
-      class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+      class="px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-600 disabled:opacity-50"
       (click)="next.emit()">
       Continue
     </button>

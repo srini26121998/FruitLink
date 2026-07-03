@@ -76,13 +76,17 @@ export class AuthService {
         'orders.delivery.update', 'orders.details.view',
 
         'fruits.view', 'fruits.add', 'fruits.edit', 'fruits.delete',
+        'products.view', 'products.create', 'products.edit', 'products.delete',
 
+        'reports.view',
         'reports.weekly', 'reports.monthly', 'reports.yearly',
         'reports.topfruits', 'reports.pendingpayments', 'reports.shopfrequency',
 
         'delivery.view', 'delivery.gps', 'delivery.routeopt',
+        'delivery.status.manage',
 
         'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
+        'shop.monitor',
 
         'payments.view', 'payments.details.view',
         'payments.checkout', 'payments.history.view',
@@ -101,7 +105,10 @@ export class AuthService {
         'audit.view',
 
         'profile.view', 'profile.update',
-        'settings.view', 'settings.update'
+        'settings.view', 'settings.update',
+
+        'shop.management.view', 'shop.management.create', 'shop.management.edit',
+        'shop.dashboard.view'
       ]
     };
 
@@ -112,29 +119,74 @@ export class AuthService {
     this.setAccessToken('mock-admin-token');
   }
 
-  loginAsShop() {
+  loginAsShopManager() {
     const user: UserProfile = {
       id: '2',
-      name: 'Shop Manager',
-      email: 'shop@fruitlink.com',
-      role: 'shop',
+      name: 'Rajesh Kumar',
+      email: 'rajesh@fruitlink.com',
+      role: 'shop_manager',
       permissions: [
         'dashboard.view',
-        'orders.view',
-        'orders.create',
-        'shop.view'
+        'shop.dashboard.view',
+
+        'orders.view', 'orders.create', 'orders.details.view',
+        'orders.history.view', 'orders.track.view',
+        'orders.print.delivery',
+
+        'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
+
+        'payments.history.view',
+
+        'profile.view', 'profile.update'
       ]
     };
 
     this.user.set(user);
     this.rbac.setUser(user);
 
-    this.setAccessToken('mock-shop-token');
+    this.setAccessToken('mock-shop-manager-token');
+  }
+
+  loginAsBranchManager() {
+    const user: UserProfile = {
+      id: '3',
+      name: 'Priya Sharma',
+      email: 'priya@fruitlink.com',
+      role: 'branch_manager',
+      permissions: [
+        'dashboard.view',
+        'shop.dashboard.view',
+
+        'orders.view', 'orders.create', 'orders.approve',
+        'orders.details.view', 'orders.history.view',
+        'orders.track.view', 'orders.print.delivery',
+
+        'shop.view', 'shop.fruits', 'shop.orders', 'shop.payments', 'shop.support',
+        'shop.monitor', 'shop.management.view',
+
+        'reports.view',
+        'reports.weekly', 'reports.monthly',
+
+        'payments.view', 'payments.history.view',
+
+        'profile.view', 'profile.update'
+      ]
+    };
+
+    this.user.set(user);
+    this.rbac.setUser(user);
+
+    this.setAccessToken('mock-branch-manager-token');
+  }
+
+  /** @deprecated Use loginAsShopManager() instead */
+  loginAsShop() {
+    this.loginAsShopManager();
   }
 
   loginAsDelivery() {
     const user: UserProfile = {
-      id: '3',
+      id: '4',
       name: 'Delivery Staff',
       email: 'delivery@fruitlink.com',
       role: 'delivery',

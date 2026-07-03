@@ -1,14 +1,14 @@
-<div class="p-6 space-y-10">
+<div class="p-2 space-y-4">
 
   <!-- Header -->
   <div class="flex justify-between items-center">
-    <h2 class="text-xl font-bold">Delivery Analytics</h2>
+    <h2 class="text-base font-medium">Delivery Analytics</h2>
 
     <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
       @for(option of filterOptions; track option) {
         <button (click)="setFilter(option)"
-                class="px-4 py-2 rounded-lg"
-                [ngClass]="filter() === option ? 'bg-blue-600 text-white' : 'hover:bg-white'">
+                class="px-2 py-2 rounded-lg"
+                [ngClass]="filter() === option ? 'bg-green-600 text-white' : 'hover:bg-white'">
           {{ option | titlecase }}
         </button>
       }
@@ -16,7 +16,7 @@
   </div>
 
   <!-- Summary -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2">
     <div class="card">Total <h1>{{ summary().totalDeliveries }}</h1></div>
     <div class="card">Delivered <h1 class="text-green-600">{{ summary().delivered }}</h1></div>
     <div class="card">Transit <h1 class="text-amber-600">{{ summary().inTransit }}</h1></div>
@@ -26,7 +26,7 @@
 
   <!-- Performance -->
   <div class="card">
-    <h3 class="font-semibold mb-3 text-lg">Delivery Performance</h3>
+    <h3 class="font-medium mb-3 text-base">Delivery Performance</h3>
     <apx-chart
       [series]="deliveryChart().series"
       [chart]="deliveryChart().chart"
@@ -42,7 +42,7 @@
 
   <!-- Avg Delivery Time -->
   <div class="card">
-    <h3 class="font-semibold mb-3 text-lg">Average Delivery Time</h3>
+    <h3 class="font-medium mb-3 text-base">Average Delivery Time</h3>
     <apx-chart
       [series]="avgTimeChart().series"
       [chart]="avgTimeChart().chart"
@@ -52,7 +52,7 @@
 
   <!-- City Chart -->
   <div class="card">
-    <h3 class="font-semibold mb-3 text-lg">Deliveries by City</h3>
+    <h3 class="font-medium mb-3 text-base">Deliveries by City</h3>
 
     <!-- PIE -->
     <apx-chart
@@ -62,7 +62,7 @@
     </apx-chart>
 
     <!-- BAR LIST -->
-    <div class="mt-6">
+    <div class="mt-2">
       @for(city of cities(); track city.city) {
         <div class="mb-2">
           <div class="flex justify-between text-sm">
@@ -83,7 +83,7 @@
 
   <!-- Drivers -->
   <div class="card">
-    <h3 class="font-semibold mb-3 text-lg">Driver Ranking</h3>
+    <h3 class="font-medium mb-3 text-base">Driver Ranking</h3>
     <table class="table">
       <thead>
         <tr>

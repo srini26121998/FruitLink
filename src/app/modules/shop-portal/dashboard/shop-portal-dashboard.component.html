@@ -1,0 +1,282 @@
+<!-- SHOP PORTAL DASHBOARD -->
+<div class="shop-portal-dashboard">
+
+  <!-- HERO HEADER -->
+  <div class="hero-header">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="greeting-row">
+          <h1 class="greeting">{{ greeting }}, {{ userName }}</h1>
+          <span class="role-badge">
+            <span class="material-symbols-rounded" style="font-size:14px;">
+              {{ userRole === 'branch_manager' ? 'domain' : 'storefront' }}
+            </span>
+            {{ roleBadge }}
+          </span>
+        </div>
+        <p class="date-text">{{ currentDate }}</p>
+      </div>
+      <div class="hero-illustration">
+        <div class="illustration-circle">
+          <span class="material-symbols-rounded filled" style="font-size:40px; color: white;">nutrition</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-today">
+      <div class="kpi-icon-wrap bg-emerald">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">today</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ todayOrders }}</span>
+        <span class="kpi-label">Today's Orders</span>
+      </div>
+      <div class="kpi-trend up">
+        <span class="material-symbols-rounded" style="font-size:16px;">trending_up</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-pending">
+      <div class="kpi-icon-wrap bg-amber">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">pending_actions</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ pendingOrders }}</span>
+        <span class="kpi-label">Pending</span>
+      </div>
+      <div class="kpi-trend neutral">
+        <span class="material-symbols-rounded" style="font-size:16px;">remove</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-approved">
+      <div class="kpi-icon-wrap bg-blue">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">verified</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ approvedOrders }}</span>
+        <span class="kpi-label">Approved</span>
+      </div>
+      <div class="kpi-trend up">
+        <span class="material-symbols-rounded" style="font-size:16px;">trending_up</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-delivered">
+      <div class="kpi-icon-wrap bg-green">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">check_circle</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ deliveredOrders }}</span>
+        <span class="kpi-label">Delivered</span>
+      </div>
+      <div class="kpi-trend up">
+        <span class="material-symbols-rounded" style="font-size:16px;">trending_up</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-revenue">
+      <div class="kpi-icon-wrap bg-violet">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">currency_rupee</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">₹{{ totalRevenue | number }}</span>
+        <span class="kpi-label">Total Revenue</span>
+      </div>
+      <div class="kpi-trend up">
+        <span class="material-symbols-rounded" style="font-size:16px;">trending_up</span>
+      </div>
+    </div>
+
+    <div class="kpi-card kpi-weekly" *ngIf="userRole === 'branch_manager'">
+      <div class="kpi-icon-wrap bg-rose">
+        <span class="material-symbols-rounded filled" style="font-size:22px;">calendar_month</span>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ weeklyOrders }}</span>
+        <span class="kpi-label">This Week</span>
+      </div>
+      <div class="kpi-trend up">
+        <span class="material-symbols-rounded" style="font-size:16px;">trending_up</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT GRID -->
+  <div class="content-grid">
+
+    <!-- LEFT: QUICK ACTIONS + RECENT ORDERS -->
+    <div class="content-left">
+
+      <!-- QUICK ACTIONS -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="material-symbols-rounded" style="font-size:20px;">bolt</span>
+            Quick Actions
+          </h2>
+        </div>
+        <div class="quick-actions-grid">
+          <a *ngFor="let action of quickActions"
+             [routerLink]="action.link"
+             class="action-card group">
+            <div class="action-icon-wrap bg-gradient-to-br" [ngClass]="action.color">
+              <span class="material-symbols-rounded filled" style="font-size:24px; color: white;">{{ action.icon }}</span>
+            </div>
+            <div class="action-text">
+              <span class="action-label">{{ action.label }}</span>
+              <span class="action-desc">{{ action.description }}</span>
+            </div>
+            <span class="material-symbols-rounded action-arrow" style="font-size:18px;">chevron_right</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RECENT ORDERS -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="material-symbols-rounded" style="font-size:20px;">receipt_long</span>
+            Recent Orders
+          </h2>
+          <a routerLink="/shop-portal/order-history" class="view-all-link">
+            View All
+            <span class="material-symbols-rounded" style="font-size:16px;">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="orders-table-wrap">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Shop</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of recentOrders"
+                  class="order-row"
+                  [routerLink]="'/orders/details/' + order.id">
+                <td class="order-id">{{ order.id }}</td>
+                <td class="order-shop">{{ order.shop }}</td>
+                <td class="order-date">{{ order.date }}</td>
+                <td class="order-total">₹{{ order.total | number }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="order.statusClass">
+                    {{ order.statusLabel }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: ACTIVITY FEED + ORDER STATUS OVERVIEW -->
+    <div class="content-right">
+
+      <!-- ORDER STATUS OVERVIEW -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="material-symbols-rounded" style="font-size:20px;">donut_large</span>
+            Order Status
+          </h2>
+        </div>
+        <div class="status-overview">
+          <div class="status-bar-item">
+            <div class="status-bar-header">
+              <span class="status-dot bg-amber-400"></span>
+              <span class="status-bar-label">Pending</span>
+              <span class="status-bar-count">{{ pendingOrders }}</span>
+            </div>
+            <div class="status-progress">
+              <div class="progress-fill bg-amber-400" [style.width.%]="weeklyOrders ? (pendingOrders / weeklyOrders * 100) : 0"></div>
+            </div>
+          </div>
+          <div class="status-bar-item">
+            <div class="status-bar-header">
+              <span class="status-dot bg-blue-400"></span>
+              <span class="status-bar-label">Approved</span>
+              <span class="status-bar-count">{{ approvedOrders }}</span>
+            </div>
+            <div class="status-progress">
+              <div class="progress-fill bg-blue-400" [style.width.%]="weeklyOrders ? (approvedOrders / weeklyOrders * 100) : 0"></div>
+            </div>
+          </div>
+          <div class="status-bar-item">
+            <div class="status-bar-header">
+              <span class="status-dot bg-emerald-400"></span>
+              <span class="status-bar-label">Delivered</span>
+              <span class="status-bar-count">{{ deliveredOrders }}</span>
+            </div>
+            <div class="status-progress">
+              <div class="progress-fill bg-emerald-400" [style.width.%]="weeklyOrders ? (deliveredOrders / weeklyOrders * 100) : 0"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITY FEED -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="material-symbols-rounded" style="font-size:20px;">timeline</span>
+            Activity Feed
+          </h2>
+        </div>
+        <div class="activity-list">
+          <div *ngFor="let item of activityFeed" class="activity-item">
+            <div class="activity-icon" [ngClass]="item.color">
+              <span class="material-symbols-rounded" style="font-size:18px;">{{ item.icon }}</span>
+            </div>
+            <div class="activity-content">
+              <p class="activity-text">{{ item.text }}</p>
+              <span class="activity-time">{{ item.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DELIVERY SLOT INFO (SHOP MANAGER) -->
+      <div class="section-card" *ngIf="userRole === 'shop_manager'">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="material-symbols-rounded" style="font-size:20px;">schedule</span>
+            Today's Slots
+          </h2>
+        </div>
+        <div class="slot-list">
+          <div class="slot-item slot-available">
+            <span class="slot-time">5:00 AM – 7:00 AM</span>
+            <span class="slot-badge available">Available</span>
+          </div>
+          <div class="slot-item slot-booked">
+            <span class="slot-time">6:00 AM – 8:00 AM</span>
+            <span class="slot-badge booked">Booked</span>
+          </div>
+          <div class="slot-item slot-available">
+            <span class="slot-time">7:00 AM – 9:00 AM</span>
+            <span class="slot-badge available">Available</span>
+          </div>
+          <div class="slot-item slot-booked">
+            <span class="slot-time">8:00 AM – 10:00 AM</span>
+            <span class="slot-badge booked">Booked</span>
+          </div>
+          <div class="slot-item slot-available">
+            <span class="slot-time">9:00 AM – 11:00 AM</span>
+            <span class="slot-badge available">Available</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

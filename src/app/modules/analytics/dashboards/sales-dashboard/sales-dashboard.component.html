@@ -1,11 +1,11 @@
 <!-- src/app/modules/analytics/dashboards/sales-dashboard/sales-dashboard.component.html -->
 
-<div class="p-6 space-y-8" id="sales-dashboard-report">
+<div class="p-2 space-y-2" id="sales-dashboard-report">
 
   <!-- HEADER -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
     <div>
-      <h1 class="text-2xl font-bold text-gray-900">Sales Dashboard</h1>
+      <h1 class="text-base font-medium text-gray-900">Sales Dashboard</h1>
       <p class="text-sm text-gray-500 mt-1">
         Track revenue, orders, and performance across fruits & cities.
       </p>
@@ -19,9 +19,9 @@
           <button
             type="button"
             (click)="changeFilter(opt)"
-            class="px-4 py-2 text-sm font-medium rounded-lg transition"
+            class="px-2 py-2 text-sm font-medium rounded-lg transition"
             [ngClass]="filter() === opt
-              ? 'bg-blue-600 text-white shadow'
+              ? 'bg-green-600 text-white shadow'
               : 'text-gray-600 hover:bg-white hover:shadow-sm'"
           >
             {{ opt | titlecase }}
@@ -44,30 +44,30 @@
   </div>
 
   <!-- KPI CARDS -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2">
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Revenue</p>
       <p class="mt-3 text-3xl font-bold text-green-600">
         ₹ {{ stats().totalRevenue | number }}
       </p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Total Orders</p>
       <p class="mt-3 text-3xl font-bold text-blue-600">
         {{ stats().totalOrders | number }}
       </p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Avg Order Value</p>
       <p class="mt-3 text-3xl font-bold text-amber-600">
         ₹ {{ stats().avgOrderValue | number }}
       </p>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
       <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Repeat Customers</p>
       <p class="mt-3 text-3xl font-bold text-purple-600">
         {{ stats().repeatCustomers }}%
@@ -76,12 +76,12 @@
   </div>
 
   <!-- CHART ROW 1 -->
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-2">
 
     <!-- SALES TREND -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-base font-semibold text-gray-800">Sales Trend</h2>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-base font-medium text-gray-800">Sales Trend</h2>
         <span class="text-xs text-gray-400">Mock Data → API later</span>
       </div>
 
@@ -93,9 +93,9 @@
     </div>
 
     <!-- REVENUE BY CITY -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-base font-semibold text-gray-800">Revenue by City</h2>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-base font-medium text-gray-800">Revenue by City</h2>
         <span class="text-xs text-gray-400">Top Performing Locations</span>
       </div>
 
@@ -109,11 +109,11 @@
   </div>
 
   <!-- CHART ROW 2 -->
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-2">
 
     <!-- CATEGORY PIE -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 class="text-base font-semibold mb-3">Sales by Category</h2>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
+      <h2 class="text-base font-medium mb-3">Sales by Category</h2>
 
       <apx-chart
         [series]="categoryChart().series"
@@ -123,8 +123,8 @@
     </div>
 
     <!-- MONTH COMPARE -->
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 class="text-base font-semibold mb-3">Month Comparison</h2>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
+      <h2 class="text-base font-medium mb-3">Month Comparison</h2>
 
       <apx-chart
         [series]="monthCompareChart().series"
@@ -136,36 +136,36 @@
   </div>
 
   <!-- GROWTH INSIGHTS -->
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
 
-    <h2 class="text-base font-semibold mb-4">Growth Insights</h2>
+    <h2 class="text-base font-medium mb-2">Growth Insights</h2>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 text-center gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 text-center gap-2">
 
       <div>
         <p class="text-xs text-gray-500">MoM Growth</p>
-        <h2 class="text-xl font-bold" [class]="getGrowthColor(growth().mom)">
+        <h2 class="text-base font-medium" [class]="getGrowthColor(growth().mom)">
           {{ growth().mom }}%
         </h2>
       </div>
 
       <div>
         <p class="text-xs text-gray-500">YoY Growth</p>
-        <h2 class="text-xl font-bold" [class]="getGrowthColor(growth().yoy)">
+        <h2 class="text-base font-medium" [class]="getGrowthColor(growth().yoy)">
           {{ growth().yoy }}%
         </h2>
       </div>
 
       <div>
         <p class="text-xs text-gray-500">Top Performer</p>
-        <h2 class="text-green-600 font-semibold">
+        <h2 class="text-green-600 font-medium">
           {{ growth().best }}
         </h2>
       </div>
 
       <div>
         <p class="text-xs text-gray-500">Weak Performer</p>
-        <h2 class="text-red-600 font-semibold">
+        <h2 class="text-red-600 font-medium">
           {{ growth().weak }}
         </h2>
       </div>
@@ -174,9 +174,9 @@
   </div>
 
   <!-- TOP FRUITS TABLE -->
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-base font-semibold text-gray-800">Top Selling Fruits</h2>
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-2">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-base font-medium text-gray-800">Top Selling Fruits</h2>
       <span class="text-xs text-gray-400">Sorted by Revenue</span>
     </div>
 
@@ -184,22 +184,22 @@
       <table class="min-w-full text-left text-sm">
         <thead class="border-b border-gray-100 text-gray-500 text-xs uppercase">
           <tr>
-            <th class="py-2 pr-4">Fruit</th>
-            <th class="py-2 pr-4">Quantity</th>
-            <th class="py-2 pr-4">Revenue</th>
+            <th class="py-2 pr-2">Fruit</th>
+            <th class="py-2 pr-2">Quantity</th>
+            <th class="py-2 pr-2">Revenue</th>
           </tr>
         </thead>
 
         <tbody>
           @for (item of topFruits(); track item.fruit) {
             <tr class="border-b border-gray-100">
-              <td class="py-2 pr-4 font-medium text-gray-800">
+              <td class="py-2 pr-2 font-medium text-gray-800">
                 {{ item.fruit }}
               </td>
-              <td class="py-2 pr-4 text-gray-700">
+              <td class="py-2 pr-2 text-gray-700">
                 {{ item.qty | number }} KG
               </td>
-              <td class="py-2 pr-4 font-semibold text-gray-900">
+              <td class="py-2 pr-2 font-semibold text-gray-900">
                 ₹ {{ item.revenue | number }}
               </td>
             </tr>

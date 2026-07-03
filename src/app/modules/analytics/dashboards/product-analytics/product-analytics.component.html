@@ -1,8 +1,8 @@
-<div class="p-6 space-y-10" id="product-analytics-screen">
+<div class="p-2 space-y-4" id="product-analytics-screen">
 
   <!-- HEADER -->
   <div class="flex justify-between items-center">
-    <h2 class="text-xl font-bold">Product Analytics</h2>
+    <h2 class="text-base font-medium">Product Analytics</h2>
 
     <div class="flex gap-3 items-center">
 
@@ -11,25 +11,25 @@
         @for(opt of filterOptions; track opt){
           <button (click)="setFilter(opt)"
             [ngClass]="filter()==opt 
-              ? 'bg-blue-600 text-white px-4 py-2 rounded-lg' 
-              : 'px-4 py-2 rounded-lg hover:bg-white'">
+              ? 'bg-green-600 text-white px-2 py-2 rounded-lg' 
+              : 'px-2 py-2 rounded-lg hover:bg-white'">
             {{ opt | titlecase }}
           </button>
         }
       </div>
 
       <!-- Export Buttons -->
-      <button class="px-4 py-2 bg-green-600 text-white rounded" (click)="exportExcel()">
+      <button class="px-2 py-2 bg-green-600 text-white rounded" (click)="exportExcel()">
         Excel
       </button>
-      <button class="px-4 py-2 border rounded" (click)="exportPDF()">
+      <button class="px-2 py-2 border rounded" (click)="exportPDF()">
         PDF
       </button>
     </div>
   </div>
 
   <!-- KPI SUMMARY -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
 
     <kpi-card label="Total Products"
               [value]="summary().totalProducts"
@@ -53,7 +53,7 @@
 
   <!-- CATEGORY PIE CHART -->
   <div class="card">
-    <h3 class="font-semibold mb-4 text-lg">Category Share</h3>
+    <h3 class="font-medium mb-2 text-base">Category Share</h3>
 
     <apx-chart
       [chart]="categoryChart().chart"
@@ -65,7 +65,7 @@
   <!-- MONTHLY REVENUE TREND -->
   <div class="card">
     <div class="flex justify-between items-center mb-3">
-      <h3 class="font-semibold text-lg">Monthly Revenue Trend</h3>
+      <h3 class="font-medium text-base">Monthly Revenue Trend</h3>
       <span class="text-xs text-gray-500">Mock Data • API later</span>
     </div>
 
@@ -78,14 +78,14 @@
 
   <!-- REVENUE HEATMAP -->
   <div class="card">
-    <h3 class="font-semibold text-lg mb-4">Revenue Heatmap</h3>
+    <h3 class="font-medium text-base mb-2">Revenue Heatmap</h3>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
       @for(h of heatmap(); track h.category){
-      <div class="p-4 rounded text-white text-center shadow"
+      <div class="p-2 rounded text-white text-center shadow"
            [style.background]="h.revenue>40000?'#1e3a8a':h.revenue>30000?'#2563eb':
                               h.revenue>20000?'#3b82f6':'#60a5fa'">
-        <h4 class="font-bold">{{h.category}}</h4>
+        <h4 class="font-medium">{{h.category}}</h4>
         <p>₹{{h.revenue}}</p>
       </div>
       }
@@ -96,7 +96,7 @@
   <div class="card">
     
     <div class="flex justify-between items-center mb-3">
-      <h3 class="font-semibold text-lg">Top Selling Products</h3>
+      <h3 class="font-medium text-base">Top Selling Products</h3>
 
       <input placeholder="Search product…"
              (input)="search.set($any($event.target).value)"
@@ -129,7 +129,7 @@
 
   <!-- STOCK STATUS -->
   <div class="card">
-    <h3 class="font-semibold text-lg mb-4">Stock Status</h3>
+    <h3 class="font-medium text-base mb-2">Stock Status</h3>
 
     <table class="table">
       <thead>

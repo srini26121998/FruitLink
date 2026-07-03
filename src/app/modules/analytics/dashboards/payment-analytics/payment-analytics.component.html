@@ -1,15 +1,15 @@
-<div class="p-6 space-y-10">
+<div class="p-2 space-y-4">
 
   <!-- ---------------- HEADER + FILTER ---------------- -->
   <div class="flex justify-between items-center">
-    <h2 class="text-xl font-bold">Payment Analytics</h2>
+    <h2 class="text-base font-medium">Payment Analytics</h2>
 
     <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
       @for (f of filterOptions; track f) {
         <button (click)="setFilter(f)"
           [ngClass]="filter() === f 
-            ? 'bg-blue-600 text-white px-4 py-2 rounded-lg' 
-            : 'px-4 py-2 rounded-lg hover:bg-white'">
+            ? 'bg-green-600 text-white px-2 py-2 rounded-lg' 
+            : 'px-2 py-2 rounded-lg hover:bg-white'">
           {{ f | titlecase }}
         </button>
       }
@@ -17,31 +17,31 @@
   </div>
 
   <!-- ---------------- SUMMARY CARDS ---------------- -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-2">
 
     <div class="card">
       <p class="text-sm text-gray-500">Total Payments</p>
-      <h1 class="text-xl font-bold">{{ summary().totalPayments }}</h1>
+      <h1 class="text-base font-medium">{{ summary().totalPayments }}</h1>
     </div>
 
     <div class="card">
       <p class="text-sm text-gray-500">Successful</p>
-      <h1 class="text-green-600 text-xl font-bold">{{ summary().successful }}</h1>
+      <h1 class="text-green-600 text-base font-medium">{{ summary().successful }}</h1>
     </div>
 
     <div class="card">
       <p class="text-sm text-gray-500">Failed</p>
-      <h1 class="text-red-600 text-xl font-bold">{{ summary().failed }}</h1>
+      <h1 class="text-red-600 text-base font-medium">{{ summary().failed }}</h1>
     </div>
 
     <div class="card">
       <p class="text-sm text-gray-500">Refunded</p>
-      <h1 class="text-amber-600 text-xl font-bold">{{ summary().refunded }}</h1>
+      <h1 class="text-amber-600 text-base font-medium">{{ summary().refunded }}</h1>
     </div>
 
     <div class="card">
       <p class="text-sm text-gray-500">Total Revenue</p>
-      <h1 class="text-purple-600 text-xl font-bold">₹{{ summary().revenue | number }}</h1>
+      <h1 class="text-purple-600 text-base font-medium">₹{{ summary().revenue | number }}</h1>
     </div>
 
   </div>
@@ -49,7 +49,7 @@
   <!-- ---------------- DAILY TREND CHART ---------------- -->
   <div class="card">
     <div class="flex justify-between mb-3">
-      <h3 class="font-semibold text-lg">Daily Payment Trend</h3>
+      <h3 class="font-medium text-base">Daily Payment Trend</h3>
       <span class="text-xs text-gray-500">Mock Data (API later)</span>
     </div>
 
@@ -62,7 +62,7 @@
 
   <!-- ---------------- PAYMENT METHODS CHART ---------------- -->
   <div class="card">
-    <h3 class="font-semibold text-lg mb-3">Payment Methods (Count)</h3>
+    <h3 class="font-medium text-base mb-3">Payment Methods (Count)</h3>
 
     <apx-chart
       [series]="paymentMethodChart().series"
@@ -73,7 +73,7 @@
 
   <!-- ---------------- METHOD REVENUE PIE ---------------- -->
   <div class="card">
-    <h3 class="font-semibold text-lg mb-3">Payment Method Revenue Share</h3>
+    <h3 class="font-medium text-base mb-3">Payment Method Revenue Share</h3>
 
     <apx-chart 
       [series]="methodRevenuePie().series"
@@ -84,7 +84,7 @@
 
   <!-- ---------------- TOP CUSTOMERS TABLE ---------------- -->
   <div class="card">
-    <h3 class="font-semibold text-lg mb-3">Top Paying Customers</h3>
+    <h3 class="font-medium text-base mb-3">Top Paying Customers</h3>
 
     <table class="table w-full">
       <thead>

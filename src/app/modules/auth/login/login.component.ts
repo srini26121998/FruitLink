@@ -61,15 +61,7 @@ export class LoginComponent {
         return;
       }
 
-      if (user.role === 'admin') {
-        await this.router.navigate(['/admin/dashboard']);
-      } else if (user.role === 'shop') {
-        await this.router.navigate(['/shop/dashboard']);
-      } else if (user.role === 'delivery') {
-        await this.router.navigate(['/delivery/gps-tracking']);
-      } else {
-        await this.router.navigate(['/']); // fallback
-      }
+      this.navigateByRole(user.role);
     } catch (err: any) {
       this.error = err?.message || 'Login failed';
     } finally {
@@ -77,17 +69,44 @@ export class LoginComponent {
     }
   }
 
-  // --- Optional quick role switcher buttons for dev testing
+  /** Navigate to appropriate dashboard based on role */
+  private navigateByRole(role: string) {
+    switch (role) {
+      case 'admin':
+        this.router.navigate(['/admin/dashboard']);
+        break;
+      case 'shop_manager':
+        this.router.navigate(['/shop-portal/dashboard']);
+        break;
+      case 'branch_manager':
+        this.router.navigate(['/shop-portal/dashboard']);
+        break;
+      case 'delivery':
+        this.router.navigate(['/delivery/gps-tracking']);
+        break;
+      default:
+        this.router.navigate(['/']);
+    }
+  }
+
+  // --- Quick role switcher buttons for dev testing
   loginAsAdmin() {
     this.auth.loginAsAdmin();
-    this.router.navigate(['/admin/dashboard']);
+    this.navigateByRole('admin');
   }
-  loginAsShop() {
-    this.auth.loginAsShop();
-    this.router.navigate(['/shop/dashboard']);
+
+  loginAsShopManager() {
+    this.auth.loginAsShopManager();
+    this.navigateByRole('shop_manager');
   }
+
+  loginAsBranchManager() {
+    this.auth.loginAsBranchManager();
+    this.navigateByRole('branch_manager');
+  }
+
   loginAsDelivery() {
     this.auth.loginAsDelivery();
-    this.router.navigate(['/delivery/gps-tracking']);
+    this.navigateByRole('delivery');
   }
 }

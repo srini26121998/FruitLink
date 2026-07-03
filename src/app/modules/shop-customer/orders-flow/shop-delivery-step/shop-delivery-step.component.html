@@ -1,6 +1,6 @@
-<div class="bg-white p-6 rounded-xl shadow max-w-3xl mx-auto space-y-4">
+<div class="bg-white p-2 rounded-xl shadow max-w-3xl mx-auto space-y-2">
 
-  <h2 class="text-xl font-bold">Delivery Details</h2>
+  <h2 class="text-base font-medium">Delivery Details</h2>
 
   <form class="grid gap-3" (ngSubmit)="submit()">
 
@@ -22,8 +22,8 @@
     <div class="flex gap-2 flex-wrap">
       @for(s of slots; track s){
         <button type="button"
-          class="px-4 py-2 rounded border"
-          [class.bg-blue-600]="form.value.slot===s"
+          class="px-2 py-2 rounded border"
+          [class.bg-green-600]="form.value.slot===s"
           [class.text-white]="form.value.slot===s"
           (click)="form.patchValue({slot:s})">
           {{s}}
@@ -33,7 +33,7 @@
 
     <textarea class="input mt-2" rows="2" placeholder="Notes" formControlName="notes"></textarea>
 
-    <div class="flex justify-between mt-4">
+    <div class="flex justify-between mt-2">
       <button type="button" class="btn-secondary" (click)="back.emit()">← Back</button>
       <button type="submit" class="btn-primary">Next →</button>
     </div>

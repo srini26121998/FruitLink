@@ -1,0 +1,51 @@
+/* CSS for Print Documents */
+
+.document-page {
+  /* Basic A4 sizing approximation for preview */
+  aspect-ratio: 1 / 1.414;
+}
+
+/* Print specific styles */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  body {
+    background-color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Hide everything except the print area */
+  body * {
+    visibility: hidden;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+  
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .document-page {
+    box-shadow: none !important;
+    max-width: none !important;
+    width: 100% !important;
+    min-height: auto !important;
+  }
+}

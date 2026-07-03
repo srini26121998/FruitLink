@@ -7,14 +7,14 @@ import { OrderCartService } from './../../../../core/services/order-cart.service
   selector: 'app-review-step',
   imports: [CommonModule],
   template: `
-  <div class="bg-white p-6 rounded-xl shadow">
+  <div class="bg-white p-2 rounded-xl shadow">
 
-    <h2 class="text-2xl font-semibold mb-6">Review Orders</h2>
+    <h2 class="text-base font-medium mb-2">Review Orders</h2>
 
-    <div class="overflow-auto border rounded mb-6 max-h-[60vh]">
+    <div class="overflow-auto border rounded mb-2 max-h-[60vh]">
       @for(entry of shopEntries; track entry.shopId) {
-        <div class="p-4 border-b">
-          <h3 class="font-semibold text-lg">{{ entry.shopName }}</h3>
+        <div class="p-2 border-b">
+          <h3 class="font-medium text-base">{{ entry.shopName }}</h3>
 
           <table class="w-full mt-3 text-sm">
             <thead class="bg-gray-100">
@@ -41,8 +41,8 @@ import { OrderCartService } from './../../../../core/services/order-cart.service
     </div>
 
     <div class="flex justify-between">
-      <button class="px-6 py-2 bg-gray-300 rounded" (click)="back.emit()">Back</button>
-      <button class="px-6 py-2 bg-blue-600 text-white rounded" (click)="next.emit()">Confirm Orders</button>
+      <button class="px-2 py-2 bg-gray-300 rounded" (click)="back.emit()">Back</button>
+      <button class="px-2 py-2 bg-green-600 text-white rounded" (click)="next.emit()">Confirm Orders</button>
     </div>
 
   </div>
@@ -57,6 +57,6 @@ export class ReviewStepComponent {
   constructor(private cartService: OrderCartService) {}
 
   ngOnInit() {
-    this.shopEntries = this.cartService.getAllShopOrders();
+    this.shopEntries = [];
   }
 }

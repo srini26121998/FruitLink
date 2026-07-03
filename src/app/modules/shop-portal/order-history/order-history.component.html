@@ -1,0 +1,167 @@
+<div class="p-2 max-w-7xl mx-auto flex flex-col gap-2">
+
+  <!-- Header Section -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+    <div>
+      <h1 class="text-base font-medium text-gray-800 m-0">Order History</h1>
+      <p class="text-sm text-gray-500 mt-1">View and filter your past daily orders</p>
+    </div>
+    
+    <a routerLink="/shop-portal/create-order" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-2.5 rounded-xl font-medium transition-colors shadow-sm">
+      <span class="material-symbols-rounded" style="font-size:20px;">add_circle</span>
+      New Daily Order
+    </a>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="bg-white p-2 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
+    <div class="flex items-center gap-2 text-gray-700 font-semibold pb-2 border-b border-gray-100">
+      <span class="material-symbols-rounded" style="font-size:20px;">filter_list</span>
+      Filter Orders
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+      <!-- Search -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-gray-500">Search</label>
+        <div class="relative">
+          <span class="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" style="font-size:20px;">search</span>
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Order ID or Product..." class="w-full pl-10 pr-2 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all text-sm">
+        </div>
+      </div>
+
+      <!-- Status Filter -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-gray-500">Status</label>
+        <select [(ngModel)]="statusFilter" class="w-full px-2 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all text-sm appearance-none">
+          <option value="All">All Statuses</option>
+          <option *ngFor="let s of admin.statuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <!-- Date Filter -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-gray-500">Date</label>
+        <input type="date" [(ngModel)]="dateFilter" class="w-full px-2 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all text-sm">
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-end gap-2">
+        <button (click)="resetFilters()" class="px-2 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors flex-1 text-center">
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse min-w-[800px]">
+        <thead>
+          <tr>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100">Order Details</th>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100">Date & Slot</th>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100">Items</th>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100">Total Amount</th>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100">Status</th>
+            <th class="py-2 px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50/80 border-b border-gray-100 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <!-- Empty State -->
+          <tr *ngIf="paginatedOrders.length === 0">
+            <td colspan="6" class="py-4 text-center text-gray-500">
+              <div class="flex flex-col items-center justify-center gap-2">
+                <span class="material-symbols-rounded text-gray-300" style="font-size:48px;">receipt_long</span>
+                <p class="font-medium text-gray-600">No orders found</p>
+                <p class="text-sm">Try adjusting your filters or search term</p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Data Rows -->
+          <tr *ngFor="let order of paginatedOrders" class="border-b border-gray-50 hover:bg-gray-50/50 transition-colors group">
+            <td class="py-2 px-2 align-top">
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-800">{{ order.id }}</span>
+                <span class="text-xs text-gray-500 mt-0.5">{{ order.shop }}</span>
+              </div>
+            </td>
+            
+            <td class="py-2 px-2 align-top">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-gray-700">{{ order.date }}</span>
+                <span class="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
+                  <span class="material-symbols-rounded" style="font-size:14px;">schedule</span>
+                  {{ order.slot || 'Standard' }}
+                </span>
+              </div>
+            </td>
+
+            <td class="py-2 px-2 align-top">
+              <div class="flex flex-col gap-1">
+                <span class="text-sm font-medium text-gray-700">{{ order.items.length }} Items</span>
+                <div class="text-xs text-gray-500 line-clamp-2 max-w-[200px]">
+                  <span *ngFor="let item of order.items; let last = last">
+                    {{ item.qty }}{{ item.unitLabel }} {{ item.name }}{{ !last ? ', ' : '' }}
+                  </span>
+                </div>
+              </div>
+            </td>
+
+            <td class="py-2 px-2 align-top">
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-800">₹{{ order.total | number }}</span>
+                <span *ngIf="order.discount" class="text-xs text-emerald-600 mt-0.5 font-medium">
+                  Saved ₹{{ order.discount }}
+                </span>
+              </div>
+            </td>
+
+            <td class="py-2 px-2 align-top">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border whitespace-nowrap"
+                    [ngClass]="getStatusClass(order.status)">
+                {{ getStatusLabel(order.status) }}
+              </span>
+            </td>
+
+            <td class="py-2 px-2 align-top text-center">
+              <a [routerLink]="'/orders/details/' + order.id" 
+                 class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 text-gray-600 hover:bg-emerald-100 hover:text-emerald-700 transition-colors"
+                 title="View Details">
+                <span class="material-symbols-rounded" style="font-size:20px;">visibility</span>
+              </a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex items-center justify-between px-2 py-2 border-t border-gray-100 bg-gray-50/50" *ngIf="totalPages > 1">
+      <span class="text-sm text-gray-500">
+        Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ min(currentPage * itemsPerPage, filteredOrders.length) }} of {{ filteredOrders.length }} entries
+      </span>
+      <div class="flex gap-1">
+        <button [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)" 
+                class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+          <span class="material-symbols-rounded" style="font-size:18px;">chevron_left</span>
+        </button>
+        <button *ngFor="let p of pages" (click)="setPage(p)"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-medium transition-colors"
+                [ngClass]="p === currentPage ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50'">
+          {{ p }}
+        </button>
+        <button [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+          <span class="material-symbols-rounded" style="font-size:18px;">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,8 +1,8 @@
-<div class="bg-white p-6 rounded-xl shadow max-w-xl mx-auto space-y-6">
+<div class="bg-white p-2 rounded-xl shadow max-w-xl mx-auto space-y-2">
 
-  <h2 class="text-xl font-bold">Payment Method</h2>
+  <h2 class="text-base font-medium">Payment Method</h2>
 
-  <form [formGroup]="form" class="space-y-4">
+  <form [formGroup]="form" class="space-y-2">
 
     <!-- Payment Type Buttons -->
     @for(p of paymentModes; track p) {
@@ -51,13 +51,13 @@
     }
 
     <!-- Action Buttons -->
-    <div class="flex justify-between pt-5">
+    <div class="flex justify-between pt-2">
       <button type="button" (click)="back.emit()"
-        class="px-5 py-2 border rounded hover:bg-gray-100">← Back</button>
+        class="px-2 py-2 border rounded hover:bg-gray-100">← Back</button>
 
       <button type="button" (click)="submit()"
         [disabled]="form.invalid"
-        class="px-5 py-2 bg-green-600 text-white rounded disabled:bg-gray-300">
+        class="px-2 py-2 bg-green-600 text-white rounded disabled:bg-gray-300">
         Continue →
       </button>
     </div>

@@ -1,8 +1,8 @@
-<div class="p-6 space-y-10">
+<div class="p-2 space-y-4">
 
   <!-- HEADER -->
   <div class="flex justify-between items-center">
-    <h2 class="text-xl font-bold">Growth Dashboard</h2>
+    <h2 class="text-base font-medium">Growth Dashboard</h2>
 
     <div class="flex gap-3 items-center">
       <!-- Filters -->
@@ -11,8 +11,8 @@
           <button
             (click)="setFilter(f)"
             [ngClass]="filter() === f
-              ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
-              : 'px-4 py-2 rounded-lg hover:bg-white'"
+              ? 'bg-green-600 text-white px-2 py-2 rounded-lg'
+              : 'px-2 py-2 rounded-lg hover:bg-white'"
           >
             {{ f | titlecase }}
           </button>
@@ -22,11 +22,11 @@
   </div>
 
   <!-- KPI SECTION -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
 
     <div class="card">
       <p class="text-xs text-gray-500">Revenue Growth</p>
-      <h2 class="text-2xl font-bold" [ngClass]="getGrowthColor(summary().revenueGrowth)">
+      <h2 class="text-base font-medium" [ngClass]="getGrowthColor(summary().revenueGrowth)">
         {{ summary().revenueGrowth }}%
       </h2>
       <p class="text-xs text-gray-400 mt-1">Compared to previous period</p>
@@ -34,21 +34,21 @@
 
     <div class="card">
       <p class="text-xs text-gray-500">Order Growth</p>
-      <h2 class="text-2xl font-bold" [ngClass]="getGrowthColor(summary().orderGrowth)">
+      <h2 class="text-base font-medium" [ngClass]="getGrowthColor(summary().orderGrowth)">
         {{ summary().orderGrowth }}%
       </h2>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Customer Growth</p>
-      <h2 class="text-2xl font-bold" [ngClass]="getGrowthColor(summary().customerGrowth)">
+      <h2 class="text-base font-medium" [ngClass]="getGrowthColor(summary().customerGrowth)">
         {{ summary().customerGrowth }}%
       </h2>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Retention Rate</p>
-      <h2 class="text-2xl font-bold text-blue-600">
+      <h2 class="text-base font-medium text-blue-600">
         {{ summary().retentionRate }}%
       </h2>
     </div>
@@ -57,7 +57,7 @@
 
   <!-- REVENUE TREND -->
   <div class="card">
-    <h3 class="font-semibold mb-4">Revenue Trend (Monthly)</h3>
+    <h3 class="font-medium mb-2">Revenue Trend (Monthly)</h3>
     <apx-chart
       [chart]="revenueTrendChart().chart"
       [series]="revenueTrendChart().series"
@@ -67,7 +67,7 @@
 
   <!-- REGION PERFORMANCE -->
   <div class="card">
-    <h3 class="font-semibold mb-4">Region Performance</h3>
+    <h3 class="font-medium mb-2">Region Performance</h3>
     <apx-chart
       [chart]="regionChart().chart"
       [series]="regionChart().series"
@@ -77,7 +77,7 @@
 
   <!-- PROFITABILITY -->
   <div class="card">
-    <h3 class="font-semibold mb-4">Profitability Breakdown</h3>
+    <h3 class="font-medium mb-2">Profitability Breakdown</h3>
     <apx-chart
       [chart]="profitChart().chart"
       [series]="profitChart().series"

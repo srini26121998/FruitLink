@@ -1,13 +1,13 @@
-<div class="p-4 md:p-6 space-y-8">
+<div class="p-2 md:p-2 space-y-2">
 
   <!-- ================= PAGE TITLE ================= -->
   <div>
-    <h1 class="text-3xl font-bold animate-fadeIn">Repeat Order</h1>
+    <h1 class="text-base font-medium animate-fadeIn">Repeat Order</h1>
     <p class="text-gray-600">Quickly reorder from your purchase history.</p>
   </div>
 
   <!-- ================= SEARCH + CATEGORY ================= -->
-  <div class="flex flex-col md:flex-row gap-4 items-center">
+  <div class="flex flex-col md:flex-row gap-2 items-center">
 
     <!-- SEARCH -->
     <input
@@ -15,7 +15,7 @@
       [value]="searchText()"
       (input)="onSearch($event)"
       placeholder="Search items..."
-      class="w-full md:w-1/3 px-4 py-2 border rounded-lg shadow-sm
+      class="w-full md:w-1/3 px-2 py-2 border rounded-lg shadow-sm
              focus:ring-primary focus:border-primary outline-none" />
 
     <!-- CATEGORY FILTERS -->
@@ -23,7 +23,7 @@
       @for (cat of categories(); track cat) {
         <button
           (click)="setCategory(cat)"
-          class="px-4 py-2 rounded-full border flex items-center gap-2 transition-all whitespace-nowrap"
+          class="px-2 py-2 rounded-full border flex items-center gap-2 transition-all whitespace-nowrap"
           [ngClass]="{
             'bg-primary text-white border-primary': selectedCategory() === cat,
             'bg-white text-gray-700': selectedCategory() !== cat
@@ -41,15 +41,15 @@
   </div>
 
   <!-- ================= MAIN GRID ================= -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
 
     <!-- ===== LEFT: PAST ORDERS ===== -->
-    <div class="bg-white p-6 border rounded-xl shadow space-y-4 animate-slideUp">
-      <h2 class="text-xl font-semibold">Past Orders</h2>
+    <div class="bg-white p-2 border rounded-xl shadow space-y-2 animate-slideUp">
+      <h2 class="text-base font-medium">Past Orders</h2>
 
       @for (o of ro.pastOrders(); track o.orderId) {
         <div
-          class="p-4 rounded-xl border bg-gray-50 hover:bg-gray-100 cursor-pointer transition-all"
+          class="p-2 rounded-xl border bg-gray-50 hover:bg-gray-100 cursor-pointer transition-all"
           (click)="ro.selectOrder(o)">
           <p class="font-bold">{{ o.orderId }}</p>
           <p class="text-gray-600 text-sm">{{ o.date }}</p>
@@ -61,7 +61,7 @@
     </div>
 
     <!-- ===== RIGHT: ORDER ITEMS ===== -->
-    <div class="md:col-span-2 bg-white p-6 border rounded-xl shadow animate-slideUp">
+    <div class="md:col-span-2 bg-white p-2 border rounded-xl shadow animate-slideUp">
 
       @if (!ro.selectedOrder()) {
         <p class="text-gray-500">Select a past order to view items.</p>
@@ -69,13 +69,13 @@
 
       @if (ro.selectedOrder()) {
 
-        <div class="flex flex-col md:flex-row justify-between items-center mb-4">
-          <h2 class="text-2xl font-semibold">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-2">
+          <h2 class="text-base font-medium">
             Items from {{ ro.selectedOrder().orderId }}
           </h2>
 
           <button
-            class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/80 transition-all"
+            class="bg-primary text-white px-2 py-2 rounded-lg hover:bg-primary/80 transition-all"
             (click)="ro.loadOrderIntoCart()">
             Repeat Entire Order
           </button>
@@ -84,7 +84,7 @@
         <!-- ITEM LOOP -->
         @for (item of filteredItems(); track item.id) {
 
-          <div class="flex flex-col md:flex-row gap-4 py-4 border-b">
+          <div class="flex flex-col md:flex-row gap-2 py-2 border-b">
 
             <!-- INFO -->
             <div class="flex-1">
@@ -129,9 +129,9 @@
 
             <!-- ADD -->
             <button
-              class="px-4 py-2 rounded-lg transition-all"
+              class="px-2 py-2 rounded-lg transition-all"
               [ngClass]="{
-                'bg-blue-600 text-white': !item.added,
+                'bg-green-600 text-white': !item.added,
                 'bg-green-600 text-white animate-pulseScale': item.added
               }"
               (click)="addSingleItem(item)">
@@ -152,12 +152,12 @@
   </div>
 
   <!-- ================= RECOMMENDATIONS ================= -->
-  <div class="mt-6">
-    <h3 class="text-xl font-bold mb-2">Recommended for You</h3>
+  <div class="mt-2">
+    <h3 class="text-base font-medium mb-2">Recommended for You</h3>
 
     <!-- LOADING -->
     @if (recommendationsLoading()) {
-      <div class="flex gap-4 overflow-x-auto">
+      <div class="flex gap-2 overflow-x-auto">
         @for (i of [1,2,3,4]; track i) {
           <div class="w-56 h-32 rounded-xl bg-gray-200 animate-pulse"></div>
         }
@@ -166,12 +166,12 @@
 
     <!-- DATA -->
     @if (!recommendationsLoading()) {
-      <div class="flex gap-4 overflow-x-auto">
+      <div class="flex gap-2 overflow-x-auto">
         @for (rec of recommendations(); track rec.id) {
 
-          <div class="w-56 p-4 border rounded-xl shadow hover:shadow-lg transition-all">
+          <div class="w-56 p-2 border rounded-xl shadow hover:shadow-lg transition-all">
             <div class="flex justify-between items-center">
-              <h4 class="font-semibold">{{ rec.name }}</h4>
+              <h4 class="font-medium">{{ rec.name }}</h4>
 
               <span
                 class="text-xs px-2 py-1 rounded-full"
@@ -204,14 +204,14 @@
 
   <!-- ================= STICKY CART ================= -->
   @if (ro.repeatCart().length > 0) {
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 flex justify-between items-center z-50">
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-2 flex justify-between items-center z-50">
       <div>
         <p class="font-semibold">Items: {{ totalItems }}</p>
         <p class="text-sm text-gray-600">Qty: {{ totalQty }}</p>
       </div>
 
       <button
-        class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/80 transition-all"
+        class="px-2 py-3 bg-primary text-white rounded-lg hover:bg-primary/80 transition-all"
         (click)="goToCart()">
         Proceed to Cart →
       </button>

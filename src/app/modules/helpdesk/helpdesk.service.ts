@@ -3,16 +3,19 @@ import { Observable, of } from 'rxjs';
 
 export interface Ticket {
   id: number;
+  ticketNumber: string;
   title: string;
+  shop: string;
+  category: string;
+  priority: string;
+  description: string;
+  assignedTo: string;
   status: string;
   created: Date;
+  updatedDate: Date;
 }
 
-export interface TicketDetails {
-  id: number;
-  title: string;
-  status: string;
-  created: Date;
+export interface TicketDetails extends Ticket {
   messages: { from: string; message: string; time: Date }[];
 }
 
@@ -26,16 +29,18 @@ export interface FaqItem {
 })
 export class HelpdeskService {
 
-  constructor() {}
+  constructor() { }
+
+
 
   // -----------------------------
   // TICKETS LIST (MOCK)
   // -----------------------------
   getTickets(): Observable<Ticket[]> {
     return of([
-      { id: 1, title: 'Payment issue', status: 'Open', created: new Date() },
-      { id: 2, title: 'Delivery delay', status: 'Closed', created: new Date() },
-      { id: 3, title: 'Order not received', status: 'Pending', created: new Date() }
+      { id: 1, ticketNumber: 'TKT-1001', title: 'Payment issue', shop: 'Main Street Branch', category: 'Payment', priority: 'High', description: 'I made payment but not updated.', assignedTo: 'John Doe', status: 'Open', created: new Date(), updatedDate: new Date() },
+      { id: 2, ticketNumber: 'TKT-1002', title: 'Delivery delay', shop: 'Downtown Store', category: 'Delivery', priority: 'Medium', description: 'Order delayed by 2 hours.', assignedTo: 'Jane Smith', status: 'Closed', created: new Date(Date.now() - 86400000), updatedDate: new Date() },
+      { id: 3, ticketNumber: 'TKT-1003', title: 'Order not received', shop: 'Uptown Market', category: 'Order Issue', priority: 'Urgent', description: 'Customer claims order was not received.', assignedTo: 'Mike Johnson', status: 'Pending', created: new Date(Date.now() - 172800000), updatedDate: new Date(Date.now() - 86400000) }
     ]);
   }
 
@@ -45,9 +50,16 @@ export class HelpdeskService {
   getTicketDetails(id: number): Observable<TicketDetails> {
     return of({
       id,
+      ticketNumber: 'TKT-1001',
       title: 'Payment issue',
+      shop: 'Main Street Branch',
+      category: 'Payment',
+      priority: 'High',
+      description: 'I made payment but not updated.',
+      assignedTo: 'John Doe',
       status: 'Open',
       created: new Date(),
+      updatedDate: new Date(),
       messages: [
         { from: 'User', message: 'I made payment but not updated', time: new Date() },
         { from: 'Support', message: 'We are checking', time: new Date() }

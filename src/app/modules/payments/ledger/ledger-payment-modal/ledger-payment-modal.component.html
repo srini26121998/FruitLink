@@ -1,11 +1,11 @@
 <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
-  <div class="bg-white p-6 rounded-xl w-96 shadow-lg animate-fadeIn">
+  <div class="bg-white p-2 rounded-xl w-96 shadow-lg animate-fadeIn">
 
-    <h2 class="text-lg font-bold mb-2">Add Payment Entry</h2>
-    <p class="text-sm text-gray-600 mb-4">Outstanding: ₹ {{ outstanding }}</p>
+    <h2 class="text-base font-medium mb-2">Add Payment Entry</h2>
+    <p class="text-sm text-gray-600 mb-2">Outstanding: ₹ {{ outstanding }}</p>
 
-    <form [formGroup]="form" class="space-y-4">
+    <form [formGroup]="form" class="space-y-2">
 
       <div>
         <label>Amount</label>
@@ -27,8 +27,8 @@
         class="w-full border p-2 rounded h-16"></textarea>
 
       <div class="flex justify-end gap-3">
-        <button class="px-4 py-2 border rounded" (click)="close.emit()">Cancel</button>
-        <button class="px-4 py-2 bg-green-600 text-white rounded" (click)="submit()">
+        <button class="px-2 py-2 border rounded" (click)="close.emit()">Cancel</button>
+        <button class="px-2 py-2 bg-green-600 text-white rounded" (click)="submit()">
           Add Payment
         </button>
       </div>

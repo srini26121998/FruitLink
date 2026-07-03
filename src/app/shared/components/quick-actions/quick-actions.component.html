@@ -1,9 +1,9 @@
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 my-4">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 my-2">
 
   <button 
     *ngFor="let action of actions"
     (click)="handleClick(action)"
-    class="flex flex-col items-center justify-center bg-white shadow rounded-xl p-4 hover:bg-blue-50 transition cursor-pointer"
+    class="flex flex-col items-center justify-center bg-white shadow rounded-xl p-2 hover:bg-blue-50 transition cursor-pointer"
   >
     <div class="text-3xl mb-2">
       {{ action.icon || '⚡' }}

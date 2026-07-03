@@ -36,7 +36,7 @@ export class RepeatOrderService {
   loadOrderIntoCart() {
     const order = this.selectedOrder();
     if (!order) return;
-    this.repeatCart.set(order.items.map(item => ({ ...item })));
+    this.repeatCart.set(order.items.map((item: any) => ({ ...item })));
   }
 
   updateQty(id: string, delta: number) {

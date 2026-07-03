@@ -1,18 +1,18 @@
-<div class="p-6 space-y-8" id="sales-drilldown-report">
+<div class="p-2 space-y-2" id="sales-drilldown-report">
 
   <!-- ================= HEADER ================= -->
   <div class="flex justify-between items-center">
-    <h2 class="text-2xl font-bold">Sales Drilldown</h2>
+    <h2 class="text-base font-medium">Sales Drilldown</h2>
 
     <div class="flex gap-2">
       <button
-        class="px-4 py-2 border rounded hover:bg-gray-50"
+        class="px-2 py-2 border rounded hover:bg-gray-50"
         (click)="exportCSV()">
         Export Excel
       </button>
 
       <button
-        class="px-4 py-2 border rounded hover:bg-gray-50"
+        class="px-2 py-2 border rounded hover:bg-gray-50"
         (click)="exportPDF()">
         Download PDF
       </button>
@@ -20,53 +20,53 @@
   </div>
 
   <!-- ================= KPI CARDS ================= -->
-  <div class="grid grid-cols-2 lg:grid-cols-7 gap-4">
+  <div class="grid grid-cols-2 lg:grid-cols-7 gap-2">
 
     <div class="card">
       <p class="text-xs text-gray-500">Orders</p>
-      <h3 class="text-xl font-bold">
+      <h3 class="text-base font-medium">
         {{ formatNumber(kpis().totalOrders) }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Revenue</p>
-      <h3 class="text-xl font-bold text-green-600">
+      <h3 class="text-base font-medium text-green-600">
         {{ formatCurrency(kpis().totalRevenue) }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Quantity (Kg)</p>
-      <h3 class="text-xl font-bold">
+      <h3 class="text-base font-medium">
         {{ formatNumber(kpis().totalQuantityKg) }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Avg Order Value</p>
-      <h3 class="text-xl font-bold">
+      <h3 class="text-base font-medium">
         {{ formatCurrency(kpis().avgOrderValue) }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Items / Order</p>
-      <h3 class="text-xl font-bold">
+      <h3 class="text-base font-medium">
         {{ kpis().avgItemsPerOrder }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Active Customers</p>
-      <h3 class="text-xl font-bold">
+      <h3 class="text-base font-medium">
         {{ formatNumber(kpis().activeCustomers) }}
       </h3>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Repeat %</p>
-      <h3 class="text-xl font-bold text-blue-600">
+      <h3 class="text-base font-medium text-blue-600">
         {{ kpis().repeatCustomerRate }}%
       </h3>
     </div>
@@ -76,7 +76,7 @@
   <!-- ================= SALES TABLE ================= -->
   <div class="card">
 
-    <h3 class="font-semibold mb-4">Sales Orders</h3>
+    <h3 class="font-medium mb-2">Sales Orders</h3>
 
     <table class="w-full text-sm">
       <thead class="border-b text-xs uppercase text-gray-500">

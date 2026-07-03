@@ -1,0 +1,284 @@
+.shop-portal-dashboard {
+  @apply flex flex-col gap-6 w-full max-w-7xl mx-auto;
+}
+
+/* HERO HEADER */
+.hero-header {
+  @apply bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl shadow-lg overflow-hidden relative text-white mt-2;
+}
+
+.hero-content {
+  @apply flex justify-between items-center p-8;
+}
+
+.hero-text {
+  @apply flex flex-col gap-2 z-10;
+}
+
+.greeting-row {
+  @apply flex items-center gap-4 flex-wrap;
+}
+
+.greeting {
+  @apply text-3xl font-bold m-0 tracking-tight;
+}
+
+.role-badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-sm font-medium border border-white/30;
+}
+
+.date-text {
+  @apply text-emerald-100 font-medium;
+}
+
+.hero-illustration {
+  @apply absolute right-0 top-0 bottom-0 w-1/3 flex items-center justify-end pr-12 opacity-20 pointer-events-none;
+}
+
+.illustration-circle {
+  @apply w-48 h-48 rounded-full border-4 border-white flex items-center justify-center;
+}
+
+/* KPI CARDS */
+.kpi-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4;
+}
+
+.kpi-card {
+  @apply bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col gap-4 relative overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+}
+
+.kpi-icon-wrap {
+  @apply w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm;
+}
+
+.bg-emerald { @apply bg-emerald-500; }
+.bg-amber { @apply bg-amber-500; }
+.bg-blue { @apply bg-blue-500; }
+.bg-green { @apply bg-green-500; }
+.bg-violet { @apply bg-violet-500; }
+.bg-rose { @apply bg-rose-500; }
+
+.kpi-info {
+  @apply flex flex-col;
+}
+
+.kpi-value {
+  @apply text-2xl font-bold text-gray-800;
+}
+
+.kpi-label {
+  @apply text-sm font-medium text-gray-500;
+}
+
+.kpi-trend {
+  @apply absolute top-5 right-5 w-6 h-6 rounded-full flex items-center justify-center;
+}
+
+.kpi-trend.up {
+  @apply bg-emerald-50 text-emerald-600;
+}
+
+.kpi-trend.neutral {
+  @apply bg-gray-50 text-gray-400;
+}
+
+/* MAIN CONTENT GRID */
+.content-grid {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-6;
+}
+
+.content-left {
+  @apply lg:col-span-2 flex flex-col gap-6;
+}
+
+.content-right {
+  @apply lg:col-span-1 flex flex-col gap-6;
+}
+
+/* SECTION CARDS */
+.section-card {
+  @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-6;
+}
+
+.section-header {
+  @apply flex justify-between items-center border-b border-gray-50 pb-4;
+}
+
+.section-title {
+  @apply text-lg font-bold text-gray-800 flex items-center gap-2 m-0;
+}
+
+.view-all-link {
+  @apply flex items-center gap-1 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors;
+}
+
+/* QUICK ACTIONS */
+.quick-actions-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.action-card {
+  @apply flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-emerald-200 hover:bg-emerald-50/30 transition-all duration-200 cursor-pointer;
+}
+
+.action-icon-wrap {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center shadow-sm shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3;
+}
+
+.action-text {
+  @apply flex flex-col flex-1;
+}
+
+.action-label {
+  @apply font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors;
+}
+
+.action-desc {
+  @apply text-xs text-gray-500 mt-0.5;
+}
+
+.action-arrow {
+  @apply text-gray-300 group-hover:text-emerald-500 transition-colors group-hover:translate-x-1;
+}
+
+/* ORDERS TABLE */
+.orders-table-wrap {
+  @apply overflow-x-auto;
+}
+
+.orders-table {
+  @apply w-full text-left border-collapse;
+}
+
+.orders-table th {
+  @apply py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100 bg-gray-50/50;
+}
+
+.order-row {
+  @apply border-b border-gray-50 hover:bg-gray-50/50 transition-colors cursor-pointer;
+}
+
+.order-row:last-child {
+  @apply border-b-0;
+}
+
+.order-row td {
+  @apply py-4 px-4 text-sm align-middle;
+}
+
+.order-id {
+  @apply font-semibold text-gray-800;
+}
+
+.order-shop {
+  @apply font-medium text-gray-700;
+}
+
+.order-date {
+  @apply text-gray-500;
+}
+
+.order-total {
+  @apply font-bold text-gray-800;
+}
+
+.status-badge {
+  @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium border whitespace-nowrap;
+}
+
+/* ORDER STATUS OVERVIEW */
+.status-overview {
+  @apply flex flex-col gap-5;
+}
+
+.status-bar-item {
+  @apply flex flex-col gap-2;
+}
+
+.status-bar-header {
+  @apply flex items-center gap-2;
+}
+
+.status-dot {
+  @apply w-2.5 h-2.5 rounded-full;
+}
+
+.status-bar-label {
+  @apply text-sm font-medium text-gray-600 flex-1;
+}
+
+.status-bar-count {
+  @apply text-sm font-bold text-gray-800;
+}
+
+.status-progress {
+  @apply h-2 w-full bg-gray-100 rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full rounded-full transition-all duration-1000 ease-out;
+}
+
+/* ACTIVITY FEED */
+.activity-list {
+  @apply flex flex-col gap-6 relative;
+}
+
+.activity-list::before {
+  content: '';
+  @apply absolute left-[15px] top-4 bottom-4 w-px bg-gray-200 z-0;
+}
+
+.activity-item {
+  @apply flex gap-4 relative z-10;
+}
+
+.activity-icon {
+  @apply w-8 h-8 rounded-full bg-white border-2 border-white shadow-sm flex items-center justify-center shrink-0 z-10;
+}
+
+.activity-content {
+  @apply flex flex-col pt-1;
+}
+
+.activity-text {
+  @apply text-sm font-medium text-gray-800 m-0 leading-tight;
+}
+
+.activity-time {
+  @apply text-xs text-gray-500 mt-1;
+}
+
+/* SLOT LIST */
+.slot-list {
+  @apply flex flex-col gap-3;
+}
+
+.slot-item {
+  @apply flex justify-between items-center p-3 rounded-lg border text-sm;
+}
+
+.slot-available {
+  @apply border-emerald-100 bg-emerald-50/30;
+}
+
+.slot-booked {
+  @apply border-gray-100 bg-gray-50 opacity-75;
+}
+
+.slot-time {
+  @apply font-medium text-gray-800;
+}
+
+.slot-badge {
+  @apply px-2 py-0.5 rounded text-xs font-medium;
+}
+
+.slot-badge.available {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+.slot-badge.booked {
+  @apply bg-gray-200 text-gray-600;
+}

@@ -1,6 +1,6 @@
-<div class="p-6 space-y-6">
+<div class="p-2 space-y-2">
 
-<h1 class="text-3xl font-bold">Your Cart</h1>
+<h1 class="text-base font-medium">Your Cart</h1>
 
 @if (cart.cart().length === 0) {
   <p class="text-gray-500">Your cart is empty.</p>
@@ -8,11 +8,11 @@
 
 @if (cart.cart().length > 0) {
 
-<div class="space-y-4">
+<div class="space-y-2">
 
   @for (item of cart.cart(); track item.id) {
 
-    <div class="flex justify-between items-center p-4 bg-white border rounded-xl shadow-sm">
+    <div class="flex justify-between items-center p-2 bg-white border rounded-xl shadow-sm">
 
       <div>
         <p class="font-semibold text-lg">{{ item.name }}</p>
@@ -50,9 +50,9 @@
 </div>
 
 <!-- Summary Block -->
-<div class="mt-6 p-6 bg-white border rounded-xl shadow">
+<div class="mt-2 p-2 bg-white border rounded-xl shadow">
 
-  <h2 class="text-xl font-semibold pb-2">Order Summary</h2>
+  <h2 class="text-base font-medium pb-2">Order Summary</h2>
 
   <div class="flex justify-between">
     <span>Total Items:</span>
@@ -67,7 +67,7 @@
 
   </div>
 
-  <button class="w-full bg-green-600 text-white px-4 py-3 rounded-lg text-lg mt-4"
+  <button class="w-full bg-green-600 text-white px-2 py-3 rounded-lg text-lg mt-2"
     routerLink="/shop/checkout">
     Proceed to Checkout →
   </button>
@@ -75,9 +75,9 @@
 </div>
 
 <!-- Billing -->
-<div class="bg-white p-6 border rounded-xl shadow space-y-3 mt-6">
+<div class="bg-white p-2 border rounded-xl shadow space-y-3 mt-2">
 
-  <h2 class="text-xl font-semibold mb-2">Price Details</h2>
+  <h2 class="text-base font-medium mb-2">Price Details</h2>
 
   <div class="flex justify-between">
     <span>Subtotal:</span><b>₹ {{ cart.pricing.subtotal }}</b>

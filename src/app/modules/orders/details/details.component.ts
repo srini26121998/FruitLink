@@ -43,11 +43,26 @@ export class OrderDetailsComponent {
     return this.subtotal + this.gst - this.discount;
   }
 
+  get orderTypeLabel(): string {
+    return this.order?.orderType === 'bulk' ? 'Bulk Order' : 'Daily Order';
+  }
+
+  get orderTypeBadgeClass(): string {
+    return this.order?.orderType === 'bulk'
+      ? 'bg-violet-50 text-violet-700 border-violet-200'
+      : 'bg-teal-50 text-teal-700 border-teal-200';
+  }
+
+  getStatusClass(status: number): string {
+    const colors = this.admin.statusColors[status];
+    return colors ? `${colors.bg} ${colors.text} ${colors.border}` : '';
+  }
+
   // ------------------------------------------------------------
 
   advance() {
     if (!this.order) return;
-    if (this.order.status < 5) {
+    if (this.order.status < 6) {
       this.admin.updateOrderStatus(this.order.id, this.order.status + 1);
       this.order = this.admin.getOrderById(this.orderId);
 

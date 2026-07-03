@@ -9,13 +9,13 @@ import { DeliveryStatus } from '../../models/delivery-status.enum';
   selector: 'app-driver-order-progress',
   imports: [CommonModule],
   template: `
-    <div class="p-4 space-y-6">
+    <div class="p-2 space-y-2">
 
-      <h2 class="text-xl font-semibold">
+      <h2 class="text-base font-medium">
         Order Progress
       </h2>
 
-      <ul class="space-y-4">
+      <ul class="space-y-2">
 
         <li class="flex gap-3 items-center">
           <span class="w-4 h-4 bg-green-600 rounded-full"></span>

@@ -46,13 +46,49 @@ export class SidebarService {
      * ----------------------------------------- */
     const MENU: MenuItem[] = [
 
-      /* ------------ DASHBOARD ------------- */
+      /* ------------ ADMIN DASHBOARD ------------- */
       {
         id: 'dashboard',
         label: 'Admin Dashboard',
         icon: 'dashboard',
         link: '/admin/dashboard',
-        permission: 'dashboard.view'
+        permission: 'dashboard.view',
+        roles: ['admin', 'superadmin']
+      },
+
+      /* ------------ SHOP PORTAL DASHBOARD ------------- */
+      {
+        id: 'shop-portal-dashboard',
+        label: 'My Dashboard',
+        icon: 'space_dashboard',
+        link: '/shop-portal/dashboard',
+        permission: 'shop.dashboard.view',
+        roles: ['shop_manager', 'branch_manager']
+      },
+
+      /* ------------ SHOP MANAGER: DAILY ORDERS ------------- */
+      {
+        id: 'shop-orders',
+        label: 'My Orders',
+        icon: 'receipt_long',
+        permission: 'orders.view',
+        roles: ['shop_manager', 'branch_manager'],
+        children: [
+          { label: 'Create Daily Order', icon: 'add_circle', link: '/shop-portal/create-order', permission: 'orders.create' },
+          { label: 'Order History', icon: 'history', link: '/shop-portal/order-history', permission: 'orders.history.view' },
+          { label: 'Track Orders', icon: 'track_changes', link: '/shop-portal/track-orders', permission: 'orders.track.view' },
+          { label: 'Print Documents', icon: 'print', link: '/shop-portal/print-documents', permission: 'orders.print.delivery' }
+        ]
+      },
+
+      /* ------------ BRANCH MANAGER: APPROVE ------------- */
+      {
+        id: 'branch-approve',
+        label: 'Order Approvals',
+        icon: 'verified',
+        link: '/orders/approve',
+        permission: 'orders.approve',
+        roles: ['branch_manager']
       },
 
       /* ------------ SHOP CUSTOMER ------------ */
@@ -73,30 +109,39 @@ export class SidebarService {
         ]
       },
 
-      /* ------------ ORDERS ------------- */
+      /* ------------ SHOP MANAGEMENT (ADMIN) ------------ */
+      {
+        id: 'shop-management',
+        label: 'Shop Management',
+        icon: 'store',
+        roles: ['admin', 'superadmin', 'branch_manager'],
+        children: [
+          { label: 'Dashboard', icon: 'dashboard', link: '/shop-management/dashboard' },
+          { label: 'Shop List', icon: 'list', link: '/shop-management/list' },
+          { label: 'Create Shop', icon: 'add_business', link: '/shop-management/create', roles: ['admin', 'superadmin'] },
+          { label: 'Analytics', icon: 'analytics', link: '/shop-management/analytics' },
+          { label: 'Assign Salesman', icon: 'assignment_ind', link: '/shop-management/salesman-assign', roles: ['admin', 'superadmin'] },
+          { label: 'Follow-ups', icon: 'support_agent', link: '/shop-management/follow-ups' },
+          { label: 'Reports', icon: 'description', link: '/shop-management/reports', roles: ['admin', 'superadmin'] }
+        ]
+      },
+
+      /* ------------ ORDERS (ADMIN) ------------- */
       {
         id: 'orders',
         label: 'Orders',
         icon: 'assignment',
         permission: 'orders.view',
+        roles: ['admin', 'superadmin'],
         children: [
           { label: 'Order List', icon: 'list', link: '/orders/list', permission: 'orders.view' },
           { label: 'Create Order', icon: 'add', link: '/orders/create', permission: 'orders.create' },
-          { label: 'Approve Orders', icon: 'verified', link: '/orders/approve', permission: 'orders.approve' }
+          { label: 'Manage Orders', icon: 'tune', link: '/orders/manage', permission: 'orders.view' },
+          { label: 'Approve Orders', icon: 'verified', link: '/orders/approve', permission: 'orders.approve' },
+          { label: 'Delivery Update', icon: 'local_shipping', link: '/orders/delivery-update', permission: 'orders.delivery.update' }
         ]
       },
 
-      /* ------------ PRODUCTS ------------- */
-      {
-        id: 'products',
-        label: 'Products',
-        icon: 'inventory_2',
-        permission: 'products.view',
-        children: [
-          { label: 'Product List', icon: 'list', link: '/products/list' },
-          { label: 'Add Product', icon: 'add', link: '/products/create' }
-        ]
-      },
 
       /* ------------ PAYMENTS ------------- */
       {
@@ -120,10 +165,10 @@ export class SidebarService {
         children: [
           { label: 'Weekly', icon: 'bar_chart', link: '/reports/weekly' },
           { label: 'Monthly', icon: 'calendar_month', link: '/reports/monthly' },
-          { label: 'Yearly', icon: 'event', link: '/reports/yearly' },
-          { label: 'Top Fruits', icon: 'favorite', link: '/reports/top-fruits' },
-          { label: 'Pending Payments', icon: 'pending', link: '/reports/pending-payments' },
-          { label: 'Shop Frequency', icon: 'trending_up', link: '/reports/shop-frequency' }
+          { label: 'Yearly', icon: 'event', link: '/reports/yearly', roles: ['admin', 'superadmin'] },
+          { label: 'Top Fruits', icon: 'favorite', link: '/reports/top-fruits', roles: ['admin', 'superadmin'] },
+          { label: 'Pending Payments', icon: 'pending', link: '/reports/pending-payments', roles: ['admin', 'superadmin'] },
+          { label: 'Shop Frequency', icon: 'trending_up', link: '/reports/shop-frequency', roles: ['admin', 'superadmin'] }
         ]
       },
 
@@ -213,6 +258,17 @@ export class SidebarService {
         ]
       },
 
+      /* ------------ NOTIFICATIONS ------------- */
+      {
+        id: 'notifications',
+        label: 'Notifications',
+        icon: 'notifications_active',
+        children: [
+          { label: 'All Notifications', icon: 'list', link: '/notifications/list' },
+          { label: 'Notification Panel', icon: 'dashboard', link: '/notifications/panel' }
+        ]
+      },
+
       /* ------------ AUDIT LOGS ------------- */
       {
         id: 'audit',
@@ -235,7 +291,8 @@ export class SidebarService {
         id: 'settings',
         label: 'Settings',
         icon: 'settings',
-        link: '/settings'
+        link: '/settings',
+        roles: ['admin', 'superadmin']
       }
     ];
 

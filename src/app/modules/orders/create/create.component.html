@@ -1,91 +1,284 @@
-<div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
-  <!-- Header -->
-  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-    <div>
-      <h1 class="text-2xl font-bold text-gray-900">Create Order</h1>
-      <p class="text-sm text-gray-500">Fill in the details to create a new order</p>
+<!-- Success Overlay -->
+@if (showOrderSuccess) {
+<div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
+  <div class="bg-white rounded-3xl p-4 text-center shadow-2xl anim-pop max-w-sm mx-2">
+    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+      <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
     </div>
-    <button class="px-4 py-1.5 bg-white border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
-      Import Data
-    </button>
+    <h3 class="text-base font-medium text-gray-900 mb-2">Order Created!</h3>
+    <p class="text-gray-400 text-sm">Redirecting to order list...</p>
+  </div>
+</div>
+}
+
+<div class="p-2 md:p-2 max-w-[1500px] mx-auto space-y-2">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 anim-up">
+    <a routerLink="/orders/list" class="p-2 hover:bg-gray-100 rounded-xl transition-colors">
+      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+    </a>
+    <div>
+      <h1 class="text-base font-medium text-gray-900 tracking-tight">Create New Order</h1>
+      <p class="text-xs text-gray-400 mt-0.5">Select shop, pick products and confirm daily order</p>
+    </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Customer Details -->
-    <div class="lg:col-span-1 space-y-4 bg-white p-5 rounded-lg shadow-sm border border-gray-200 h-fit">
-      <h2 class="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">Customer Details</h2>
-      
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-        <input type="text" [(ngModel)]="customer.name" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2 border" placeholder="Enter full name">
-      </div>
-      
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-        <input type="text" [(ngModel)]="customer.phone" (keypress)="allowOnlyNumbers($event)" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2 border" placeholder="Enter phone number">
-      </div>
-      
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
-        <textarea [(ngModel)]="customer.address" rows="3" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2 border" placeholder="Enter delivery address"></textarea>
-      </div>
-    </div>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-2">
 
-    <!-- Order Items -->
-    <div class="lg:col-span-2 space-y-4 bg-white p-5 rounded-lg shadow-sm border border-gray-200">
-      <div class="flex items-center justify-between border-b pb-3 mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Order Items</h2>
-        <button (click)="addItem()" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-md text-sm font-medium hover:bg-gray-200 flex items-center gap-1">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          Add Product
-        </button>
-      </div>
+    <!-- ─── LEFT: Shop Details + Cart ─── -->
+    <div class="lg:col-span-4 space-y-2">
 
-      <div class="space-y-4">
-        <div *ngFor="let item of items; let i = index" class="flex flex-col sm:flex-row items-end gap-3 p-4 bg-gray-50 border border-gray-200 rounded-md">
-          
-          <div class="flex-1 w-full">
-            <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Product</label>
-            <select [(ngModel)]="item.fruit" (change)="updatePrice(i)" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2 border bg-white">
-              <option value="" disabled selected>Select product...</option>
-              <option *ngFor="let f of fruits" [value]="f.name">{{ f.name }}</option>
+      <!-- Shop Details -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden anim-up delay-1">
+        <div class="px-2 py-3.5 border-b border-gray-100 bg-gradient-to-r from-green-50 to-emerald-50 flex items-center gap-2">
+          <div class="p-1.5 bg-green-100 rounded-lg">
+            <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h2 class="text-sm font-medium text-gray-800">Shop Details</h2>
+        </div>
+        <div class="p-2 space-y-3.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Shop Name *</label>
+            <select [(ngModel)]="shopName" class="w-full border border-gray-200 rounded-xl px-2 py-2.5 text-sm focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none bg-gray-50 transition-all">
+              <option value="" disabled>Select a shop...</option>
+              <option *ngFor="let shop of shops" [value]="shop">{{ shop }}</option>
             </select>
           </div>
-
-          <div class="w-full sm:w-24">
-            <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Qty</label>
-            <input type="number" [(ngModel)]="item.quantity" (input)="updateTotal(i)" min="1" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm p-2 border">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Order Date *</label>
+              <input type="date" [(ngModel)]="orderDate" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none bg-gray-50 transition-all" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Delivery Slot *</label>
+              <select [(ngModel)]="deliverySlot" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none bg-gray-50 transition-all">
+                <option value="" disabled>Select...</option>
+                <option *ngFor="let slot of deliverySlots" [value]="slot">{{ slot }}</option>
+              </select>
+            </div>
           </div>
-
-          <div class="w-full sm:w-28">
-            <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Rate (₹)</label>
-            <input type="number" [(ngModel)]="item.price" readonly class="w-full border-gray-300 rounded-md shadow-sm bg-gray-100 sm:text-sm p-2 border text-gray-600">
+          <div>
+            <label class="block text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">Notes (Optional)</label>
+            <textarea [(ngModel)]="orderNotes" rows="2" placeholder="Special instructions..." class="w-full border border-gray-200 rounded-xl px-2 py-2.5 text-sm focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none bg-gray-50 transition-all resize-none"></textarea>
           </div>
-
-          <div class="w-full sm:w-28">
-            <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Total (₹)</label>
-            <div class="font-bold text-gray-900 p-2 text-base">₹{{ item.total }}</div>
-          </div>
-
-          <button (click)="removeItem(i)" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors" title="Remove item">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-          </button>
         </div>
       </div>
-      
-      <div *ngIf="items.length === 0" class="text-center py-8 text-gray-500 text-sm border-2 border-dashed border-gray-200 rounded-md">
-        Your cart is empty. Add a product to get started.
-      </div>
 
-      <div class="mt-8 pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span class="block text-sm font-medium text-gray-500">Total Amount</span>
-          <span class="text-2xl font-bold text-gray-900">₹{{ orderTotal }}</span>
+      <!-- Cart -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden anim-up delay-2">
+        <div class="px-2 py-3.5 border-b border-gray-100 bg-gray-50/60 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="p-1.5 bg-gray-200/60 rounded-lg">
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+            </div>
+            <h2 class="text-sm font-medium text-gray-800">Cart</h2>
+          </div>
+          @if (items.length > 0) {
+            <span class="bg-green-100 text-green-700 text-xs font-bold px-2.5 py-0.5 rounded-full">{{ itemCount }} items</span>
+          }
         </div>
-        <button (click)="submitOrder()" class="w-full sm:w-auto px-6 py-1.5 bg-green-600 text-white rounded-md shadow-sm hover:bg-green-700 font-medium transition-colors focus:ring-4 focus:ring-green-100">
-          Confirm Order
-        </button>
+        <div class="p-2">
+          @if (items.length === 0) {
+            <div class="text-center py-2 text-gray-300">
+              <svg class="w-10 h-10 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+              <p class="text-sm font-medium text-gray-400">Cart is empty</p>
+              <p class="text-xs mt-0.5 text-gray-300">Browse products to add items</p>
+            </div>
+          } @else {
+            <div class="space-y-2 max-h-[280px] overflow-y-auto pr-1">
+              @for (item of items; track item.productId; let i = $index) {
+                <div class="flex items-center gap-2.5 p-2.5 bg-gray-50 rounded-xl border border-gray-100 hover:border-green-200 transition-all group">
+                  <span class="text-base flex-shrink-0">{{ getCategoryIcon(item.category) }}</span>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-gray-900 truncate">{{ item.name }}</p>
+                    <p class="text-[10px] text-gray-400">₹{{ item.price }}/{{ item.unit }}</p>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <button (click)="item.quantity = item.quantity > 1 ? item.quantity - 1 : 1; updateItemTotal(i)" class="w-6 h-6 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-green-300 hover:text-green-600 transition-all text-sm font-bold">−</button>
+                    <input type="number" [(ngModel)]="item.quantity" (input)="updateItemTotal(i)" min="1" class="w-10 text-center text-xs font-bold border border-gray-200 rounded-lg py-1 outline-none focus:border-green-400" />
+                    <button (click)="item.quantity = item.quantity + 1; updateItemTotal(i)" class="w-6 h-6 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-green-300 hover:text-green-600 transition-all text-sm font-bold">+</button>
+                  </div>
+                  <p class="text-xs font-bold text-gray-900 w-14 text-right">₹{{ item.total }}</p>
+                  <button (click)="removeItem(i)" class="p-1 text-gray-300 hover:text-red-500 transition-colors flex-shrink-0">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              }
+            </div>
+            <div class="mt-3 pt-3 border-t border-gray-100">
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-xs text-gray-500 font-medium">Order Total</span>
+                <span class="text-xl font-bold text-gray-900">₹{{ orderTotal | number }}</span>
+              </div>
+              <button (click)="submitOrder()" [disabled]="!shopName || !deliverySlot || items.length === 0"
+                class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-green-600 shadow-lg shadow-green-200/50 transition-all active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 text-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Confirm Order
+              </button>
+            </div>
+          }
+        </div>
       </div>
     </div>
+
+    <!-- ─── RIGHT: Product Catalog ─── -->
+    <div class="lg:col-span-8 anim-up delay-3">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden" style="height: 680px; display:flex; flex-direction:column;">
+
+        <!-- Catalog Header -->
+        <div class="px-2 py-3.5 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <div class="p-1.5 bg-green-100 rounded-lg">
+              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            </div>
+            <h2 class="text-sm font-medium text-gray-800">Product Catalog</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">{{ availableProducts.length }} products</span>
+            @if (items.length > 0) {
+              <span class="text-xs text-green-700 bg-green-100 px-2.5 py-1 rounded-full font-semibold">{{ itemCount }} in cart</span>
+            }
+          </div>
+        </div>
+
+        <!-- Body: sidebar + panel -->
+        <div class="catalog-shell flex-1 min-h-0">
+
+          <!-- ── Category Sidebar ── -->
+          <div class="cat-sidebar">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-2 mb-1">Categories</p>
+
+            <button class="cat-btn" [class.active]="selectedCategory === 'All'" (click)="selectedCategory = 'All'">
+              <span class="cat-icon">🏪</span>
+              <span class="cat-name">All Products</span>
+              <span class="cat-count">{{ getTotalCount() }}</span>
+            </button>
+
+            @for (cat of categories; track cat) {
+              <button class="cat-btn" [class.active]="selectedCategory === cat" (click)="selectedCategory = cat">
+                <span class="cat-icon">{{ getCategoryIcon(cat) }}</span>
+                <span class="cat-name">{{ cat }}</span>
+                <span class="cat-count">{{ getCategoryCount(cat) }}</span>
+              </button>
+            }
+          </div>
+
+          <!-- ── Product Panel ── -->
+          <div class="product-panel">
+
+            <!-- Toolbar -->
+            <div class="catalog-toolbar">
+              <div class="search-wrap">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" [(ngModel)]="productSearch" placeholder="Search products..." class="search-input" />
+              </div>
+              <select [(ngModel)]="sortOrder" class="sort-select">
+                <option value="name">A → Z</option>
+                <option value="name-desc">Z → A</option>
+                <option value="price-asc">Price ↑</option>
+                <option value="price-desc">Price ↓</option>
+              </select>
+              <div class="view-toggle">
+                <button class="view-btn" [class.active]="viewMode === 'grid'" (click)="viewMode = 'grid'" title="Grid view">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                </button>
+                <button class="view-btn" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'" title="List view">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Products -->
+            <div class="product-scroll">
+
+              @if (availableProducts.length === 0) {
+                <div class="empty-state">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <p class="text-sm font-medium text-gray-400">No products found</p>
+                  <p class="text-xs mt-1 text-gray-300">Try a different category or search term</p>
+                </div>
+              }
+
+              <!-- Grid View -->
+              @if (viewMode === 'grid' && availableProducts.length > 0) {
+                <div class="product-grid">
+                  @for (product of availableProducts; track product.id) {
+                    <div class="p-card" [class.in-cart]="isInCart(product.id)">
+
+                      @if (isInCart(product.id)) {
+                        <div class="badge">{{ getCartQty(product.id) }}</div>
+                      }
+
+                      <div class="flex items-start justify-between">
+                        <span class="p-icon">{{ getCategoryIcon(product.category) }}</span>
+                        <span class="cat-pill">{{ product.category }}</span>
+                      </div>
+
+                      <p class="p-name">{{ product.name }}</p>
+
+                      <div class="flex items-baseline gap-1">
+                        <span class="p-price">₹{{ product.pricePerUnit }}</span>
+                        <span class="p-unit">/{{ product.unit }}</span>
+                      </div>
+
+                      @if (isInCart(product.id)) {
+                        <div class="qty-bar" (click)="$event.stopPropagation()">
+                          <button class="q-btn" (click)="decrementCart(product.id)">−</button>
+                          <input class="q-input" type="number" [value]="getCartQty(product.id)" (change)="setCartQty(product.id, $event)" min="1" />
+                          <button class="q-btn" (click)="incrementCart(product.id)">+</button>
+                          <button class="rm-btn" (click)="removeFromCart(product.id)">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                          </button>
+                        </div>
+                      } @else {
+                        <button class="add-btn" (click)="addProductToOrder(product)">
+                          <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                          Add to cart
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+
+              <!-- List View -->
+              @if (viewMode === 'list' && availableProducts.length > 0) {
+                <div class="product-list">
+                  @for (product of availableProducts; track product.id) {
+                    <div class="p-row" [class.in-cart]="isInCart(product.id)">
+                      <span class="r-icon">{{ getCategoryIcon(product.category) }}</span>
+                      <div class="flex-1 min-w-0">
+                        <p class="r-name truncate">{{ product.name }}</p>
+                        <p class="r-cat">{{ product.category }}</p>
+                      </div>
+                      <span class="r-price">₹{{ product.pricePerUnit }}<span class="r-unit">/{{ product.unit }}</span></span>
+
+                      @if (isInCart(product.id)) {
+                        <div class="qty-bar" (click)="$event.stopPropagation()">
+                          <button class="q-btn" (click)="decrementCart(product.id)">−</button>
+                          <input class="q-input" type="number" [value]="getCartQty(product.id)" (change)="setCartQty(product.id, $event)" min="1" style="width:38px;" />
+                          <button class="q-btn" (click)="incrementCart(product.id)">+</button>
+                          <button class="rm-btn" (click)="removeFromCart(product.id)">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                          </button>
+                        </div>
+                      } @else {
+                        <button class="add-btn" style="width:90px;" (click)="addProductToOrder(product)">
+                          <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                          Add
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>

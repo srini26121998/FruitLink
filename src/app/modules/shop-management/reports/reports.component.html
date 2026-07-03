@@ -1,0 +1,127 @@
+<div class="h-full bg-slate-50 flex flex-col font-sans">
+  
+  <!-- Header -->
+  <div class="px-6 py-5 bg-white border-b border-slate-200 shadow-sm shrink-0 flex justify-between items-center z-10">
+    <div>
+      <h1 class="text-xl font-semibold text-slate-800 tracking-tight">Reports Generation</h1>
+      <p class="text-sm text-slate-500 mt-1">Export customized data reports for analysis and accounting.</p>
+    </div>
+    <div class="flex items-center gap-2 text-sm text-slate-500 bg-slate-100 px-3 py-1.5 rounded-md font-medium">
+      <span class="material-icons text-[18px] text-emerald-500">history</span>
+      Last generated: Today, 09:45 AM
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 overflow-y-auto p-6" @staggerCards>
+    <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
+      
+      <!-- Report Types Grid -->
+      <div class="flex-1">
+        <h2 class="text-base font-semibold text-slate-800 mb-4">Select Report Type</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div *ngFor="let report of reportTypes" 
+               class="report-card relative bg-white border rounded-xl p-5 cursor-pointer transition-all hover:shadow-md"
+               [ngClass]="selectedReport === report.id ? 'border-emerald-500 shadow-sm ring-1 ring-emerald-500 bg-emerald-50/10' : 'border-slate-200 hover:border-emerald-200'"
+               (click)="selectedReport = report.id">
+            
+            <!-- Checkmark for selected state -->
+            <div *ngIf="selectedReport === report.id" class="absolute top-3 right-3 w-6 h-6 bg-emerald-500 text-white rounded-full flex items-center justify-center">
+              <span class="material-icons text-sm font-bold">check</span>
+            </div>
+            
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border"
+                   [ngClass]="report.color.split(' ').slice(1).join(' ') + ' ' + report.color.split(' ')[0]">
+                <span class="material-icons text-2xl">{{report.icon}}</span>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-slate-800 mb-1">{{report.name}}</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">{{report.description}}</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Configuration Panel -->
+      <div class="w-full lg:w-96 shrink-0">
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sticky top-0">
+          <h2 class="text-base font-semibold text-slate-800 mb-6 flex items-center gap-2">
+            <span class="material-icons text-emerald-600">tune</span>
+            Report Configuration
+          </h2>
+          
+          <div class="space-y-5">
+            <!-- Date Range -->
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-2">Date Range</label>
+              <div class="relative">
+                <select [(ngModel)]="dateRange" class="w-full appearance-none bg-slate-50 border border-slate-200 text-slate-700 py-2.5 pl-4 pr-10 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors cursor-pointer">
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="last_7_days">Last 7 Days</option>
+                  <option value="last_30_days">Last 30 Days</option>
+                  <option value="this_month">This Month</option>
+                  <option value="custom">Custom Range...</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+                  <span class="material-icons text-sm">calendar_month</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Output Format -->
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-2">Output Format</label>
+              <div class="grid grid-cols-2 gap-3">
+                <label class="relative flex flex-col items-center p-3 border rounded-lg cursor-pointer transition-all hover:bg-slate-50"
+                       [ngClass]="format === 'pdf' ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-200'">
+                  <input type="radio" name="format" value="pdf" [(ngModel)]="format" class="sr-only">
+                  <span class="material-icons mb-1" [ngClass]="format === 'pdf' ? 'text-red-500' : 'text-slate-400'">picture_as_pdf</span>
+                  <span class="text-xs font-semibold" [ngClass]="format === 'pdf' ? 'text-emerald-700' : 'text-slate-600'">PDF</span>
+                </label>
+                
+                <label class="relative flex flex-col items-center p-3 border rounded-lg cursor-pointer transition-all hover:bg-slate-50"
+                       [ngClass]="format === 'csv' ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-200'">
+                  <input type="radio" name="format" value="csv" [(ngModel)]="format" class="sr-only">
+                  <span class="material-icons mb-1" [ngClass]="format === 'csv' ? 'text-green-600' : 'text-slate-400'">grid_on</span>
+                  <span class="text-xs font-semibold" [ngClass]="format === 'csv' ? 'text-emerald-700' : 'text-slate-600'">CSV / Excel</span>
+                </label>
+              </div>
+            </div>
+            
+            <!-- Advanced Options -->
+            <div class="pt-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
+                <span class="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">Include inactive shops</span>
+              </label>
+            </div>
+            <div class="pt-1">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <input type="checkbox" checked class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
+                <span class="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition-colors">Include charts/graphs</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-5 border-t border-slate-100">
+            <button (click)="generateReport()" 
+                    [disabled]="isGenerating"
+                    class="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white py-3 rounded-lg text-sm font-semibold shadow-sm transition-all shadow-emerald-200">
+              <span class="material-icons text-[18px]" [class.animate-spin]="isGenerating">
+                {{isGenerating ? 'refresh' : 'download'}}
+              </span>
+              {{isGenerating ? 'Generating Report...' : 'Generate Report'}}
+            </button>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

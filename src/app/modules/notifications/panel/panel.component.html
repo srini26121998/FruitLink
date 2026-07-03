@@ -1,27 +1,43 @@
 <!-- Notification Panel -->
-<div class="w-80 bg-white shadow-xl rounded-xl">
-
-  <div class="p-4 border-b font-semibold">
-    Notifications
+<div class="w-80 bg-white shadow-lg rounded border border-gray-100 flex flex-col overflow-hidden">
+  <div class="p-2 border-b border-gray-100 bg-gray-50/80 flex items-center justify-between">
+    <span class="text-xs font-semibold text-gray-800">Notifications</span>
+    <span class="text-[10px] font-medium text-green-600 hover:text-green-700 cursor-pointer">Mark all as read</span>
   </div>
 
-  <ul class="max-h-64 overflow-y-auto">
-
-    <li class="p-4 border-b hover:bg-gray-50 cursor-pointer">
-      <p class="font-semibold">New Order Received</p>
-      <p class="text-xs text-gray-500">3 mins ago</p>
+  <ul class="max-h-64 overflow-y-auto flex flex-col">
+    <li class="p-2 border-b border-gray-50 hover:bg-green-50/50 cursor-pointer transition-colors flex gap-2 items-start group">
+      <div class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
+        <span class="material-symbols-rounded text-[14px]">shopping_cart</span>
+      </div>
+      <div class="flex-1">
+        <p class="font-medium text-xs text-gray-800 m-0 mb-0.5 group-hover:text-blue-700 transition-colors">New Order Received</p>
+        <p class="text-[10px] text-gray-500 m-0">3 mins ago</p>
+      </div>
     </li>
 
-    <li class="p-4 border-b hover:bg-gray-50 cursor-pointer">
-      <p class="font-semibold">Payment Successful — ₹1,250</p>
-      <p class="text-xs text-gray-500">10 mins ago</p>
+    <li class="p-2 border-b border-gray-50 hover:bg-green-50/50 cursor-pointer transition-colors flex gap-2 items-start group">
+      <div class="w-6 h-6 rounded-full bg-green-50 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+        <span class="material-symbols-rounded text-[14px]">payments</span>
+      </div>
+      <div class="flex-1">
+        <p class="font-medium text-xs text-gray-800 m-0 mb-0.5 group-hover:text-green-700 transition-colors">Payment Successful — ₹1,250</p>
+        <p class="text-[10px] text-gray-500 m-0">10 mins ago</p>
+      </div>
     </li>
 
-    <li class="p-4 hover:bg-gray-50 cursor-pointer">
-      <p class="font-semibold">Fruit Stock Updated — Mango</p>
-      <p class="text-xs text-gray-500">30 mins ago</p>
+    <li class="p-2 hover:bg-green-50/50 cursor-pointer transition-colors flex gap-2 items-start group">
+      <div class="w-6 h-6 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 mt-0.5">
+        <span class="material-symbols-rounded text-[14px]">inventory_2</span>
+      </div>
+      <div class="flex-1">
+        <p class="font-medium text-xs text-gray-800 m-0 mb-0.5 group-hover:text-orange-700 transition-colors">Fruit Stock Updated — Mango</p>
+        <p class="text-[10px] text-gray-500 m-0">30 mins ago</p>
+      </div>
     </li>
-
   </ul>
-
+  
+  <div class="p-2 border-t border-gray-100 bg-gray-50 text-center">
+    <a routerLink="/notifications/list" class="text-[11px] font-medium text-green-600 hover:text-green-700 transition-colors">View All Notifications</a>
+  </div>
 </div>

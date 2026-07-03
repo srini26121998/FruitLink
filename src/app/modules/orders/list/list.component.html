@@ -1,138 +1,184 @@
-<div class="p-4">
+<style>
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes countUp { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+  .anim-up { animation: fadeInUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+  .anim-count { animation: countUp 0.4s ease-out forwards; opacity: 0; }
+  .delay-1 { animation-delay: 0.05s; } .delay-2 { animation-delay: 0.1s; }
+  .delay-3 { animation-delay: 0.15s; } .delay-4 { animation-delay: 0.2s; }
+</style>
 
-  <h2 class="text-2xl font-bold text-primary mb-6">Orders</h2>
+<div class="p-2 md:p-2 max-w-[1400px] mx-auto space-y-2">
 
-  <!-- Search & Filters -->
-  <div class="flex justify-between mb-4">
-    <div class="relative w-1/3">
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-        </svg>
-      </div>
-      <input
-        type="text"
-        placeholder="Search orders..."
-        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full pl-10 p-2.5 outline-none transition-colors"
-        [(ngModel)]="searchTerm"
-        (input)="currentPage = 1"
-      />
+  <!-- Page Header -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 anim-up">
+    <div>
+      <h1 class="text-base font-medium text-gray-900 tracking-tight">Order Management</h1>
+      <p class="text-sm text-gray-500 mt-1 font-medium">Track, manage and fulfill all shop orders in one place</p>
     </div>
+    <div class="flex gap-3">
+      <a routerLink="/orders/create" class="inline-flex items-center gap-2 px-2 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white text-sm font-semibold rounded-xl hover:from-emerald-600 hover:to-green-600 shadow-lg shadow-green-200/50 transition-all active:scale-[0.97]">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        New Order
+      </a>
+    </div>
+  </div>
 
-    <select class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 outline-none cursor-pointer transition-colors" [(ngModel)]="statusFilter" (change)="currentPage = 1">
-      <option value="All">All Statuses</option>
-      <option value="Pending">Pending</option>
-      <option value="Approved">Approved</option>
-      <option value="Delivered">Delivered</option>
-    </select>
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+    <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow anim-up delay-1">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-blue-50 rounded-xl"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+        <div>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Total Orders</p>
+          <p class="text-2xl font-bold text-gray-900 anim-count delay-2">{{ totalOrdersCount }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow anim-up delay-2">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-amber-50 rounded-xl"><svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Pending</p>
+          <p class="text-2xl font-bold text-amber-600 anim-count delay-3">{{ pendingCount }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow anim-up delay-3">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-blue-50 rounded-xl"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Approved</p>
+          <p class="text-2xl font-bold text-blue-600 anim-count delay-3">{{ approvedCount }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow anim-up delay-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-emerald-50 rounded-xl"><svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+        <div>
+          <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Delivered</p>
+          <p class="text-2xl font-bold text-emerald-600 anim-count delay-4">{{ deliveredCount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Toolbar -->
+  <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm anim-up delay-3">
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Search -->
+      <div class="relative flex-1 min-w-[220px]">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <input type="text" placeholder="Search orders, shops, products..."
+          class="w-full pl-10 pr-2 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none transition-all bg-gray-50/50"
+          [(ngModel)]="searchTerm" (input)="currentPage = 1" />
+      </div>
+
+      <!-- Status Filter -->
+      <select class="px-2 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none cursor-pointer bg-gray-50/50 transition-all"
+        [(ngModel)]="statusFilter" (change)="currentPage = 1">
+        <option value="All">All Statuses</option>
+        <option *ngFor="let s of admin.statuses">{{ s }}</option>
+      </select>
+
+      <!-- Type Filter -->
+      <select class="px-2 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none cursor-pointer bg-gray-50/50 transition-all"
+        [(ngModel)]="typeFilter" (change)="currentPage = 1">
+        <option value="All">All Types</option>
+        <option value="daily">Daily</option>
+        <option value="bulk">Bulk</option>
+      </select>
+
+      <!-- Date Filter -->
+      <input type="date"
+        class="px-2 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500/20 focus:border-green-400 outline-none cursor-pointer bg-gray-50/50 transition-all"
+        [(ngModel)]="dateFilter" (change)="currentPage = 1" />
+
+      <!-- Reset -->
+      <button (click)="resetFilters()" class="px-2 py-2.5 text-sm text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl border border-gray-200 transition-all" title="Reset Filters">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      </button>
+    </div>
   </div>
 
   <!-- Orders Table -->
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden anim-up delay-4">
     <div class="overflow-x-auto">
-      <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
+      <table class="w-full text-sm text-left">
+        <thead class="bg-gray-50/80 border-b border-gray-100">
           <tr>
-            <th scope="col" class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('id')">
-              <div class="flex items-center">
-                Order ID
-                <span class="ml-1 text-gray-400">
-                  <svg *ngIf="sortColumn !== 'id'" class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'id' && sortDirection === 'asc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'id' && sortDirection === 'desc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
-                  </svg>
-                </span>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-green-600 transition-colors" (click)="sortBy('id')">
+              <div class="flex items-center gap-1">Order ID
+                <svg *ngIf="sortColumn === 'id'" class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path *ngIf="sortDirection === 'asc'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                  <path *ngIf="sortDirection === 'desc'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
               </div>
             </th>
-            <th scope="col" class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('shop')">
-              <div class="flex items-center">
-                Shop
-                <span class="ml-1 text-gray-400">
-                  <svg *ngIf="sortColumn !== 'shop'" class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'shop' && sortDirection === 'asc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'shop' && sortDirection === 'desc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
-                  </svg>
-                </span>
-              </div>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-green-600 transition-colors" (click)="sortBy('shop')">
+              <div class="flex items-center gap-1">Shop</div>
             </th>
-            <th scope="col" class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('total')">
-              <div class="flex items-center">
-                Total (₹)
-                <span class="ml-1 text-gray-400">
-                  <svg *ngIf="sortColumn !== 'total'" class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'total' && sortDirection === 'asc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'total' && sortDirection === 'desc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
-                  </svg>
-                </span>
-              </div>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-green-600 transition-colors" (click)="sortBy('date')">
+              <div class="flex items-center gap-1">Date</div>
             </th>
-            <th scope="col" class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('status')">
-              <div class="flex items-center">
-                Status
-                <span class="ml-1 text-gray-400">
-                  <svg *ngIf="sortColumn !== 'status'" class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'status' && sortDirection === 'asc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-                  </svg>
-                  <svg *ngIf="sortColumn === 'status' && sortDirection === 'desc'" class="w-3 h-3 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
-                  </svg>
-                </span>
-              </div>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Items</th>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-green-600 transition-colors" (click)="sortBy('total')">
+              <div class="flex items-center gap-1">Total (₹)</div>
             </th>
-            <th scope="col" class="px-6 py-4">Action</th>
+            <th class="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-green-600 transition-colors" (click)="sortBy('status')">
+              <div class="flex items-center gap-1">Status</div>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="paginatedOrders.length === 0">
-            <td colspan="5" class="px-6 py-10 text-center text-gray-500">
-              <div class="flex flex-col items-center justify-center">
-                <svg class="w-10 h-10 text-gray-300 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                </svg>
-                <p class="text-base font-medium">No orders found</p>
-                <p class="text-sm">Try adjusting your search or filters.</p>
+            <td colspan="7" class="px-2 py-4 text-center">
+              <div class="flex flex-col items-center">
+                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-2">
+                  <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                </div>
+                <p class="text-base font-semibold text-gray-700">No orders found</p>
+                <p class="text-sm text-gray-400 mt-1">Try adjusting your search or filters</p>
               </div>
             </td>
           </tr>
-          
-          <tr *ngFor="let order of paginatedOrders" class="bg-white border-b border-gray-100 hover:bg-gray-50 transition-colors">
-            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ order.id }}</td>
-            <td class="px-6 py-4">{{ order.shop }}</td>
-            <td class="px-6 py-4 font-medium text-gray-900">₹ {{ order.total | number }}</td>
-            <td class="px-6 py-4">
-              <span [ngClass]="{
-                'bg-yellow-100 text-yellow-800 border-yellow-200': order.status === 'Pending',
-                'bg-blue-100 text-blue-800 border-blue-200': order.status === 'Approved',
-                'bg-green-100 text-green-800 border-green-200': order.status === 'Delivered'
-              }" class="px-2.5 py-1 text-xs font-semibold rounded-full border">
-                {{ order.status }}
+
+          <tr *ngFor="let order of paginatedOrders; let i = index"
+            [routerLink]="['/orders/details', order.id]"
+            class="border-b border-gray-50 hover:bg-green-50/30 transition-colors group cursor-pointer">
+            <td class="px-2 py-2">
+              <span class="font-semibold text-gray-900 group-hover:text-green-700 transition-colors">{{ order.id }}</span>
+            </td>
+            <td class="px-2 py-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span class="text-xs font-bold text-green-700">{{ order.shop.charAt(0) }}</span>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900 text-sm">{{ order.shop }}</p>
+                  <p class="text-xs text-gray-400">{{ order.createdBy }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-2 py-2 text-gray-600 text-sm">{{ order.date }}</td>
+            <td class="px-2 py-2">
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md border" [ngClass]="getOrderTypeBadgeClass(order.orderType)">
+                {{ getOrderTypeLabel(order.orderType) }}
               </span>
             </td>
-            <td class="px-6 py-4">
-              <a [routerLink]="['/orders/details', order.id]" class="inline-flex items-center justify-center p-2 text-primary bg-primary/10 border border-primary/20 rounded-lg hover:bg-primary hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" title="View Details">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-              </a>
+            <td class="px-2 py-2">
+              <span class="text-sm text-gray-600 font-medium">{{ order.items.length }} items</span>
+            </td>
+            <td class="px-2 py-2">
+              <span class="font-bold text-gray-900">₹{{ order.total | number }}</span>
+            </td>
+            <td class="px-2 py-2">
+              <span class="px-2.5 py-1 text-xs font-semibold rounded-full border" [ngClass]="getStatusClass(order.status)">
+                {{ getStatusLabel(order.status) }}
+              </span>
             </td>
           </tr>
         </tbody>
@@ -140,38 +186,25 @@
     </div>
 
     <!-- Pagination -->
-    <div class="px-6 py-4 flex items-center justify-between border-t border-gray-100 bg-gray-50" *ngIf="totalPages > 0">
+    <div class="px-2 py-2 flex items-center justify-between border-t border-gray-50 bg-gray-50/50" *ngIf="totalPages > 0">
       <div class="text-sm text-gray-500">
-        Showing <span class="font-medium text-gray-900">{{ showingStartIndex }}</span> to <span class="font-medium text-gray-900">{{ showingEndIndex }}</span> of <span class="font-medium text-gray-900">{{ filteredOrders.length }}</span> entries
+        Showing <span class="font-semibold text-gray-900">{{ showingStartIndex }}</span> to <span class="font-semibold text-gray-900">{{ showingEndIndex }}</span> of <span class="font-semibold text-gray-900">{{ filteredOrders.length }}</span>
       </div>
-      
-      <div class="inline-flex rounded-md shadow-sm">
-        <button 
-          (click)="setPage(currentPage - 1)" 
-          [disabled]="currentPage === 1"
-          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:bg-gray-50 disabled:cursor-not-allowed transition-colors">
+      <div class="inline-flex rounded-lg shadow-sm">
+        <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1"
+          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
           Previous
         </button>
-        
-        <button 
-          *ngFor="let page of pages" 
-          (click)="setPage(page)"
-          [ngClass]="{
-            'z-10 text-primary bg-primary/10 border-primary': currentPage === page,
-            'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700': currentPage !== page
-          }"
-          class="px-3 py-2 text-sm font-medium border-t border-b transition-colors -ml-px first:ml-0">
+        <button *ngFor="let page of pages" (click)="setPage(page)"
+          [ngClass]="{ 'z-10 text-green-600 bg-green-50 border-green-300': currentPage === page, 'text-gray-500 bg-white border-gray-200 hover:bg-gray-50': currentPage !== page }"
+          class="px-3.5 py-2 text-sm font-medium border-t border-b transition-colors -ml-px">
           {{ page }}
         </button>
-
-        <button 
-          (click)="setPage(currentPage + 1)" 
-          [disabled]="currentPage === totalPages"
-          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:bg-gray-50 disabled:cursor-not-allowed transition-colors -ml-px">
+        <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages"
+          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors -ml-px">
           Next
         </button>
       </div>
     </div>
   </div>
-
 </div>

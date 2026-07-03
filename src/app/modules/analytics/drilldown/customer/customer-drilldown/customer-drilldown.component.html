@@ -1,9 +1,9 @@
-<div class="p-6 space-y-10" id="customer-drilldown-report">
+<div class="p-2 space-y-4" id="customer-drilldown-report">
 
   <!-- ================= HEADER ================= -->
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-2xl font-bold">
+      <h2 class="text-base font-medium">
         {{ profile().businessName }}
       </h2>
       <p class="text-gray-500 text-sm mt-1">
@@ -17,8 +17,8 @@
         <button
           (click)="setFilter(f)"
           [ngClass]="filter() === f
-            ? 'bg-blue-600 text-white px-4 py-2 rounded-lg'
-            : 'px-4 py-2 rounded-lg hover:bg-white'">
+            ? 'bg-green-600 text-white px-2 py-2 rounded-lg'
+            : 'px-2 py-2 rounded-lg hover:bg-white'">
           {{ f | titlecase }}
         </button>
       }
@@ -37,25 +37,25 @@
   </div>
 
   <!-- ================= KPI SUMMARY ================= -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
 
     <div class="card">
       <p class="text-xs text-gray-500">Total Spent</p>
-      <h2 class="text-2xl font-bold text-green-600">
+      <h2 class="text-base font-medium text-green-600">
         ₹{{ kpis().totalSpent }}
       </h2>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Total Orders</p>
-      <h2 class="text-2xl font-bold">
+      <h2 class="text-base font-medium">
         {{ kpis().totalOrders }}
       </h2>
     </div>
 
     <div class="card">
       <p class="text-xs text-gray-500">Avg Order Value</p>
-      <h2 class="text-2xl font-bold text-blue-600">
+      <h2 class="text-base font-medium text-blue-600">
         ₹{{ kpis().avgOrderValue }}
       </h2>
     </div>
@@ -63,7 +63,7 @@
     <div class="card">
       <p class="text-xs text-gray-500">Segment</p>
       <h2
-        class="text-xl font-bold"
+        class="text-base font-medium"
         [ngClass]="getSegmentColor(rfm().segment)">
         {{ rfm().segment }}
       </h2>
@@ -73,14 +73,14 @@
 
   <!-- ================= RFM SCORE ================= -->
   <div class="card">
-    <h3 class="font-semibold mb-3">RFM Score</h3>
+    <h3 class="font-medium mb-3">RFM Score</h3>
 
-    <div class="grid grid-cols-3 gap-6 text-center">
+    <div class="grid grid-cols-3 gap-2 text-center">
 
       <div>
         <p class="text-xs text-gray-500">Recency (Days)</p>
         <h2
-          class="text-2xl font-bold"
+          class="text-base font-medium"
           [ngClass]="getRfmColor(rfm().recencyDays)">
           {{ rfm().recencyDays }}
         </h2>
@@ -89,7 +89,7 @@
       <div>
         <p class="text-xs text-gray-500">Frequency</p>
         <h2
-          class="text-2xl font-bold"
+          class="text-base font-medium"
           [ngClass]="getRfmColor(rfm().frequencyOrders)">
           {{ rfm().frequencyOrders }}
         </h2>
@@ -98,7 +98,7 @@
       <div>
         <p class="text-xs text-gray-500">Monetary</p>
         <h2
-          class="text-2xl font-bold"
+          class="text-base font-medium"
           [ngClass]="getRfmColor(rfm().monetaryValue)">
           {{ rfm().monetaryValue }}
         </h2>
@@ -108,11 +108,11 @@
   </div>
 
   <!-- ================= CHARTS ================= -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
 
     <!-- Revenue / CLV -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Revenue Trend</h3>
+      <h3 class="font-medium mb-3">Revenue Trend</h3>
       <apx-chart
         [chart]="clvChart().chart"
         [series]="clvChart().series"
@@ -122,7 +122,7 @@
 
     <!-- Order Frequency -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Order Frequency</h3>
+      <h3 class="font-medium mb-3">Order Frequency</h3>
       <apx-chart
         [chart]="frequencyChart().chart"
         [series]="frequencyChart().series"
@@ -132,7 +132,7 @@
 
     <!-- AOV -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Average Order Value</h3>
+      <h3 class="font-medium mb-3">Average Order Value</h3>
       <apx-chart
         [chart]="aovChart().chart"
         [series]="aovChart().series"
@@ -144,7 +144,7 @@
 
   <!-- ================= PRODUCT AFFINITY ================= -->
   <div class="card">
-    <h3 class="font-semibold mb-3">Product Affinity</h3>
+    <h3 class="font-medium mb-3">Product Affinity</h3>
     <apx-chart
       [chart]="affinityChart().chart"
       [series]="affinityChart().series"
@@ -156,7 +156,7 @@
   <div class="card">
 
     <div class="flex justify-between items-center mb-3">
-      <h3 class="font-semibold">Top Purchased Products</h3>
+      <h3 class="font-medium">Top Purchased Products</h3>
 
       <button
         class="px-3 py-1 border rounded flex items-center gap-2 hover:bg-gray-50"
@@ -192,7 +192,7 @@
   <div class="card">
 
     <div class="flex justify-between items-center mb-3">
-      <h3 class="font-semibold">Recent Activity</h3>
+      <h3 class="font-medium">Recent Activity</h3>
 
       <button
         class="px-3 py-1 border rounded flex items-center gap-2 hover:bg-gray-50"
@@ -202,7 +202,7 @@
       </button>
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-2">
       @for (a of activities(); track a.timestamp) {
 
         <div class="border-b pb-2">

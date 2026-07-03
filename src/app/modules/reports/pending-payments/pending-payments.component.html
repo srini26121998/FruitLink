@@ -1,33 +1,166 @@
-<div class="p-4">
-
-  <h2 class="text-2xl font-bold text-primary mb-6">Outstanding Payments</h2>
-
-  <div class="bg-white p-6 rounded-xl shadow">
-
-    <table class="w-full border-collapse">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-4 py-2">Shop Name</th>
-          <th class="px-4 py-2">Pending Amount (₹)</th>
-          <th class="px-4 py-2">Last Payment</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr class="border-b">
-          <td class="px-4 py-2">Juice Hub</td>
-          <td class="px-4 py-2">₹ 2,400</td>
-          <td class="px-4 py-2">15 Nov 2025</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2">Fruit King</td>
-          <td class="px-4 py-2">₹ 1,850</td>
-          <td class="px-4 py-2">12 Nov 2025</td>
-        </tr>
-      </tbody>
-
-    </table>
-
+<div class="p-2 h-full flex flex-col bg-gray-50/50 gap-2">
+  <div class="flex justify-between items-center bg-white p-2 rounded-lg border border-gray-100 shadow-sm">
+    <div>
+      <h2 class="text-base font-medium text-gray-800 m-0">Outstanding Payments</h2>
+      <p class="text-xs text-gray-500 mt-0.5 m-0">Track and manage shop credit balances</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="px-3 py-1.5 bg-white border border-gray-200 rounded text-xs font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition-colors">
+        Send Reminders
+      </button>
+      <button class="px-3 py-1.5 bg-green-600 border border-transparent rounded text-xs font-medium text-white hover:bg-green-700 shadow-sm transition-colors">
+        Export Report
+      </button>
+    </div>
   </div>
 
+  <div class="bg-white rounded-lg shadow-sm border border-gray-100 flex-1 flex flex-col overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs whitespace-nowrap">
+        <thead class="bg-gray-50/80 text-gray-600 font-medium border-b border-gray-100">
+          <tr>
+            <th class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('shopName')">
+              <div class="flex items-center gap-1">
+                Shop Name
+                @if (sortColumn() === 'shopName') { <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span> }
+              </div>
+            </th>
+            <th class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('contactPerson')">
+              <div class="flex items-center gap-1">
+                Contact Person
+                @if (sortColumn() === 'contactPerson') { <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span> }
+              </div>
+            </th>
+            <th class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('pendingAmount')">
+              <div class="flex items-center gap-1">
+                Pending Amount (₹)
+                @if (sortColumn() === 'pendingAmount') { <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span> }
+              </div>
+            </th>
+            <th class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('lastPaymentDate')">
+              <div class="flex items-center gap-1">
+                Last Payment
+                @if (sortColumn() === 'lastPaymentDate') { <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span> }
+              </div>
+            </th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          @for (payment of paginatedPayments(); track payment.id) {
+            <tr class="hover:bg-green-50/30 transition-colors group">
+              <td class="px-4 py-2 font-medium text-gray-800">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded bg-green-100 flex items-center justify-center text-green-700 font-bold text-[10px]">
+                    {{ payment.shopName.charAt(0) }}
+                  </div>
+                  {{ payment.shopName }}
+                </div>
+              </td>
+              <td class="px-4 py-2 text-gray-600">{{ payment.contactPerson }}</td>
+              <td class="px-4 py-2 font-medium text-gray-800">₹{{ payment.pendingAmount | number }}</td>
+              <td class="px-4 py-2 text-gray-600">{{ payment.lastPaymentDate }}</td>
+              <td class="px-4 py-2">
+                @if (payment.status === 'critical') {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-red-700 border border-red-200">Critical (> 60 days)</span>
+                } @else if (payment.status === 'warning') {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-orange-100 text-orange-700 border border-orange-200">Warning (> 30 days)</span>
+                } @else {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-green-100 text-green-700 border border-green-200">Normal</span>
+                }
+              </td>
+              <td class="px-4 py-2 text-right">
+                <button (click)="toggleExpand(payment.id)" class="text-xs text-green-600 hover:text-green-800 font-medium transition-colors">
+                  {{ expandedRowId() === payment.id ? 'Hide Details' : 'View Details' }}
+                </button>
+              </td>
+            </tr>
+            @if (expandedRowId() === payment.id) {
+              <tr class="bg-gray-50/50 border-b border-gray-100">
+                <td colspan="6" class="p-0">
+                  <div class="px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div class="bg-white rounded border border-gray-200 shadow-sm p-3 flex flex-col md:flex-row gap-4">
+                      
+                      <!-- Summary Box -->
+                      <div class="flex-1 space-y-2">
+                        <h4 class="text-xs font-medium text-gray-700 uppercase tracking-wider m-0">Account Overview</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                          <div class="bg-gray-50 p-2 rounded border border-gray-100">
+                            <p class="text-[10px] text-gray-500 mb-0.5 m-0">Credit Limit</p>
+                            <p class="text-xs font-medium text-gray-800 m-0">₹{{ payment.creditLimit | number }}</p>
+                          </div>
+                          <div class="bg-gray-50 p-2 rounded border border-gray-100">
+                            <p class="text-[10px] text-gray-500 mb-0.5 m-0">Available Credit</p>
+                            <p class="text-xs font-medium text-green-600 m-0">₹{{ (payment.creditLimit - payment.pendingAmount) | number }}</p>
+                          </div>
+                          <div class="bg-gray-50 p-2 rounded border border-gray-100">
+                            <p class="text-[10px] text-gray-500 mb-0.5 m-0">Phone</p>
+                            <p class="text-xs font-medium text-gray-800 m-0">{{ payment.phone }}</p>
+                          </div>
+                          <div class="bg-gray-50 p-2 rounded border border-gray-100">
+                            <p class="text-[10px] text-gray-500 mb-0.5 m-0">Unpaid Invoices</p>
+                            <p class="text-xs font-medium text-red-600 m-0">{{ payment.unpaidInvoices }}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Action Box -->
+                      <div class="md:w-64 flex flex-col justify-center gap-2 bg-gray-50 p-3 rounded border border-gray-100">
+                        <h4 class="text-xs font-medium text-gray-700 uppercase tracking-wider m-0">Quick Actions</h4>
+                        <button class="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded transition-colors shadow-sm">
+                          <span class="material-symbols-rounded text-[14px]">payments</span>
+                          Record Payment
+                        </button>
+                        <button class="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 text-xs font-medium rounded border border-gray-200 transition-colors shadow-sm">
+                          <span class="material-symbols-rounded text-[14px]">notifications</span>
+                          Send Reminder
+                        </button>
+                        <a [routerLink]="['/shop-management/credit-ledger', payment.id]" class="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-100 text-green-600 text-xs font-medium rounded border border-gray-200 transition-colors shadow-sm">
+                          <span class="material-symbols-rounded text-[14px]">receipt_long</span>
+                          View Full Ledger
+                        </a>
+                      </div>
+
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+          @if (paginatedPayments().length === 0) {
+            <tr>
+              <td colspan="6" class="px-6 py-12 text-center text-gray-500">No pending payments found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="mt-auto px-4 py-2 border-t border-gray-100 bg-gray-50/50 flex items-center justify-between">
+      <div class="text-xs text-gray-500">
+        Showing <span class="font-medium text-gray-800">{{ showingStart }}</span> to 
+        <span class="font-medium text-gray-800">{{ showingEnd }}</span> of 
+        <span class="font-medium text-gray-800">{{ payments().length }}</span> entries
+      </div>
+      <div class="flex items-center gap-1">
+        <button [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)" 
+                class="px-2 py-1 rounded border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          Prev
+        </button>
+        @for (page of pages(); track page) {
+          <button (click)="setPage(page)" 
+                  class="w-6 h-6 rounded text-xs font-medium transition-colors"
+                  [ngClass]="currentPage() === page ? 'bg-green-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'">
+            {{ page }}
+          </button>
+        }
+        <button [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)" 
+                class="px-2 py-1 rounded border border-gray-200 text-xs font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -12,5 +12,5 @@ import { CustomerDrilldownService } from '../../drilldown/customer/customer-dril
 export class CustomerActivityLogComponent {
 
   private svc = inject(CustomerDrilldownService);
-  logs = this.svc.activityLog;
+  logs: any[] = [];
 }

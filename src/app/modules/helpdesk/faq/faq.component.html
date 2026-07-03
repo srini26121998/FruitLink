@@ -1,6 +1,6 @@
-<div class="px-4 py-4 max-w-7xl mx-auto flex flex-col h-full">
+<div class="px-2 py-2 max-w-7xl mx-auto flex flex-col h-full">
 
-  <div class="mb-5 flex items-center justify-between border-b pb-3 border-gray-100">
+  <div class="mb-2 flex items-center justify-between border-b pb-3 border-gray-100">
     <div class="flex items-center gap-3">
       <div class="bg-green-100 p-2 rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -8,24 +8,35 @@
         </svg>
       </div>
       <div>
-        <h2 class="text-xl font-bold text-gray-800 leading-tight">Frequently Asked Questions</h2>
+        <h2 class="text-base font-medium text-gray-800 leading-tight">Frequently Asked Questions</h2>
         <p class="text-gray-500 text-xs mt-0.5 font-medium">Quick answers to common questions about your FruitLink experience.</p>
       </div>
     </div>
     
-    <div class="hidden sm:block">
-      <button routerLink="/helpdesk/list" class="bg-green-600 hover:bg-green-700 text-white text-xs px-4 py-1.5 rounded-md font-semibold transition-colors shadow-sm">
+    <div class="hidden sm:block flex items-center gap-2">
+      <div class="relative inline-block mr-2">
+        <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearch()"
+          placeholder="Search FAQs..." 
+          class="pl-2 pr-2 py-1.5 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-xs w-64 transition-shadow bg-gray-50"
+        />
+      </div>
+      <button routerLink="/helpdesk/list" class="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1.5 rounded-md font-semibold transition-colors shadow-sm">
         Need More Help?
       </button>
     </div>
   </div>
 
-  <div *ngIf="faqs.length === 0" class="flex-1 flex items-center justify-center text-gray-500 bg-gray-50 rounded-lg border border-gray-100 p-10">
-    <p class="font-medium text-sm">No FAQs available at the moment.</p>
+  <div *ngIf="filteredFaqs.length === 0" class="flex-1 flex flex-col items-center justify-center text-gray-500 bg-gray-50 rounded-lg border border-gray-100 p-4">
+    <svg class="w-10 h-10 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242zM21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <p class="font-medium text-sm text-gray-600">No FAQs found matching "{{ searchTerm }}"</p>
   </div>
 
-  <div *ngIf="faqs.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-max">
-    <div *ngFor="let f of faqs" class="bg-white rounded-lg border border-gray-200 hover:border-green-400 hover:shadow-sm transition-all duration-200">
+  <div *ngIf="filteredFaqs.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-max">
+    <div *ngFor="let f of filteredFaqs" class="bg-white rounded-lg border border-gray-200 hover:border-green-400 hover:shadow-sm transition-all duration-200">
       <details class="group p-3.5">
         <summary class="cursor-pointer text-sm font-semibold text-gray-800 list-none flex justify-between items-start outline-none gap-2">
           <span class="mt-0.5">{{ f.question }}</span>

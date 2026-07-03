@@ -1,6 +1,6 @@
-<div class="space-y-6">
+<div class="space-y-2">
 
-  <h2 class="text-xl font-semibold mb-3">Review Cart</h2>
+  <h2 class="text-base font-medium mb-3">Review Cart</h2>
 
   @if(cart.cart().length===0){
     <p class="text-red-600">No items added!</p>
@@ -35,8 +35,8 @@
   </div>
 
   <div class="flex justify-between">
-    <button class="px-6 py-3 rounded bg-gray-200" (click)="back.emit()">← Back</button>
-    <button class="px-6 py-3 rounded bg-blue-600 text-white"
+    <button class="px-2 py-3 rounded bg-gray-200" (click)="back.emit()">← Back</button>
+    <button class="px-2 py-3 rounded bg-green-600 text-white"
             [disabled]="cart.cart().length===0"
             (click)="next.emit()">
       Continue → Delivery

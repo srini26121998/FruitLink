@@ -1,10 +1,10 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-2">
+  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-2">
 
-    <h2 class="text-2xl font-semibold text-center text-green-700 mb-4">FruitLink</h2>
-    <p class="text-center text-sm text-gray-500 mb-6">Sign in to your account</p>
+    <h2 class="text-base font-medium text-center text-green-700 mb-2">FruitLink</h2>
+    <p class="text-center text-sm text-gray-500 mb-2">Sign in to your account</p>
 
-    <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-4">
+    <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-2">
 
       <!-- Identifier -->
       <div>
@@ -61,17 +61,34 @@
 
     </form>
 
-    <!-- Extra dev role switcher -->
-    <div class="mt-6 border-t pt-4">
-      <p class="text-xs text-gray-500 mb-2 text-center">Quick role sign-in (dev)</p>
-      <div class="flex gap-2">
-        <button (click)="loginAsAdmin()" class="flex-1 bg-green-600 text-white py-1.5 rounded hover:bg-green-700">Admin</button>
-        <button (click)="loginAsShop()" class="flex-1 bg-blue-600 text-white py-1.5 rounded hover:bg-blue-700">Shop</button>
-        <button (click)="loginAsDelivery()" class="flex-1 bg-orange-600 text-white py-1.5 rounded hover:bg-orange-700">Delivery</button>
+    <!-- Quick role sign-in (dev) -->
+    <div class="mt-2 border-t pt-2">
+      <p class="text-xs text-gray-500 mb-3 text-center">Quick role sign-in (dev)</p>
+      <div class="grid grid-cols-2 gap-2">
+        <button (click)="loginAsAdmin()"
+          class="flex items-center justify-center gap-1.5 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 text-sm font-medium transition-colors">
+          <span class="material-symbols-rounded" style="font-size:16px;">shield_person</span>
+          Admin
+        </button>
+        <button (click)="loginAsShopManager()"
+          class="flex items-center justify-center gap-1.5 bg-green-600 text-white py-2 rounded-lg hover:bg-green-600 text-sm font-medium transition-colors">
+          <span class="material-symbols-rounded" style="font-size:16px;">storefront</span>
+          Shop Manager
+        </button>
+        <button (click)="loginAsBranchManager()"
+          class="flex items-center justify-center gap-1.5 bg-violet-600 text-white py-2 rounded-lg hover:bg-violet-700 text-sm font-medium transition-colors">
+          <span class="material-symbols-rounded" style="font-size:16px;">domain</span>
+          Branch Manager
+        </button>
+        <button (click)="loginAsDelivery()"
+          class="flex items-center justify-center gap-1.5 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 text-sm font-medium transition-colors">
+          <span class="material-symbols-rounded" style="font-size:16px;">local_shipping</span>
+          Delivery
+        </button>
       </div>
     </div>
 
-    <div class="text-center text-xs text-gray-400 mt-4">
+    <div class="text-center text-xs text-gray-400 mt-2">
       <a routerLink="/auth/forgot-password" class="hover:underline">Forgot password?</a>
     </div>
 

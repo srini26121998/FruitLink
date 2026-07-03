@@ -340,6 +340,43 @@ export const routes: Routes = [
         ]
       },
 
+      // ---------------- SHOP PORTAL ----------------
+      {
+        path: 'shop-portal',
+        children: [
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./modules/shop-portal/dashboard/shop-portal-dashboard.component')
+                .then(m => m.ShopPortalDashboardComponent)
+          },
+          {
+            path: 'create-order',
+            loadComponent: () =>
+              import('./modules/orders/create/create.component')
+                .then(m => m.CreateComponent)
+          },
+          {
+            path: 'order-history',
+            loadComponent: () =>
+              import('./modules/shop-portal/order-history/order-history.component')
+                .then(m => m.ShopOrderHistoryComponent)
+          },
+          {
+            path: 'track-orders',
+            loadComponent: () =>
+              import('./modules/shop-portal/track-orders/track-orders.component')
+                .then(m => m.ShopTrackOrdersComponent)
+          },
+          {
+            path: 'print-documents',
+            loadComponent: () =>
+              import('./modules/shop-portal/print-documents/print-documents.component')
+                .then(m => m.ShopPrintDocumentsComponent)
+          }
+        ]
+      },
+
       // ---------------- ORDERS ----------------
       {
         path: 'orders',
@@ -373,6 +410,12 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./modules/orders/create/create.component')
                 .then(m => m.CreateComponent)
+          },
+          {
+            path: 'manage',
+            loadComponent: () =>
+              import('./modules/orders/manage/manage.component')
+                .then(m => m.OrderManageComponent)
           }
         ]
       },
@@ -541,6 +584,148 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./modules/delivery/route-optimization/route-optimization.component')
                 .then(m => m.RouteOptimizationComponent)
+          }
+        ]
+      },
+
+      // ---------------- AUDIT LOGS ----------------
+      {
+        path: 'audit-logs',
+        children: [
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./modules/audit-logs/list/list.component')
+                .then(m => m.ListComponent)
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./modules/audit-logs/view/view.component')
+                .then(m => m.ViewComponent)
+          }
+        ]
+      },
+
+      // ---------------- MASTER DATA ----------------
+      {
+        path: 'master-data',
+        children: [
+          {
+            path: 'cities',
+            loadComponent: () =>
+              import('./modules/master-data/cities/cities.component')
+                .then(m => m.CitiesComponent)
+          },
+          {
+            path: 'shop-types',
+            loadComponent: () =>
+              import('./modules/master-data/shop-types/shop-types.component')
+                .then(m => m.ShopTypesComponent)
+          },
+          {
+            path: 'fruit-categories',
+            loadComponent: () =>
+              import('./modules/master-data/fruit-categories/fruit-categories.component')
+                .then(m => m.FruitCategoriesComponent)
+          }
+        ]
+      },
+
+      // ---------------- NOTIFICATIONS ----------------
+      {
+        path: 'notifications',
+        children: [
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./modules/notifications/list/list.component')
+                .then(m => m.ListComponent)
+          },
+          {
+            path: 'panel',
+            loadComponent: () =>
+              import('./modules/notifications/panel/panel.component')
+                .then(m => m.PanelComponent)
+          }
+        ]
+      },
+
+      // ---------------- SHOP MANAGEMENT ----------------
+      {
+        path: 'shop-management',
+        children: [
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./modules/shop-management/dashboard/dashboard.component')
+                .then(m => m.DashboardComponent)
+          },
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./modules/shop-management/list/list.component')
+                .then(m => m.ListComponent)
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./modules/shop-management/create/create.component')
+                .then(m => m.CreateComponent)
+          },
+          {
+            path: 'details/:id',
+            loadComponent: () =>
+              import('./modules/shop-management/details/details.component')
+                .then(m => m.DetailsComponent)
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () =>
+              import('./modules/shop-management/edit/edit.component')
+                .then(m => m.EditComponent)
+          },
+          {
+            path: 'analytics',
+            loadComponent: () =>
+              import('./modules/shop-management/analytics/analytics.component')
+                .then(m => m.AnalyticsComponent)
+          },
+          {
+            path: 'credit-ledger/:id',
+            loadComponent: () =>
+              import('./modules/shop-management/credit-ledger/credit-ledger.component')
+                .then(m => m.CreditLedgerComponent)
+          },
+          {
+            path: 'price-overrides/:id',
+            loadComponent: () =>
+              import('./modules/shop-management/price-overrides/price-overrides.component')
+                .then(m => m.PriceOverridesComponent)
+          },
+          {
+            path: 'salesman-assign',
+            loadComponent: () =>
+              import('./modules/shop-management/salesman-assign/salesman-assign.component')
+                .then(m => m.SalesmanAssignComponent)
+          },
+          {
+            path: 'visit-history/:id',
+            loadComponent: () =>
+              import('./modules/shop-management/visit-history/visit-history.component')
+                .then(m => m.VisitHistoryComponent)
+          },
+          {
+            path: 'follow-ups',
+            loadComponent: () =>
+              import('./modules/shop-management/follow-ups/follow-ups.component')
+                .then(m => m.FollowUpsComponent)
+          },
+          {
+            path: 'reports',
+            loadComponent: () =>
+              import('./modules/shop-management/reports/reports.component')
+                .then(m => m.ReportsComponent)
           }
         ]
       },

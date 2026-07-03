@@ -1,11 +1,11 @@
-<div class="p-6 space-y-4">
+<div class="p-2 space-y-2">
 
-    <h2 class="text-xl font-bold mb-4">Select Products</h2>
+    <h2 class="text-base font-medium mb-2">Select Products</h2>
 
-    <div class="grid md:grid-cols-2 gap-4">
+    <div class="grid md:grid-cols-2 gap-2">
         @for (p of products; track p.id) {
 
-        <div class="border p-4 rounded-xl bg-white shadow flex justify-between items-center">
+        <div class="border p-2 rounded-xl bg-white shadow flex justify-between items-center">
 
             <div>
                 <p class="font-semibold">{{ p.name }}</p>
@@ -32,7 +32,7 @@
         }
     </div>
 
-    <button class="w-full bg-blue-600 text-white py-3 rounded mt-5" (click)="continue()">
+    <button class="w-full bg-green-600 text-white py-3 rounded mt-2" (click)="continue()">
         Continue →
     </button>
 

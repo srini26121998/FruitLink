@@ -8,8 +8,42 @@ nav::-webkit-scrollbar {
   display: none;
 }
 
+/* Legacy icon class — kept for backward compat */
 .material-icons {
-  font-size:22px;
-  width:22px;
-  text-align:center;
+  font-size: 20px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Material Symbols Rounded sizing in sidebar context */
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+  line-height: 1;
+}
+
+.material-symbols-rounded.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Smooth FILL transition via custom property trick */
+.material-symbols-rounded {
+  transition: font-variation-settings 0.2s ease, color 0.15s ease;
+}
+
+/* Icon pill container */
+.icon-pill {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Collapsed tooltip */
+aside[class*="w-[72px]"] li > div[title] {
+  position: relative;
 }

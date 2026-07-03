@@ -1,32 +1,113 @@
-<div class="p-4">
-
-  <h2 class="text-2xl font-bold text-primary mb-6">Top Fruits Report</h2>
-
-  <div class="bg-white p-6 rounded-xl shadow">
-
-    <table class="w-full border-collapse">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-4 py-2">Fruit</th>
-          <th class="px-4 py-2">Orders</th>
-          <th class="px-4 py-2">Total Sales (₹)</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr class="border-b">
-          <td class="px-4 py-2 font-semibold">Apple</td>
-          <td class="px-4 py-2">110</td>
-          <td class="px-4 py-2">₹ 13,200</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 font-semibold">Banana</td>
-          <td class="px-4 py-2">95</td>
-          <td class="px-4 py-2">₹ 4,200</td>
-        </tr>
-      </tbody>
-    </table>
-
+<div class="p-6 h-full flex flex-col bg-gray-50/50">
+  <div class="mb-6 flex justify-between items-center">
+    <div>
+      <h2 class="text-2xl font-semibold text-gray-800">Top Fruits Report</h2>
+      <p class="text-sm text-gray-500 mt-1">Analytics of best-selling products</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm transition-colors flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Export
+      </button>
+    </div>
   </div>
 
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 flex-1 flex flex-col overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm whitespace-nowrap">
+        <thead class="bg-gray-50/80 text-gray-600 font-medium border-b border-gray-100">
+          <tr>
+            <th class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('name')">
+              <div class="flex items-center gap-2">
+                Fruit Name
+                @if (sortColumn() === 'name') {
+                  <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+                }
+              </div>
+            </th>
+            <th class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('orders')">
+              <div class="flex items-center gap-2">
+                Orders Count
+                @if (sortColumn() === 'orders') {
+                  <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+                }
+              </div>
+            </th>
+            <th class="px-6 py-4 cursor-pointer hover:bg-gray-100 transition-colors" (click)="sortBy('sales')">
+              <div class="flex items-center gap-2">
+                Total Sales
+                @if (sortColumn() === 'sales') {
+                  <span class="text-green-600 font-bold">{{ sortDirection() === 'asc' ? '↑' : '↓' }}</span>
+                }
+              </div>
+            </th>
+            <th class="px-6 py-4">
+              Trend
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          @for (fruit of paginatedFruits(); track fruit.id) {
+            <tr class="hover:bg-green-50/30 transition-colors group">
+              <td class="px-6 py-4 font-medium text-gray-800">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xs">
+                    {{ fruit.name.charAt(0) }}
+                  </div>
+                  {{ fruit.name }}
+                </div>
+              </td>
+              <td class="px-6 py-4 text-gray-600">
+                {{ fruit.orders | number }}
+              </td>
+              <td class="px-6 py-4 font-semibold text-gray-800">
+                ₹{{ fruit.sales | number }}
+              </td>
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium" 
+                      [ngClass]="fruit.trend === 'up' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
+                  {{ fruit.trend === 'up' ? '↑' : '↓' }} {{ fruit.trendValue }}
+                </span>
+              </td>
+            </tr>
+          }
+          @if (paginatedFruits().length === 0) {
+            <tr>
+              <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                No fruits data available.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="mt-auto px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex items-center justify-between">
+      <div class="text-sm text-gray-500">
+        Showing <span class="font-medium text-gray-800">{{ showingStart }}</span> to 
+        <span class="font-medium text-gray-800">{{ showingEnd }}</span> of 
+        <span class="font-medium text-gray-800">{{ fruits().length }}</span> entries
+      </div>
+      <div class="flex items-center gap-1">
+        <button [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)" 
+                class="px-3 py-1 rounded-md border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          Prev
+        </button>
+        @for (page of pages(); track page) {
+          <button (click)="setPage(page)" 
+                  class="w-8 h-8 rounded-md text-sm font-medium transition-colors"
+                  [ngClass]="currentPage() === page ? 'bg-green-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'">
+            {{ page }}
+          </button>
+        }
+        <button [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)" 
+                class="px-3 py-1 rounded-md border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

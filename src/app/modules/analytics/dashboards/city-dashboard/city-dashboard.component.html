@@ -1,14 +1,14 @@
-<div class="p-6 space-y-10">
+<div class="p-2 space-y-4">
 
   <!-- ================= HEADER ================= -->
   <div class="flex justify-between items-center">
-    <h2 class="text-2xl font-bold">City Analytics</h2>
+    <h2 class="text-base font-medium">City Analytics</h2>
 
     <!-- FILTER -->
     <div class="flex gap-2 bg-gray-100 p-1 rounded-xl">
       @for (f of filterOptions; track f) {
-      <button (click)="setFilter(f)" class="px-4 py-2 rounded-lg"
-       [class.bg-blue-600]="filter() === f"
+      <button (click)="setFilter(f)" class="px-2 py-2 rounded-lg"
+       [class.bg-green-600]="filter() === f"
         [class.text-white]="filter() === f">
         {{ f }}
       </button>
@@ -33,7 +33,7 @@
   </tbody>
 
   <!-- ================= KPI CARDS ================= -->
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
     @for (r of rows(); track r.city) {
     <div class="card">
       <p class="text-xs text-gray-500">{{ r.city }}</p>
@@ -46,25 +46,25 @@
   </div>
 
   <!-- ================= CHARTS ================= -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
 
     <!-- Revenue Chart -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Revenue by City</h3>
+      <h3 class="font-medium mb-3">Revenue by City</h3>
       <apx-chart [chart]="revenueChart().chart" [series]="revenueChart().series" [xaxis]="revenueChart().xaxis">
       </apx-chart>
     </div>
 
     <!-- Orders Chart -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Orders by City</h3>
+      <h3 class="font-medium mb-3">Orders by City</h3>
       <apx-chart [chart]="orderChart().chart" [series]="orderChart().series" [xaxis]="orderChart().xaxis">
       </apx-chart>
     </div>
 
     <!-- Customer Share -->
     <div class="card">
-      <h3 class="font-semibold mb-3">Customer Share</h3>
+      <h3 class="font-medium mb-3">Customer Share</h3>
       <apx-chart [chart]="customerPie().chart" [series]="customerPie().series" [labels]="customerPie().labels">
       </apx-chart>
     </div>
@@ -73,8 +73,8 @@
 
   <!-- ================= CITY TABLE ================= -->
   <div class="card">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="font-semibold">City-wise Performance</h3>
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="font-medium">City-wise Performance</h3>
     </div>
 
     <table class="w-full text-sm">

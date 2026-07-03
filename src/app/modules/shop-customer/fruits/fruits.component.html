@@ -1,39 +1,39 @@
-<div class="p-6">
+<div class="p-2">
 
-  <h2 class="text-2xl font-semibold mb-6">Order Fruits & Vegetables</h2>
+  <h2 class="text-base font-medium mb-2">Order Fruits & Vegetables</h2>
 
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
 
     @for (p of productsService.products(); track p.id) {
 
-      <div class="border rounded-xl bg-white shadow hover:shadow-lg transition p-4">
+      <div class="border rounded-xl bg-white shadow hover:shadow-lg transition p-2">
 
-        <img [src]="p.image" alt="{{p.name}}" class="w-full h-32 object-cover rounded-lg mb-4">
+        <img [src]="p.image" alt="{{p.name}}" class="w-full h-32 object-cover rounded-lg mb-2">
 
-        <h3 class="font-semibold text-lg">{{ p.name }}</h3>
+        <h3 class="font-medium text-base">{{ p.name }}</h3>
         <p class="text-gray-600 text-sm">₹{{ p.price }}/kg</p>
 
         @if (!cart.hasItem(p.id)) {
 
-          <button class="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+          <button class="mt-2 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-600"
                   (click)="cart.add(p)">
             Add to Cart
           </button>
 
         } @else {
 
-          <div class="mt-4 flex items-center justify-between">
+          <div class="mt-2 flex items-center justify-between">
 
             <button class="w-10 h-10 bg-gray-200 rounded-lg text-xl"
                     (click)="cart.decreaseQty(p.id)">
               -
             </button>
 
-            <div class="px-4 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">
+            <div class="px-2 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium">
               {{ cart.getQty(p.id) }} kg
             </div>
 
-            <button class="w-10 h-10 bg-blue-600 text-white rounded-lg text-xl"
+            <button class="w-10 h-10 bg-green-600 text-white rounded-lg text-xl"
                     (click)="cart.increaseQty(p.id)">
               +
             </button>

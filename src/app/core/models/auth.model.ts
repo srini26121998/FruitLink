@@ -10,7 +10,7 @@ export interface LoginResponse {
     id: string;
     name: string;
     email: string;
-    role: 'Admin' | 'ShopManager' | 'DeliveryStaff';
+    role: 'Admin' | 'ShopManager' | 'BranchManager' | 'DeliveryStaff';
     permissions: string[];
   };
 }

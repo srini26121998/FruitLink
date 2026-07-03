@@ -1,8 +1,8 @@
-<div class="p-4 md:p-8 min-h-screen bg-gray-50/50">
+<div class="p-2 md:p-2 min-h-screen bg-gray-50/50">
   <!-- Header -->
-  <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+  <div class="mb-2 flex flex-col md:flex-row md:items-end justify-between gap-2">
     <div>
-      <h2 class="text-3xl font-semibold text-gray-900 tracking-tight mb-2">Smart Route Optimization</h2>
+      <h2 class="text-base font-medium text-gray-900 tracking-tight mb-2">Smart Route Optimization</h2>
       <p class="text-gray-500 text-sm md:text-base max-w-2xl">
         AI-powered route planning to minimize delivery time, reduce fuel costs, and ensure timely drop-offs.
       </p>
@@ -10,7 +10,7 @@
     <button 
       (click)="optimizeRoute()"
       [disabled]="isOptimizing()"
-      class="group relative inline-flex items-center justify-center px-8 py-2 text-base font-medium text-white transition-all duration-200 bg-primary border border-transparent rounded-xl hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden">
+      class="group relative inline-flex items-center justify-center px-2 py-2 text-base font-medium text-white transition-all duration-200 bg-primary border border-transparent rounded-xl hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden">
       <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
       <span class="relative flex items-center gap-2">
         <svg *ngIf="!isOptimizing()" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -20,25 +20,25 @@
     </button>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-2">
     
     <!-- Left Column: Pending Points -->
-    <div class="lg:col-span-5 flex flex-col gap-4">
+    <div class="lg:col-span-5 flex flex-col gap-2">
       <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
-        <div class="p-5 border-b border-gray-50 flex items-center justify-between bg-white/50 backdrop-blur-xl">
+        <div class="p-2 border-b border-gray-50 flex items-center justify-between bg-white/50 backdrop-blur-xl">
           <div class="flex items-center gap-3">
             <div class="p-2 bg-orange-50 rounded-lg">
               <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             </div>
-            <h3 class="text-lg font-medium text-gray-800">Pending Deliveries</h3>
+            <h3 class="text-base font-medium text-gray-800">Pending Deliveries</h3>
           </div>
           <span class="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">{{points().length}} Stops</span>
         </div>
         
-        <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+        <div class="p-2 flex-1 overflow-y-auto custom-scrollbar">
           <div class="grid gap-3">
-            <div *ngFor="let p of points(); let i = index" class="group relative bg-white border border-gray-100 hover:border-primary/30 p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div class="flex items-start gap-4">
+            <div *ngFor="let p of points(); let i = index" class="group relative bg-white border border-gray-100 hover:border-primary/30 p-2 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div class="flex items-start gap-2">
                 <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-sm font-medium text-gray-500 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors">
                   {{i + 1}}
                 </div>
@@ -60,29 +60,29 @@
     <div class="lg:col-span-7">
       
       <!-- Placeholder state -->
-      <div *ngIf="!optimizedRoute() && !isOptimizing()" class="h-full min-h-[400px] bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col items-center justify-center text-center">
-        <div class="w-32 h-32 mb-6 relative">
+      <div *ngIf="!optimizedRoute() && !isOptimizing()" class="h-full min-h-[400px] bg-white rounded-2xl shadow-sm border border-gray-100 p-2 flex flex-col items-center justify-center text-center">
+        <div class="w-32 h-32 mb-2 relative">
            <div class="absolute inset-0 bg-primary/10 rounded-full animate-ping opacity-75"></div>
            <div class="relative w-full h-full bg-primary/10 rounded-full flex items-center justify-center">
               <svg class="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
            </div>
         </div>
-        <h3 class="text-xl font-medium text-gray-800 mb-2">Ready to Optimize</h3>
+        <h3 class="text-base font-medium text-gray-800 mb-2">Ready to Optimize</h3>
         <p class="text-gray-500 max-w-sm mx-auto">
           Click the "Generate Optimal Route" button above to calculate the most efficient path for your deliveries.
         </p>
       </div>
 
       <!-- Loading State -->
-      <div *ngIf="isOptimizing()" class="h-full min-h-[400px] bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex flex-col items-center justify-center text-center">
-         <div class="relative w-24 h-24 mb-6">
+      <div *ngIf="isOptimizing()" class="h-full min-h-[400px] bg-white rounded-2xl shadow-sm border border-gray-100 p-2 flex flex-col items-center justify-center text-center">
+         <div class="relative w-24 h-24 mb-2">
             <div class="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
             <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
             <div class="absolute inset-0 flex items-center justify-center">
               <svg class="w-8 h-8 text-primary animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
          </div>
-         <h3 class="text-xl font-medium text-gray-800 mb-2">Calculating Optimal Path...</h3>
+         <h3 class="text-base font-medium text-gray-800 mb-2">Calculating Optimal Path...</h3>
          <p class="text-gray-500 max-w-sm mx-auto animate-pulse">
            Analyzing distances, traffic patterns, and delivery windows to find the best route.
          </p>
@@ -91,13 +91,13 @@
       <!-- Optimized Route State (Timeline) -->
       <div *ngIf="optimizedRoute() && !isOptimizing()" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full animate-fade-in-up">
         
-        <div class="p-5 border-b border-gray-50 flex items-center justify-between bg-gradient-to-r from-green-50 to-emerald-50">
+        <div class="p-2 border-b border-gray-50 flex items-center justify-between bg-gradient-to-r from-green-50 to-emerald-50">
           <div class="flex items-center gap-3">
             <div class="p-2 bg-primary/20 rounded-lg">
               <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
-              <h3 class="text-lg font-medium text-gray-900">Optimized Path</h3>
+              <h3 class="text-base font-medium text-gray-900">Optimized Path</h3>
               <p class="text-xs text-green-700 font-normal">Estimated savings: 18% fuel, 24 mins</p>
             </div>
           </div>
@@ -111,16 +111,16 @@
           </div>
         </div>
 
-        <div class="p-6 md:p-8 flex-1 overflow-y-auto">
+        <div class="p-2 md:p-2 flex-1 overflow-y-auto">
           <div class="relative">
             <!-- Continuous Line -->
             <div class="absolute left-[27px] top-4 bottom-8 w-[2px] bg-gradient-to-b from-primary via-primary/50 to-transparent"></div>
 
-            <div class="space-y-8">
+            <div class="space-y-2">
               <div *ngFor="let r of optimizedRoute(); let i = index; let last = last" class="relative flex items-start group">
                 
                 <!-- Timeline Dot -->
-                <div class="relative z-10 flex flex-col items-center mr-6">
+                <div class="relative z-10 flex flex-col items-center mr-2">
                   <div class="w-14 h-14 bg-white rounded-full border-[3px] shadow-sm flex items-center justify-center transition-all duration-300"
                        [ngClass]="i === 0 ? 'border-primary text-primary' : last ? 'border-orange-500 text-orange-500' : 'border-gray-300 text-gray-500 group-hover:border-primary group-hover:text-primary'">
                     <span class="text-lg font-medium">{{i + 1}}</span>
@@ -128,14 +128,14 @@
                 </div>
 
                 <!-- Timeline Content -->
-                <div class="flex-1 bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex-1 bg-white border border-gray-100 rounded-2xl p-2 shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <div class="flex items-center gap-2 mb-1">
                         <span *ngIf="i === 0" class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-medium uppercase tracking-wider rounded">Start Point</span>
                         <span *ngIf="last" class="px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-medium uppercase tracking-wider rounded">Final Drop</span>
                       </div>
-                      <h4 class="text-lg font-medium text-gray-900">{{ r.shop }}</h4>
+                      <h4 class="text-base font-medium text-gray-900">{{ r.shop }}</h4>
                       <p class="text-sm text-gray-500 mt-1 flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                         {{ r.lat | number:'1.2-4' }}, {{ r.lng | number:'1.2-4' }}

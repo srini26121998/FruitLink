@@ -1,14 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-interface Order {
-  id: string;
-  shop: string;
-  total: number;
-  status: string;
-}
+import { OrderAdminService, Order } from '../services/order-admin.service';
 
 @Component({
   selector: 'app-list',
@@ -18,51 +12,64 @@ interface Order {
   styleUrl: './list.component.css'
 })
 export class ListComponent {
-  orders: Order[] = [
-    { id: '#ORD1201', shop: 'Juice Hub', total: 1250, status: 'Pending' },
-    { id: '#ORD1202', shop: 'Cool Sip Station', total: 890, status: 'Delivered' },
-    { id: '#ORD1203', shop: 'Fresh Bites', total: 2300, status: 'Approved' },
-    { id: '#ORD1204', shop: 'Morning Dew', total: 450, status: 'Pending' },
-    { id: '#ORD1205', shop: 'Sunny Sides', total: 1560, status: 'Delivered' },
-    { id: '#ORD1206', shop: 'Green Leaf', total: 3100, status: 'Approved' },
-    { id: '#ORD1207', shop: 'Daily Squeeze', total: 720, status: 'Pending' },
-    { id: '#ORD1208', shop: 'The Fruit Basket', total: 1980, status: 'Delivered' },
-    { id: '#ORD1209', shop: 'Citrus Stand', total: 540, status: 'Approved' },
-    { id: '#ORD1210', shop: 'Berry Good', total: 2100, status: 'Pending' },
-    { id: '#ORD1211', shop: 'Mango Magic', total: 3300, status: 'Delivered' },
-    { id: '#ORD1212', shop: 'Apple Valley', total: 1100, status: 'Approved' },
-  ];
+  admin = inject(OrderAdminService);
 
   searchTerm: string = '';
   statusFilter: string = 'All';
+  typeFilter: string = 'All';
+  dateFilter: string = '';
 
   // Sorting
-  sortColumn: keyof Order | '' = '';
+  sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   // Pagination
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 8;
+
+  // View mode
+  viewMode: 'table' | 'card' = 'table';
+
+  get orders(): Order[] {
+    return this.admin.orders();
+  }
 
   get filteredOrders(): Order[] {
     let filtered = this.orders;
 
     if (this.searchTerm) {
-      filtered = filtered.filter(order => 
-        order.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        order.shop.toLowerCase().includes(this.searchTerm.toLowerCase())
+      const term = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(order =>
+        order.id.toLowerCase().includes(term) ||
+        order.shop.toLowerCase().includes(term) ||
+        order.items.some(i => i.name.toLowerCase().includes(term))
       );
     }
 
     if (this.statusFilter !== 'All') {
-      filtered = filtered.filter(order => order.status === this.statusFilter);
+      const statusIndex = this.admin.statuses.indexOf(this.statusFilter);
+      filtered = filtered.filter(order => order.status === statusIndex);
+    }
+
+    if (this.typeFilter !== 'All') {
+      filtered = filtered.filter(order => order.orderType === this.typeFilter.toLowerCase());
+    }
+
+    if (this.dateFilter) {
+      filtered = filtered.filter(order => order.date === this.dateFilter);
     }
 
     if (this.sortColumn) {
       filtered = [...filtered].sort((a, b) => {
-        const valA = a[this.sortColumn as keyof Order];
-        const valB = b[this.sortColumn as keyof Order];
-        
+        let valA: any, valB: any;
+        switch (this.sortColumn) {
+          case 'id': valA = a.id; valB = b.id; break;
+          case 'shop': valA = a.shop; valB = b.shop; break;
+          case 'total': valA = a.total; valB = b.total; break;
+          case 'status': valA = a.status; valB = b.status; break;
+          case 'date': valA = a.date; valB = b.date; break;
+          default: return 0;
+        }
         if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
         if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
         return 0;
@@ -80,9 +87,9 @@ export class ListComponent {
   get totalPages(): number {
     return Math.ceil(this.filteredOrders.length / this.itemsPerPage);
   }
-  
+
   get pages(): number[] {
-    return Array.from({length: this.totalPages}, (_, i) => i + 1);
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   get showingStartIndex(): number {
@@ -93,7 +100,18 @@ export class ListComponent {
     return Math.min(this.currentPage * this.itemsPerPage, this.filteredOrders.length);
   }
 
-  sortBy(column: keyof Order) {
+  // ── KPI Stats ──
+  get totalOrdersCount(): number { return this.orders.length; }
+  get pendingCount(): number { return this.orders.filter(o => o.status === 0).length; }
+  get approvedCount(): number { return this.orders.filter(o => o.status === 1).length; }
+  get deliveredCount(): number { return this.orders.filter(o => o.status === 5).length; }
+  get totalRevenue(): number { return this.orders.reduce((s, o) => s + o.total, 0); }
+  get todayOrdersCount(): number {
+    const today = new Date().toISOString().split('T')[0];
+    return this.orders.filter(o => o.date === today).length;
+  }
+
+  sortBy(column: string) {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
@@ -106,5 +124,32 @@ export class ListComponent {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
+  }
+
+  resetFilters() {
+    this.searchTerm = '';
+    this.statusFilter = 'All';
+    this.typeFilter = 'All';
+    this.dateFilter = '';
+    this.currentPage = 1;
+  }
+
+  getStatusClass(status: number): string {
+    const colors = this.admin.statusColors[status];
+    return colors ? `${colors.bg} ${colors.text} ${colors.border}` : '';
+  }
+
+  getStatusLabel(status: number): string {
+    return this.admin.statuses[status] || 'Unknown';
+  }
+
+  getOrderTypeLabel(type: string): string {
+    return type === 'bulk' ? 'Bulk' : 'Daily';
+  }
+
+  getOrderTypeBadgeClass(type: string): string {
+    return type === 'bulk'
+      ? 'bg-violet-50 text-violet-700 border-violet-200'
+      : 'bg-teal-50 text-teal-700 border-teal-200';
   }
 }

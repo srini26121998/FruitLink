@@ -1,15 +1,15 @@
-<div class="p-6 space-y-6">
+<div class="p-2 space-y-2">
 
-  <h1 class="text-3xl font-bold">Suggested Refill Items</h1>
+  <h1 class="text-base font-medium">Suggested Refill Items</h1>
   <p class="text-gray-600">Based on your last week orders.</p>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
 
     @for (s of suggestion.suggestions(); track s.itemId) {
 
-    <div class="p-4 rounded-xl shadow bg-white border">
+    <div class="p-2 rounded-xl shadow bg-white border">
 
-      <h2 class="text-xl font-bold capitalize">
+      <h2 class="text-base font-medium capitalize">
         {{ getItemName(s.itemId) }}
       </h2>
 
@@ -23,7 +23,7 @@
         {{ s.trend | uppercase }}
       </span>
 
-      <button class="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-lg">
+      <button class="mt-2 w-full bg-green-600 text-white px-2 py-2 rounded-lg">
         Add to Cart
       </button>
     </div>
