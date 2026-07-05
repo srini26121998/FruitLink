@@ -14,7 +14,6 @@ import { NgIf } from '@angular/common';
 export class ProfileComponent {
 
   showPasswordModal = false;
-  showPhotoModal = false;
 
   openChangePassword() {
     this.showPasswordModal = true;
@@ -22,14 +21,6 @@ export class ProfileComponent {
 
   closeChangePassword() {
     this.showPasswordModal = false;
-  }
-
-  openPhotoModal() {
-    this.showPhotoModal = true;
-  }
-
-  closePhotoModal() {
-    this.showPhotoModal = false;
   }
 
 }

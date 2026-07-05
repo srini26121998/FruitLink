@@ -42,7 +42,7 @@ export class ShopPortalDashboardComponent implements OnInit {
 
   ngOnInit() {
     const user = this.auth.currentUser();
-    this.userName = user?.name || 'User';
+    this.userName = user?.shopName || user?.name || 'User';
     this.userRole = user?.role || '';
     this.roleBadge = this.getRoleBadge();
     this.greeting = this.getGreeting();
@@ -129,11 +129,11 @@ export class ShopPortalDashboardComponent implements OnInit {
     if (this.userRole === 'branch_manager') {
       this.quickActions.push(
         {
-          icon: 'verified',
-          label: 'Approve Orders',
-          link: '/orders/approve',
+          icon: 'tune',
+          label: 'Manage Orders',
+          link: '/orders/manage',
           color: 'from-teal-500 to-cyan-600',
-          description: 'Review pending approvals'
+          description: 'Review and manage orders'
         },
         {
           icon: 'monitoring',

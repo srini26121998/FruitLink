@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { ProductMasterService, MasterProduct } from '../services/product-master.service';
 import { OrderAdminService } from '../services/order-admin.service';
 
@@ -22,16 +22,27 @@ interface OrderItem {
   styleUrls: ['./create.component.css'],
   imports: [CommonModule, FormsModule, RouterModule]
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   private productMaster = inject(ProductMasterService);
   private orderAdmin    = inject(OrderAdminService);
   private router        = inject(Router);
+  private route         = inject(ActivatedRoute);
+
+  // Prefill mode tracking
+  prefillMode: 'reorder' | 'duplicate' | null = null;
+  sourceOrderId: string = '';
 
   // Shop info
   shopName: string     = '';
+  shopLocation: string = '';
+  shopPhone: string    = '';
   deliverySlot: string = '';
   orderDate: string    = new Date().toISOString().split('T')[0];
   orderNotes: string   = '';
+
+  // Shop dropdown state
+  isShopDropdownOpen: boolean = false;
+  shopSearchTerm: string      = '';
 
   // Catalog state
   categories        = this.productMaster.getCategories();
@@ -50,6 +61,56 @@ export class CreateComponent {
   ];
 
   deliverySlots = ['5AM - 7AM', '6AM - 8AM', '7AM - 9AM', '8AM - 10AM', '9AM - 11AM'];
+
+  // ── Lifecycle: Read prefill data ────────────────────────────────
+  ngOnInit() {
+    const prefill = this.orderAdmin.prefillData();
+    if (prefill) {
+      this.prefillMode    = prefill.mode;
+      this.sourceOrderId  = prefill.sourceOrderId;
+      this.shopName       = prefill.shopName;
+      this.shopLocation   = prefill.shopLocation ?? '';
+      this.shopPhone      = prefill.shopPhone ?? '';
+      this.deliverySlot   = prefill.deliverySlot ?? '';
+      this.orderDate      = prefill.orderDate;
+
+      // Prefill cart items
+      this.items = prefill.items.map(i => ({
+        productId: i.productId,
+        name:      i.name,
+        category:  i.category,
+        quantity:  i.quantity,
+        unit:      i.unit,
+        price:     i.price,
+        total:     i.total
+      }));
+
+      // Clear prefill data after consuming it
+      this.orderAdmin.prefillData.set(null);
+    }
+  }
+
+  // ── Shop Dropdown Helpers ─────────────────────────────────────────
+  get filteredShops(): string[] {
+    if (!this.shopSearchTerm.trim()) {
+      return this.shops;
+    }
+    const term = this.shopSearchTerm.toLowerCase();
+    return this.shops.filter(s => s.toLowerCase().includes(term));
+  }
+
+  toggleShopDropdown() {
+    this.isShopDropdownOpen = !this.isShopDropdownOpen;
+    if (this.isShopDropdownOpen) {
+      this.shopSearchTerm = '';
+    }
+  }
+
+  selectShop(shop: string) {
+    this.shopName = shop;
+    this.isShopDropdownOpen = false;
+    this.shopSearchTerm = '';
+  }
 
   // ── Computed product list ──────────────────────────────────────────
   get availableProducts(): MasterProduct[] {
@@ -193,7 +254,8 @@ export class CreateComponent {
       total:     this.orderTotal,
       discount:  0,
       createdAt: new Date().toISOString(),
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Pending' as const
     };
 
     this.orderAdmin.addOrder(newOrder);

@@ -16,6 +16,12 @@
   height: 100%;
   min-height: 560px;
 }
+@media (max-width: 768px) {
+  .catalog-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+}
 
 /* ─── Category Sidebar ─── */
 .cat-sidebar {
@@ -26,6 +32,17 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+@media (max-width: 768px) {
+  .cat-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px;
+    gap: 4px;
+  }
 }
 
 .cat-btn {
@@ -40,6 +57,13 @@
   transition: all .18s ease;
   text-align: left;
   width: 100%;
+}
+@media (max-width: 768px) {
+  .cat-btn {
+    width: auto;
+    flex-shrink: 0;
+    padding: 6px 10px;
+  }
 }
 .cat-btn:hover  { background: #f0fdf4; }
 .cat-btn.active { background: linear-gradient(135deg,#16a34a,#22c55e); color:#fff; box-shadow:0 4px 12px rgba(22,163,74,.25); }

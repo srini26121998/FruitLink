@@ -25,6 +25,19 @@ export class ShopOrderHistoryComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
+  // Sorting
+  sortColumn: string = 'createdAt';
+  sortDirection: 'asc' | 'desc' = 'desc';
+
+  toggleSort(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+  }
+
   ngOnInit() {
     this.loadOrders();
   }
@@ -55,8 +68,42 @@ export class ShopOrderHistoryComponent implements OnInit {
       filtered = filtered.filter(order => order.date === this.dateFilter);
     }
 
-    // Sort by date desc (newest first)
-    return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    // Sort by selected column
+    filtered.sort((a, b) => {
+      let valA: any = '';
+      let valB: any = '';
+
+      switch (this.sortColumn) {
+        case 'id':
+          valA = a.id;
+          valB = b.id;
+          break;
+        case 'date':
+          valA = new Date(a.createdAt).getTime();
+          valB = new Date(b.createdAt).getTime();
+          break;
+        case 'items':
+          valA = a.items.length;
+          valB = b.items.length;
+          break;
+        case 'total':
+          valA = a.total;
+          valB = b.total;
+          break;
+        case 'status':
+          valA = a.status;
+          valB = b.status;
+          break;
+        default:
+          valA = new Date(a.createdAt).getTime();
+          valB = new Date(b.createdAt).getTime();
+      }
+
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    return filtered;
   }
 
   get paginatedOrders(): Order[] {

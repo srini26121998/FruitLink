@@ -10,8 +10,10 @@ interface FollowUp {
   followUpDate: string;
   nextFollowUp: string;
   assignedEmployee: string;
-  status: 'Open' | 'In Progress' | 'Resolved' | 'Closed';
+  salesman: string;
+  status: 'Open' | 'In Progress' | 'Resolved' | 'Closed' | 'Approved';
   remarks: string;
+  approvalMessage?: string;
 }
 
 @Component({
@@ -31,6 +33,7 @@ export class FollowUpsComponent {
       followUpDate: '2026-07-01',
       nextFollowUp: '2026-07-04',
       assignedEmployee: 'John Doe',
+      salesman: 'Michael Scott',
       status: 'Open',
       remarks: 'Shop owner promised to clear by weekend.'
     },
@@ -41,6 +44,7 @@ export class FollowUpsComponent {
       followUpDate: '2026-06-28',
       nextFollowUp: '2026-07-05',
       assignedEmployee: 'Sarah Smith',
+      salesman: 'Dwight Schrute',
       status: 'In Progress',
       remarks: 'Inspected recent delivery. Replaced damaged items.'
     },
@@ -51,6 +55,7 @@ export class FollowUpsComponent {
       followUpDate: '2026-07-02',
       nextFollowUp: '2026-07-09',
       assignedEmployee: 'Mike Johnson',
+      salesman: 'Jim Halpert',
       status: 'Resolved',
       remarks: 'Credit limit increased to ₹50,000 after approval.'
     }
@@ -61,6 +66,10 @@ export class FollowUpsComponent {
   showModal = false;
   isEditing = false;
   currentFollowUp: Partial<FollowUp> = {};
+
+  showApproveModal = false;
+  approveMessage = '';
+  followUpToApprove: FollowUp | null = null;
 
   get filteredFollowUps() {
     return this.followUps().filter(fup => {
@@ -78,6 +87,7 @@ export class FollowUpsComponent {
       case 'In Progress': return 'bg-amber-50 text-amber-700 border-amber-200';
       case 'Resolved': return 'bg-emerald-50 text-emerald-700 border-emerald-200';
       case 'Closed': return 'bg-gray-50 text-gray-700 border-gray-200';
+      case 'Approved': return 'bg-blue-50 text-blue-700 border-blue-200';
       default: return 'bg-gray-50 text-gray-700 border-gray-200';
     }
   }
@@ -91,6 +101,7 @@ export class FollowUpsComponent {
       followUpDate: new Date().toISOString().split('T')[0],
       nextFollowUp: '',
       assignedEmployee: '',
+      salesman: '',
       status: 'Open',
       remarks: ''
     };
@@ -116,9 +127,27 @@ export class FollowUpsComponent {
     this.closeModal();
   }
 
-  deleteFollowUp(id: string) {
-    if(confirm('Are you sure you want to delete this follow-up?')) {
-      this.followUps.update(fups => fups.filter(f => f.id !== id));
+  openApproveModal(fup: FollowUp) {
+    this.followUpToApprove = fup;
+    this.approveMessage = '';
+    this.showApproveModal = true;
+  }
+
+  closeApproveModal() {
+    this.showApproveModal = false;
+    this.followUpToApprove = null;
+    this.approveMessage = '';
+  }
+
+  confirmApprove() {
+    if (this.followUpToApprove) {
+      this.followUps.update(fups => fups.map(f => f.id === this.followUpToApprove!.id ? { 
+        ...f, 
+        status: 'Approved', 
+        approvalMessage: this.approveMessage,
+        remarks: this.approveMessage ? `Approved: ${this.approveMessage}` : f.remarks 
+      } : f));
+      this.closeApproveModal();
     }
   }
 }

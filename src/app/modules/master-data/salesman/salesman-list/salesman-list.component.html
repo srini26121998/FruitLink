@@ -1,0 +1,119 @@
+<div class="p-4 md:p-6 w-full mx-auto">
+  <!-- Header -->
+  <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h2 class="text-xl font-bold text-gray-900 tracking-tight">Salesmen Directory</h2>
+      <p class="text-sm text-gray-500 mt-1 m-0">Manage all registered salesmen and their details.</p>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" [ngModel]="searchQuery()" (ngModelChange)="onSearchChange($event)" placeholder="Search salesmen..."
+          class="pl-9 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm w-64 transition-shadow">
+      </div>
+      <button (click)="createSalesman()"
+        class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors shadow-sm flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Create Salesman
+      </button>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-600">
+        <thead class="bg-gray-50 text-gray-700 font-medium border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-4 font-semibold cursor-pointer hover:bg-gray-100" (click)="sortBy('name')">
+              <div class="flex items-center justify-between">Name
+                <svg *ngIf="sortColumn() === 'name'" class="w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': sortDirection() === 'desc'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </th>
+            <th class="px-6 py-4 font-semibold cursor-pointer hover:bg-gray-100" (click)="sortBy('email')">
+              <div class="flex items-center justify-between">Email
+                <svg *ngIf="sortColumn() === 'email'" class="w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': sortDirection() === 'desc'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </th>
+            <th class="px-6 py-4 font-semibold cursor-pointer hover:bg-gray-100" (click)="sortBy('phone')">
+              <div class="flex items-center justify-between">Phone Number
+                <svg *ngIf="sortColumn() === 'phone'" class="w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': sortDirection() === 'desc'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </th>
+            <th class="px-6 py-4 font-semibold cursor-pointer hover:bg-gray-100" (click)="sortBy('location')">
+              <div class="flex items-center justify-between">Location
+                <svg *ngIf="sortColumn() === 'location'" class="w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': sortDirection() === 'desc'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </th>
+            <th class="px-6 py-4 font-semibold cursor-pointer hover:bg-gray-100" (click)="sortBy('status')">
+              <div class="flex items-center justify-between">Status
+                <svg *ngIf="sortColumn() === 'status'" class="w-4 h-4 text-gray-400" [ngClass]="{'rotate-180': sortDirection() === 'desc'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </th>
+            <th class="px-6 py-4 font-semibold text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr *ngFor="let salesman of paginatedSalesmen()" class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs uppercase">
+                  {{ salesman.name.substring(0, 2) }}
+                </div>
+                <span class="font-medium text-gray-900">{{ salesman.name }}</span>
+              </div>
+            </td>
+            <td class="px-6 py-3">{{ salesman.email }}</td>
+            <td class="px-6 py-3">{{ salesman.phone }}</td>
+            <td class="px-6 py-3">{{ salesman.location }}</td>
+            <td class="px-6 py-3">
+              <span class="px-2.5 py-1 text-xs font-medium rounded-full"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': salesman.status === 'Active',
+                  'bg-red-100 text-red-700': salesman.status === 'Inactive',
+                  'bg-yellow-100 text-yellow-700': salesman.status === 'On Leave'
+                }">
+                {{ salesman.status }}
+              </span>
+            </td>
+            <td class="px-6 py-3 text-right">
+              <button (click)="editSalesman(salesman.id)" class="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors" title="Edit">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="paginatedSalesmen().length === 0">
+            <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+              No salesmen found matching your criteria.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Pagination -->
+    <div *ngIf="filteredSalesmen().length > 0" class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="text-sm text-gray-500">
+        Showing <span class="font-medium text-gray-900">{{ (currentPage() - 1) * pageSize() + 1 }}</span> to 
+        <span class="font-medium text-gray-900">{{ (currentPage() * pageSize()) > filteredSalesmen().length ? filteredSalesmen().length : (currentPage() * pageSize()) }}</span> of 
+        <span class="font-medium text-gray-900">{{ filteredSalesmen().length }}</span> entries
+      </div>
+      <div class="flex items-center gap-2">
+        <button (click)="previousPage()" [disabled]="currentPage() === 1"
+          class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm">
+          Previous
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage() === totalPages()"
+          class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

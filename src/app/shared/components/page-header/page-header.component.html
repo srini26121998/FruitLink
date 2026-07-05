@@ -1,9 +1,9 @@
-<div class="flex items-center justify-between mb-2">
+<div class="flex items-center justify-between mb-4 sm:mb-6 animate-fade-in-down">
 
   <!-- LEFT SECTION -->
-  <div>
-    <h1 class="text-base font-medium text-gray-800">{{ title }}</h1>
-    <p *ngIf="subtitle" class="text-gray-500 text-sm mt-1">
+  <div class="min-w-0 pr-4">
+    <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight truncate">{{ title }}</h1>
+    <p *ngIf="subtitle" class="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1 font-medium truncate">
       {{ subtitle }}
     </p>
   </div>
@@ -12,12 +12,11 @@
   <button
     *ngIf="actionLabel"
     (click)="actionCallback?.()"
-    class="flex items-center gap-2 bg-green-600 hover:bg-green-600 text-white px-2 py-2 rounded-lg shadow transition"
+    class="btn-primary flex-shrink-0"
   >
-    <span *ngIf="actionIcon">{{ actionIcon }}</span>
-    {{ actionLabel }}
+    <span *ngIf="actionIcon" class="material-symbols-rounded" style="font-size:18px;">{{ actionIcon }}</span>
+    <span class="hidden sm:inline">{{ actionLabel }}</span>
+    <span class="sm:hidden">{{ actionLabel }}</span>
   </button>
 
 </div>
-
-<hr class="border-gray-200" />

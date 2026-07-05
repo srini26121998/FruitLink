@@ -28,7 +28,7 @@
     <div class="p-6 space-y-6">
       <div>
         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Select Order</label>
-        <select [(ngModel)]="selectedOrderId" (change)="onOrderSelect()" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 outline-none bg-gray-50/50 transition-all shadow-sm">
+        <select [(ngModel)]="selectedOrderId" (change)="onOrderSelect()" class="animated-dropdown w-full">
           <option value="" disabled>Choose an order...</option>
           <option *ngFor="let order of inTransitOrders" [value]="order.id">
             {{ order.id }} — {{ order.shop }} (₹{{ order.total | number }}) - {{ admin.statuses[order.status] }}
@@ -123,7 +123,7 @@
         <div class="anim-up delay-1 space-y-6">
           <div>
             <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Delivery Status</label>
-            <select [(ngModel)]="deliveryStatus" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-400 outline-none bg-gray-50/50 transition-all shadow-sm">
+            <select [(ngModel)]="deliveryStatus" class="animated-dropdown w-full">
               <option>Order Received</option>
               <option>Order Ready</option>
               <option>Out for Delivery</option>

@@ -1,34 +1,39 @@
-<div class="bg-white p-2 rounded-xl shadow max-w-md mx-auto">
-
-  <h2 class="text-base font-medium mb-2">Change Profile Photo</h2>
+<div class="flex flex-col items-center gap-4 py-2">
 
   <!-- Preview Section -->
-  <div class="flex flex-col items-center gap-2">
-
+  <div class="relative group">
     <img 
       *ngIf="previewUrl; else defaultPhoto"
       [src]="previewUrl"
-      class="w-32 h-32 rounded-full object-cover shadow"
+      class="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover shadow-lg ring-4 ring-white transition-transform duration-300 group-hover:scale-105"
     />
 
     <ng-template #defaultPhoto>
-      <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-4xl">
-        👤
+      <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center shadow-lg ring-4 ring-white">
+        <span class="material-symbols-rounded text-green-600" style="font-size:48px;">person</span>
       </div>
     </ng-template>
 
-    <!-- Upload Button -->
-    <button 
-      class="px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-600 transition"
-      (click)="triggerFileInput(photoInput)"
-    >
-      Upload New Photo
-    </button>
-
-    <!-- Hidden File Input -->
-    <input type="file" #photoInput class="hidden" accept="image/*"
-           (change)="onFileSelect($event)" />
-
+    <!-- Camera overlay on hover -->
+    <div class="absolute inset-0 rounded-full bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-pointer"
+         (click)="triggerFileInput(photoInput)">
+      <span class="material-symbols-rounded text-white" style="font-size:28px;">photo_camera</span>
+    </div>
   </div>
+
+  <!-- Upload Button -->
+  <button 
+    class="btn-secondary text-sm active:scale-95"
+    (click)="triggerFileInput(photoInput)"
+  >
+    <span class="material-symbols-rounded" style="font-size:18px;">upload</span>
+    Upload New Photo
+  </button>
+
+  <!-- Hidden File Input -->
+  <input type="file" #photoInput class="hidden" accept="image/*"
+         (change)="onFileSelect($event)" />
+
+  <p class="text-xs text-gray-400 text-center">JPG, PNG or GIF. Max 5MB.</p>
 
 </div>

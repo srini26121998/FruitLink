@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   shops: Shop[] = [];
   filteredShops: Shop[] = [];
   paginatedShops: Shop[] = [];
+  expandedShopIds: Set<string> = new Set<string>();
 
   searchTerm: string = '';
   activeFilter: 'All' | 'Active' | 'Inactive' | 'Suspended' = 'All';
@@ -101,6 +102,27 @@ export class ListComponent implements OnInit {
 
   viewShopDetails(id: string): void {
     this.router.navigate(['/shop-management/details', id]);
+  }
+
+  toggleRemainingData(event: Event, id: string): void {
+    event.stopPropagation();
+    if (this.expandedShopIds.has(id)) {
+      this.expandedShopIds.delete(id);
+    } else {
+      this.expandedShopIds.add(id);
+    }
+  }
+
+  getLandmark(address: string): string {
+    if (!address) return 'N/A';
+    const parts = address.split(', ');
+    return parts.length > 1 ? parts[0] : address;
+  }
+
+  getLocation(address: string): string {
+    if (!address) return 'N/A';
+    const parts = address.split(', ');
+    return parts.length > 1 ? parts.slice(1).join(', ') : 'N/A';
   }
 
   navigateToCreate(): void {

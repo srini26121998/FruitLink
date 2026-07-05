@@ -9,7 +9,7 @@
       (input)="qty.set($any($event.target).valueAsNumber)"
     />
 
-    <select class="p-2 border rounded"
+    <select class="animated-dropdown w-full"
       [value]="selectedUnit()"
       (change)="selectedUnit.set($any($event.target).value)">
       @for (u of (product.unitOptions ?? unitSvc.globalUnits); track u.id) {

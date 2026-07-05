@@ -393,12 +393,7 @@ export const routes: Routes = [
               import('./modules/orders/details/details.component')
                 .then(m => m.OrderDetailsComponent)
           },
-          {
-            path: 'approve',
-            loadComponent: () =>
-              import('./modules/orders/approve/approve.component')
-                .then(m => m.ApproveComponent)
-          },
+
           {
             path: 'delivery-update',
             loadComponent: () =>
@@ -482,22 +477,10 @@ export const routes: Routes = [
         path: 'reports',
         children: [
           {
-            path: 'weekly',
+            path: 'summary',
             loadComponent: () =>
-              import('./modules/reports/weekly/weekly.component')
-                .then(m => m.WeeklyComponent)
-          },
-          {
-            path: 'monthly',
-            loadComponent: () =>
-              import('./modules/reports/monthly/monthly.component')
-                .then(m => m.MonthlyComponent)
-          },
-          {
-            path: 'yearly',
-            loadComponent: () =>
-              import('./modules/reports/yearly/yearly.component')
-                .then(m => m.YearlyComponent)
+              import('./modules/reports/summary/summary.component')
+                .then(m => m.SummaryComponent)
           },
           {
             path: 'top-fruits',
@@ -560,6 +543,12 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./modules/delivery/dispatch-panel/dispatch-panel.component')
                 .then(m => m.DispatchPanelComponent)
+          },
+          {
+            path: 'driver/create',
+            loadComponent: () =>
+              import('./modules/delivery/driver/driver-create/driver-create.component')
+                .then(m => m.DriverCreateComponent)
           },
           {
             path: 'driver-dashboard',
@@ -628,6 +617,24 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./modules/master-data/fruit-categories/fruit-categories.component')
                 .then(m => m.FruitCategoriesComponent)
+          },
+          {
+            path: 'salesmen',
+            loadComponent: () =>
+              import('./modules/master-data/salesman/salesman-list/salesman-list.component')
+                .then(m => m.SalesmanListComponent)
+          },
+          {
+            path: 'salesmen/create',
+            loadComponent: () =>
+              import('./modules/master-data/salesman/salesman-create/salesman-create.component')
+                .then(m => m.SalesmanCreateComponent)
+          },
+          {
+            path: 'salesmen/edit/:id',
+            loadComponent: () =>
+              import('./modules/master-data/salesman/salesman-create/salesman-create.component')
+                .then(m => m.SalesmanCreateComponent)
           }
         ]
       },

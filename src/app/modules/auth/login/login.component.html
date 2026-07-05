@@ -1,96 +1,178 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100 p-2">
-  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-2">
-
-    <h2 class="text-base font-medium text-center text-green-700 mb-2">FruitLink</h2>
-    <p class="text-center text-sm text-gray-500 mb-2">Sign in to your account</p>
-
-    <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-2">
-
-      <!-- Identifier -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Email or Mobile</label>
-        <input
-          formControlName="identifier"
-          type="text"
-          placeholder="you@example.com or 9876543210"
-          class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200 focus:outline-none"
-        />
-        <div *ngIf="form.controls['identifier'].touched && form.controls['identifier'].invalid">
-          <p *ngIf="form.controls['identifier'].hasError('required')" class="text-xs text-red-600 mt-1">
-            Email or Mobile is required (valid email or 10-digit mobile).
-          </p>
-          <p *ngIf="form.controls['identifier'].hasError('invalidIdentifier')" class="text-xs text-red-600 mt-1">
-            Please enter a valid email address or a 10-digit mobile number.
-          </p>
+<div class="h-screen w-full flex flex-col md:flex-row bg-slate-50 overflow-hidden">
+  <!-- Left Side: Image -->
+  <div class="hidden md:flex w-1/2 h-full flex-col justify-between bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1610397962076-02407a169a5b?q=80&w=1974&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-gradient-to-br from-green-900/90 via-green-800/80 to-emerald-900/90"></div>
+    
+    <div class="relative z-10 p-12 text-white flex items-center gap-3">
+      <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center shadow-lg border border-white/20">
+        <span class="material-symbols-rounded text-white font-bold" style="font-size:24px;">eco</span>
+      </div>
+      <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-sm">FruitLink</h1>
+    </div>
+    
+    <div class="relative z-10 p-12 text-white">
+      <h2 class="text-5xl font-black mb-6 leading-tight drop-shadow-md">Empowering your <br><span class="text-green-300">fresh supply chain.</span></h2>
+      <p class="text-lg text-green-50 max-w-lg font-medium leading-relaxed drop-shadow-sm">Streamline operations, manage deliveries, and track orders with our comprehensive fruit and grocery management platform.</p>
+      
+      <div class="mt-10 flex items-center gap-4">
+        <div class="flex -space-x-4">
+          <img class="w-12 h-12 rounded-full border-2 border-green-800 shadow-md" src="https://i.pravatar.cc/100?img=1" alt="User">
+          <img class="w-12 h-12 rounded-full border-2 border-green-800 shadow-md" src="https://i.pravatar.cc/100?img=2" alt="User">
+          <img class="w-12 h-12 rounded-full border-2 border-green-800 shadow-md" src="https://i.pravatar.cc/100?img=3" alt="User">
+          <div class="w-12 h-12 rounded-full border-2 border-green-800 bg-green-100 flex items-center justify-center text-green-800 font-bold text-sm shadow-md">+2k</div>
         </div>
-      </div>
-
-      <!-- Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input
-          formControlName="password"
-          type="password"
-          placeholder="Enter your password"
-          class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-green-200 focus:outline-none"
-        />
-        <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
-          <p *ngIf="form.controls['password'].hasError('required')" class="text-xs text-red-600 mt-1">
-            Password is required (min 6 chars).
-          </p>
-          <p *ngIf="form.controls['password'].hasError('minlength')" class="text-xs text-red-600 mt-1">
-            Password must be at least 6 characters long.
-          </p>
-        </div>
-      </div>
-
-      <!-- Submit -->
-      <div>
-        <button
-          type="submit"
-          [disabled]="loading"
-          class="w-full bg-green-600 hover:bg-green-700 text-white py-1.5 rounded-lg font-semibold disabled:opacity-60">
-          <span *ngIf="!loading">Login</span>
-          <span *ngIf="loading">Signing in...</span>
-        </button>
-      </div>
-
-      <div *ngIf="error" class="text-sm text-red-600 text-center mt-2">
-        {{ error }}
-      </div>
-
-    </form>
-
-    <!-- Quick role sign-in (dev) -->
-    <div class="mt-2 border-t pt-2">
-      <p class="text-xs text-gray-500 mb-3 text-center">Quick role sign-in (dev)</p>
-      <div class="grid grid-cols-2 gap-2">
-        <button (click)="loginAsAdmin()"
-          class="flex items-center justify-center gap-1.5 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 text-sm font-medium transition-colors">
-          <span class="material-symbols-rounded" style="font-size:16px;">shield_person</span>
-          Admin
-        </button>
-        <button (click)="loginAsShopManager()"
-          class="flex items-center justify-center gap-1.5 bg-green-600 text-white py-2 rounded-lg hover:bg-green-600 text-sm font-medium transition-colors">
-          <span class="material-symbols-rounded" style="font-size:16px;">storefront</span>
-          Shop Manager
-        </button>
-        <button (click)="loginAsBranchManager()"
-          class="flex items-center justify-center gap-1.5 bg-violet-600 text-white py-2 rounded-lg hover:bg-violet-700 text-sm font-medium transition-colors">
-          <span class="material-symbols-rounded" style="font-size:16px;">domain</span>
-          Branch Manager
-        </button>
-        <button (click)="loginAsDelivery()"
-          class="flex items-center justify-center gap-1.5 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 text-sm font-medium transition-colors">
-          <span class="material-symbols-rounded" style="font-size:16px;">local_shipping</span>
-          Delivery
-        </button>
+        <p class="text-sm font-bold text-green-100 drop-shadow-sm">Joined by 2,000+ businesses</p>
       </div>
     </div>
-
-    <div class="text-center text-xs text-gray-400 mt-2">
-      <a routerLink="/auth/forgot-password" class="hover:underline">Forgot password?</a>
-    </div>
-
   </div>
+
+  <!-- Right Side: Unique Card -->
+  <div class="w-full md:w-1/2 h-full flex flex-col bg-slate-50 relative">
+    
+    <!-- Scrollable content area -->
+    <div class="flex-1 overflow-hidden flex flex-col items-center justify-center p-6 relative">
+      <!-- Decorative background elements -->
+      <div class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-green-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+      <div class="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-emerald-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" style="animation-delay: 2s;"></div>
+      
+      <div class="w-full max-w-[480px] relative z-10 my-auto py-2">
+      
+      <!-- Logo for Mobile -->
+      <div class="md:hidden flex items-center justify-center gap-3 mb-8">
+        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+          <span class="material-symbols-rounded text-white font-bold" style="font-size:28px;">eco</span>
+        </div>
+        <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-emerald-500">FruitLink</h1>
+      </div>
+      
+      <!-- The Card -->
+      <div class="bg-white/80 backdrop-blur-2xl border border-white/60 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] p-6 md:p-8">
+        
+        <div class="mb-6 text-center md:text-left">
+          <h2 class="text-3xl font-bold text-gray-800 mb-2 tracking-tight">Welcome back</h2>
+          <p class="text-gray-500 font-medium text-sm">Please enter your details to sign in.</p>
+        </div>
+
+        <form (ngSubmit)="submit()" [formGroup]="form" class="space-y-4">
+
+          <!-- Identifier -->
+          <div class="group">
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 group-focus-within:text-green-600 transition-colors">Email or Mobile</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-rounded text-gray-400 group-focus-within:text-green-500 transition-colors" style="font-size: 20px;">mail</span>
+              </div>
+              <input
+                formControlName="identifier"
+                type="text"
+                placeholder="Enter your email or phone"
+                class="w-full border border-gray-200 bg-gray-50/50 rounded-xl pl-11 pr-4 py-3 text-gray-800 focus:bg-white focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all duration-300 outline-none"
+              />
+            </div>
+            <div *ngIf="form.controls['identifier'].touched && form.controls['identifier'].invalid" class="mt-2 text-xs font-medium text-red-500 flex items-center gap-1">
+              <span class="material-symbols-rounded" style="font-size: 14px;">error</span>
+              <span *ngIf="form.controls['identifier'].hasError('required')">Email or Mobile is required.</span>
+              <span *ngIf="form.controls['identifier'].hasError('invalidIdentifier')">Valid email or 10-digit mobile.</span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="group">
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 group-focus-within:text-green-600 transition-colors">Password</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <span class="material-symbols-rounded text-gray-400 group-focus-within:text-green-500 transition-colors" style="font-size: 20px;">lock</span>
+              </div>
+              <input
+                formControlName="password"
+                type="password"
+                placeholder="••••••••"
+                class="w-full border border-gray-200 bg-gray-50/50 rounded-xl pl-11 pr-4 py-3 text-gray-800 focus:bg-white focus:border-green-500 focus:ring-4 focus:ring-green-500/10 transition-all duration-300 outline-none font-medium tracking-widest placeholder:tracking-normal"
+              />
+            </div>
+            <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="mt-2 text-xs font-medium text-red-500 flex items-center gap-1">
+              <span class="material-symbols-rounded" style="font-size: 14px;">error</span>
+              <span *ngIf="form.controls['password'].hasError('required')">Password is required.</span>
+              <span *ngIf="form.controls['password'].hasError('minlength')">Minimum 6 characters.</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <label class="flex items-center gap-2 cursor-pointer group/cb">
+              <div class="relative flex items-center justify-center">
+                <input type="checkbox" class="peer sr-only">
+                <div class="w-5 h-5 rounded border border-gray-300 bg-white peer-checked:bg-green-600 peer-checked:border-green-600 transition-all duration-200 flex items-center justify-center">
+                  <span class="material-symbols-rounded text-white text-[14px] opacity-0 peer-checked:opacity-100 transition-opacity">check</span>
+                </div>
+              </div>
+              <span class="text-sm font-medium text-gray-600 group-hover/cb:text-gray-900 transition-colors">Remember me</span>
+            </label>
+            <a routerLink="/auth/forgot-password" class="text-sm font-bold text-green-600 hover:text-green-700 hover:underline transition-colors">Forgot password?</a>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-4">
+            <button
+              type="submit"
+              [disabled]="loading"
+              class="w-full relative overflow-hidden group bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold text-base shadow-lg shadow-green-600/30 transform hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-70 disabled:hover:translate-y-0 disabled:shadow-none flex items-center justify-center">
+              
+              <span class="relative z-10 flex items-center gap-2">
+                <span *ngIf="!loading">Sign In</span>
+                <span *ngIf="loading" class="flex items-center gap-2">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Authenticating...
+                </span>
+                <span *ngIf="!loading" class="material-symbols-rounded" style="font-size: 20px;">arrow_forward</span>
+              </span>
+            </button>
+          </div>
+
+          <div *ngIf="error" class="text-sm text-red-600 font-semibold text-center bg-red-50 py-3 px-4 rounded-xl border border-red-100 flex items-center justify-center gap-2 animate-pulse">
+             <span class="material-symbols-rounded">error</span> {{ error }}
+          </div>
+        </form>
+        
+        <!-- Quick role sign-in (dev) -->
+        <div class="mt-6 pt-6 border-t border-gray-100 relative">
+          <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-md px-3 rounded-full border border-gray-100">
+             <p class="text-[10px] text-gray-500 font-bold tracking-widest uppercase py-1">Quick Access (Dev)</p>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-3">
+            <button (click)="loginAsAdmin()"
+              class="flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 text-gray-600 py-2 rounded-xl hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm text-xs font-bold transition-all duration-200 group">
+              <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center transition-colors">
+                <span class="material-symbols-rounded text-green-600 transition-colors" style="font-size:18px;">shield_person</span>
+              </div>
+              Admin
+            </button>
+            <button (click)="loginAsShopManager()"
+              class="flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 text-gray-600 py-2 rounded-xl hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm text-xs font-bold transition-all duration-200 group">
+              <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center transition-colors">
+                <span class="material-symbols-rounded text-blue-600 transition-colors" style="font-size:18px;">storefront</span>
+              </div>
+              Manager
+            </button>
+            <button (click)="loginAsDelivery()"
+              class="flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 text-gray-600 py-2 rounded-xl hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm text-xs font-bold transition-all duration-200 group">
+              <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center transition-colors">
+                <span class="material-symbols-rounded text-orange-600 transition-colors" style="font-size:18px;">local_shipping</span>
+              </div>
+              Delivery
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <!-- Fixed Footer -->
+  <footer class="w-full bg-slate-50/95 backdrop-blur-md py-4 border-t border-gray-200 text-center text-sm font-medium text-gray-400 z-20 relative shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.02)]">
+    Powered by <span class="text-gray-800 font-bold hover:text-green-600 transition-colors cursor-pointer">mkwebtech</span>
+  </footer>
 </div>

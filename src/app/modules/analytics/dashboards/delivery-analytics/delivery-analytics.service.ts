@@ -26,16 +26,17 @@ export class DeliveryAnalyticsService {
     inTransit: 120,
     pending: 45,
     failed: 15,
+    damaged: 12,
   });
 
   performance = signal<DeliveryPerformance[]>([
-    { date:'Mon', delivered:180, failed:3 },
-    { date:'Tue', delivered:210, failed:5 },
-    { date:'Wed', delivered:160, failed:4 },
-    { date:'Thu', delivered:240, failed:2 },
-    { date:'Fri', delivered:300, failed:6 },
-    { date:'Sat', delivered:280, failed:3 },
-    { date:'Sun', delivered:190, failed:1 },
+    { date:'Mon', delivered:180, failed:3, damaged: 2 },
+    { date:'Tue', delivered:210, failed:5, damaged: 4 },
+    { date:'Wed', delivered:160, failed:4, damaged: 1 },
+    { date:'Thu', delivered:240, failed:2, damaged: 0 },
+    { date:'Fri', delivered:300, failed:6, damaged: 3 },
+    { date:'Sat', delivered:280, failed:3, damaged: 1 },
+    { date:'Sun', delivered:190, failed:1, damaged: 1 },
   ]);
 
   drivers = signal<DriverRanking[]>([

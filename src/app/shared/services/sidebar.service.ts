@@ -81,15 +81,6 @@ export class SidebarService {
         ]
       },
 
-      /* ------------ BRANCH MANAGER: APPROVE ------------- */
-      {
-        id: 'branch-approve',
-        label: 'Order Approvals',
-        icon: 'verified',
-        link: '/orders/approve',
-        permission: 'orders.approve',
-        roles: ['branch_manager']
-      },
 
       /* ------------ SHOP CUSTOMER ------------ */
       {
@@ -137,7 +128,6 @@ export class SidebarService {
           { label: 'Order List', icon: 'list', link: '/orders/list', permission: 'orders.view' },
           { label: 'Create Order', icon: 'add', link: '/orders/create', permission: 'orders.create' },
           { label: 'Manage Orders', icon: 'tune', link: '/orders/manage', permission: 'orders.view' },
-          { label: 'Approve Orders', icon: 'verified', link: '/orders/approve', permission: 'orders.approve' },
           { label: 'Delivery Update', icon: 'local_shipping', link: '/orders/delivery-update', permission: 'orders.delivery.update' }
         ]
       },
@@ -163,9 +153,7 @@ export class SidebarService {
         icon: 'analytics',
         permission: 'reports.view',
         children: [
-          { label: 'Weekly', icon: 'bar_chart', link: '/reports/weekly' },
-          { label: 'Monthly', icon: 'calendar_month', link: '/reports/monthly' },
-          { label: 'Yearly', icon: 'event', link: '/reports/yearly', roles: ['admin', 'superadmin'] },
+          { label: 'Sales Summary', icon: 'bar_chart', link: '/reports/summary' },
           { label: 'Top Fruits', icon: 'favorite', link: '/reports/top-fruits', roles: ['admin', 'superadmin'] },
           { label: 'Pending Payments', icon: 'pending', link: '/reports/pending-payments', roles: ['admin', 'superadmin'] },
           { label: 'Shop Frequency', icon: 'trending_up', link: '/reports/shop-frequency', roles: ['admin', 'superadmin'] }
@@ -180,7 +168,8 @@ export class SidebarService {
         permission: 'delivery.view',
         children: [
           { label: 'Dispatch Panel', icon: 'send', link: '/delivery/dispatch-panel' },
-          { label: 'Driver Dashboard', icon: 'directions_car', link: '/delivery/driver-dashboard' },
+          { label: 'Delivery Dashboard', icon: 'directions_car', link: '/delivery/driver-dashboard' },
+          { label: 'Create Driver', icon: 'person_add', link: '/delivery/driver/create' },
           { label: 'GPS Tracking', icon: 'location_on', link: '/delivery/gps-tracking' },
           { label: 'Route Optimization', icon: 'map', link: '/delivery/route-optimization' }
         ]
@@ -228,7 +217,9 @@ export class SidebarService {
         children: [
           { label: 'Cities', icon: 'location_city', link: '/master-data/cities' },
           { label: 'Shop Types', icon: 'category', link: '/master-data/shop-types' },
-          { label: 'Fruit Categories', icon: 'shopping_basket', link: '/master-data/fruit-categories' }
+          { label: 'Fruit Categories', icon: 'shopping_basket', link: '/master-data/fruit-categories' },
+          { label: 'Salesmen List', icon: 'badge', link: '/master-data/salesmen' },
+          { label: 'Create Salesman', icon: 'person_add', link: '/master-data/salesmen/create' }
         ]
       },
 
@@ -239,8 +230,7 @@ export class SidebarService {
         icon: 'support_agent',
         permission: 'helpdesk.view',
         children: [
-          { label: 'Tickets', icon: 'list', link: '/helpdesk/list' },
-          { label: 'FAQ', icon: 'help', link: '/helpdesk/faq' }
+          { label: 'Tickets', icon: 'list', link: '/helpdesk/list' }
         ]
       },
 

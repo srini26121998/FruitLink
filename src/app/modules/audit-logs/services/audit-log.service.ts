@@ -66,7 +66,7 @@ export class AuditLogService {
       userRole: 'Delivery Agent',
       activity: 'Order Delivered',
       module: 'Delivery',
-      screenName: 'Driver Dashboard',
+      screenName: 'Delivery Dashboard',
       recordId: 'ORD-4998',
       date: new Date(new Date().setHours(new Date().getHours() - 5)),
       ipAddress: '192.168.1.200',

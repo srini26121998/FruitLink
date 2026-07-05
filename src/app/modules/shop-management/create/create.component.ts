@@ -29,7 +29,9 @@ export class CreateComponent {
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
       creditLimit: [10000, [Validators.required, Validators.min(0)]],
-      assignedSalesman: ['', Validators.required]
+      assignedSalesman: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -41,7 +43,7 @@ export class CreateComponent {
 
     this.isSubmitting = true;
     const formValue = this.shopForm.value;
-    
+
     // Add currentCredit initialized to 0 for a new shop
     const newShopData = {
       ...formValue,

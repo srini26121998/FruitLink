@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { OrderAdminService, Order } from '../services/order-admin.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { OrderAdminService, Order } from '../services/order-admin.service';
 })
 export class ListComponent {
   admin = inject(OrderAdminService);
+  private router = inject(Router);
 
   searchTerm: string = '';
   statusFilter: string = 'All';
@@ -104,11 +105,22 @@ export class ListComponent {
   get totalOrdersCount(): number { return this.orders.length; }
   get pendingCount(): number { return this.orders.filter(o => o.status === 0).length; }
   get approvedCount(): number { return this.orders.filter(o => o.status === 1).length; }
-  get deliveredCount(): number { return this.orders.filter(o => o.status === 5).length; }
+  get deliveredCount(): number { return this.orders.filter(o => o.status >= 5).length; }
   get totalRevenue(): number { return this.orders.reduce((s, o) => s + o.total, 0); }
+  
   get todayOrdersCount(): number {
     const today = new Date().toISOString().split('T')[0];
     return this.orders.filter(o => o.date === today).length;
+  }
+
+  get todayDeliveredCount(): number {
+    const today = new Date().toISOString().split('T')[0];
+    return this.orders.filter(o => o.date === today && o.status >= 5).length;
+  }
+
+  get lateDeliveredCount(): number {
+    // For prototype purposes, mocking late deliveries
+    return this.orders.filter(o => o.status >= 5 && parseInt(o.id.split('-')[1]) % 2 === 0).length;
   }
 
   sortBy(column: string) {
@@ -151,5 +163,17 @@ export class ListComponent {
     return type === 'bulk'
       ? 'bg-violet-50 text-violet-700 border-violet-200'
       : 'bg-teal-50 text-teal-700 border-teal-200';
+  }
+
+  reorder(order: Order, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.admin.reorderOrder(order.id, this.router);
+  }
+
+  duplicate(order: Order, event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.admin.duplicateOrder(order.id, this.router);
   }
 }

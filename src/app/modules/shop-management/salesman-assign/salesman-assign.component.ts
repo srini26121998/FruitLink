@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { animate, style, transition, trigger, query, stagger } from '@angular/animations';
 import { ShopManagementService, Shop } from '../services/shop-management.service';
 
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-salesman-assign',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './salesman-assign.component.html',
   styleUrls: ['./salesman-assign.component.css'],
   animations: [

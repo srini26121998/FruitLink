@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { OrderAdminService } from '../services/order-admin.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { OrderAdminService } from '../services/order-admin.service';
 export class OrderDetailsComponent {
   private route = inject(ActivatedRoute);
   private admin = inject(OrderAdminService);
+  private router = inject(Router);
 
   orderId = this.route.snapshot.paramMap.get('id')!;
   order = this.admin.getOrderById(this.orderId);
@@ -85,5 +86,15 @@ export class OrderDetailsComponent {
       by: 'Admin',
       time: new Date().toLocaleString()
     });
+  }
+
+  reorder() {
+    if (!this.order) return;
+    this.admin.reorderOrder(this.order.id, this.router);
+  }
+
+  duplicate() {
+    if (!this.order) return;
+    this.admin.duplicateOrder(this.order.id, this.router);
   }
 }

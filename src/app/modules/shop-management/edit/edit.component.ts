@@ -32,7 +32,9 @@ export class EditComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
       creditLimit: [10000, [Validators.required, Validators.min(0)]],
-      assignedSalesman: ['', Validators.required]
+      assignedSalesman: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -58,7 +60,9 @@ export class EditComponent implements OnInit {
           email: data.email,
           address: data.address,
           creditLimit: data.creditLimit,
-          assignedSalesman: data.assignedSalesman
+          assignedSalesman: data.assignedSalesman,
+          username: data.username || '',
+          password: data.password || ''
         });
       }
       this.loading = false;

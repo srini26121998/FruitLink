@@ -8,12 +8,14 @@ export interface DeliverySummary {
   inTransit: number;
   pending: number;
   failed: number;
+  damaged: number;
 }
 
 export interface DeliveryPerformance {
   date: string;
   delivered: number;
   failed: number;
+  damaged: number;
 }
 
 export interface DriverRanking {

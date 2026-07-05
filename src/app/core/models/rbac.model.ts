@@ -8,6 +8,8 @@ export interface UserProfile {
 
   /** LIST OF PERMISSIONS */
   permissions: string[];
+  
+  shopName?: string;
 }
 
 export interface Role {

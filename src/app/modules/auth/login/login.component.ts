@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 export function identifierValidator(): ValidatorFn {
@@ -19,7 +19,7 @@ export function identifierValidator(): ValidatorFn {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -98,11 +98,6 @@ export class LoginComponent {
   loginAsShopManager() {
     this.auth.loginAsShopManager();
     this.navigateByRole('shop_manager');
-  }
-
-  loginAsBranchManager() {
-    this.auth.loginAsBranchManager();
-    this.navigateByRole('branch_manager');
   }
 
   loginAsDelivery() {

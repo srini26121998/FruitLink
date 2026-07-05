@@ -48,6 +48,16 @@ export class DeliveryAnalyticsComponent {
     )
   );
 
+  damagedChart = computed(() =>
+    createChartConfig(
+      'line',
+      280,
+      this.performance().map(p => p.date),
+      'Damaged',
+      this.performance().map(p => p.damaged)
+    )
+  );
+
   // ---------------------------
   //  AVERAGE DELIVERY TIME CHART
   // ---------------------------

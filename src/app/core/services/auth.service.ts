@@ -125,6 +125,7 @@ export class AuthService {
       name: 'Rajesh Kumar',
       email: 'rajesh@fruitlink.com',
       role: 'shop_manager',
+      shopName: 'FruitLink B2B',
       permissions: [
         'dashboard.view',
         'shop.dashboard.view',
@@ -153,6 +154,7 @@ export class AuthService {
       name: 'Priya Sharma',
       email: 'priya@fruitlink.com',
       role: 'branch_manager',
+      shopName: 'FruitLink Main Branch',
       permissions: [
         'dashboard.view',
         'shop.dashboard.view',

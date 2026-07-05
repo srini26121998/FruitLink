@@ -1,70 +1,115 @@
-<div class="p-2">
+<div class="p-2 sm:p-4 md:p-6 max-w-[1400px] mx-auto space-y-4 sm:space-y-6">
 
-  <h1 class="text-base font-medium mb-2">FruitLink Admin Dashboard</h1>
+  <!-- Page Header -->
+  <div class="animate-fade-in-down">
+    <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">Admin Dashboard</h1>
+    <p class="text-xs sm:text-sm text-gray-500 mt-0.5 font-medium">Welcome back — here's what's happening today</p>
+  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
 
     <!-- Today Sales -->
-    <div class="bg-white p-2 rounded-xl shadow hover:shadow-lg transition">
-      <p class="text-gray-500 text-sm">Today Sales</p>
-      <h2 class="text-base font-medium mt-2">₹{{ dash.salesStats().today | number }}</h2>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up delay-100">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="p-2.5 bg-emerald-50 rounded-xl flex-shrink-0">
+          <span class="material-symbols-rounded text-emerald-600" style="font-size:22px;">trending_up</span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 font-medium">Today Sales</p>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">₹{{ dash.salesStats().today | number }}</h2>
     </div>
 
     <!-- This Week -->
-    <div class="bg-white p-2 rounded-xl shadow hover:shadow-lg transition">
-      <p class="text-gray-500 text-sm">This Week</p>
-      <h2 class="text-base font-medium mt-2">₹{{ dash.salesStats().thisWeek | number }}</h2>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up delay-150">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="p-2.5 bg-blue-50 rounded-xl flex-shrink-0">
+          <span class="material-symbols-rounded text-blue-600" style="font-size:22px;">date_range</span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 font-medium">This Week</p>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">₹{{ dash.salesStats().thisWeek | number }}</h2>
     </div>
 
     <!-- This Month -->
-    <div class="bg-white p-2 rounded-xl shadow hover:shadow-lg transition">
-      <p class="text-gray-500 text-sm">This Month</p>
-      <h2 class="text-base font-medium mt-2">₹{{ dash.salesStats().thisMonth | number }}</h2>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up delay-200">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="p-2.5 bg-violet-50 rounded-xl flex-shrink-0">
+          <span class="material-symbols-rounded text-violet-600" style="font-size:22px;">calendar_month</span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 font-medium">This Month</p>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">₹{{ dash.salesStats().thisMonth | number }}</h2>
     </div>
 
     <!-- Total Shops -->
-    <div class="bg-white p-2 rounded-xl shadow hover:shadow-lg transition">
-      <p class="text-gray-500 text-sm">Active Shops</p>
-      <h2 class="text-base font-medium mt-2">{{ dash.salesStats().totalShops }}</h2>
+    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up delay-300">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="p-2.5 bg-amber-50 rounded-xl flex-shrink-0">
+          <span class="material-symbols-rounded text-amber-600" style="font-size:22px;">storefront</span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 font-medium">Active Shops</p>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">{{ dash.salesStats().totalShops }}</h2>
     </div>
 
   </div>
-  <div class="bg-white p-2 rounded-xl shadow mb-2">
-    <h2 class="text-base font-medium mb-2">Weekly Orders Trend</h2>
-    <apx-chart
-      [series]="weeklyOrdersChart.series"
-      [chart]="weeklyOrdersChart.chart"
-      [xaxis]="weeklyOrdersChart.xaxis"
-      [colors]="weeklyOrdersChart.colors">
-    </apx-chart>
-  </div>
-  <div class="bg-white p-2 rounded-xl shadow mb-2">
-    <h2 class="text-base font-medium mb-2">Top Selling Fruits & Vegetables</h2>
-    <apx-chart
-      [series]="topFruitsChart.series"
-      [chart]="topFruitsChart.chart"
-      [labels]="topFruitsChart.labels"
-      [colors]="topFruitsChart.colors">
-    </apx-chart>
-  </div>
-  <div class="bg-white p-2 rounded-xl shadow mb-2">
-    <h2 class="text-base font-medium mb-2">Revenue Trend (Weekly)</h2>
-    <apx-chart
-      [series]="revenueTrendChart.series"
-      [chart]="revenueTrendChart.chart"
-      [xaxis]="revenueTrendChart.xaxis"
-      [colors]="revenueTrendChart.colors"
-      [stroke]="revenueTrendChart.stroke">
-    </apx-chart>
-  </div>
-  <div class="bg-white p-2 rounded-xl shadow">
-    <h2 class="text-base font-medium mb-2">Delivery Performance</h2>
-    <apx-chart
-      [series]="deliveryPerformanceChart.series"
-      [chart]="deliveryPerformanceChart.chart"
-      [labels]="deliveryPerformanceChart.labels"
-      [colors]="deliveryPerformanceChart.colors">
-    </apx-chart>
+
+  <!-- Charts Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+    <!-- Weekly Orders Trend -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fade-in-up delay-200">
+      <h2 class="text-sm sm:text-base font-semibold text-gray-800 mb-4">Weekly Orders Trend</h2>
+      <div class="w-full overflow-x-auto -mx-2 px-2">
+        <apx-chart
+          [series]="weeklyOrdersChart.series"
+          [chart]="weeklyOrdersChart.chart"
+          [xaxis]="weeklyOrdersChart.xaxis"
+          [colors]="weeklyOrdersChart.colors">
+        </apx-chart>
+      </div>
+    </div>
+
+    <!-- Top Selling Fruits -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fade-in-up delay-300">
+      <h2 class="text-sm sm:text-base font-semibold text-gray-800 mb-4">Top Selling Fruits & Vegetables</h2>
+      <div class="w-full overflow-x-auto -mx-2 px-2">
+        <apx-chart
+          [series]="topFruitsChart.series"
+          [chart]="topFruitsChart.chart"
+          [labels]="topFruitsChart.labels"
+          [colors]="topFruitsChart.colors">
+        </apx-chart>
+      </div>
+    </div>
+
+    <!-- Revenue Trend -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fade-in-up delay-200">
+      <h2 class="text-sm sm:text-base font-semibold text-gray-800 mb-4">Revenue Trend (Weekly)</h2>
+      <div class="w-full overflow-x-auto -mx-2 px-2">
+        <apx-chart
+          [series]="revenueTrendChart.series"
+          [chart]="revenueTrendChart.chart"
+          [xaxis]="revenueTrendChart.xaxis"
+          [colors]="revenueTrendChart.colors"
+          [stroke]="revenueTrendChart.stroke">
+        </apx-chart>
+      </div>
+    </div>
+
+    <!-- Delivery Performance -->
+    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300 animate-fade-in-up delay-300">
+      <h2 class="text-sm sm:text-base font-semibold text-gray-800 mb-4">Delivery Performance</h2>
+      <div class="w-full overflow-x-auto -mx-2 px-2">
+        <apx-chart
+          [series]="deliveryPerformanceChart.series"
+          [chart]="deliveryPerformanceChart.chart"
+          [labels]="deliveryPerformanceChart.labels"
+          [colors]="deliveryPerformanceChart.colors">
+        </apx-chart>
+      </div>
+    </div>
   </div>
 
 </div>

@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { of, delay } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface OrderItem {
   id: string;
@@ -25,10 +26,28 @@ export interface Order {
   discount: number;
   createdAt: string;
   createdBy: string;
+  paymentStatus: 'Paid' | 'Pending';
+}
+
+export interface OrderPrefill {
+  mode: 'reorder' | 'duplicate';
+  sourceOrderId: string;
+  shopName: string;
+  shopLocation?: string;
+  shopPhone?: string;
+  deliverySlot?: string;
+  orderDate: string;
+  orderType: 'daily' | 'bulk';
+  items: { productId: string; name: string; category: string; quantity: number; unit: string; price: number; total: number }[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class OrderAdminService {
+
+  private router: Router | null = null;
+
+  // Holds prefill data for the create component when reordering/duplicating
+  prefillData = signal<OrderPrefill | null>(null);
 
   orders = signal<Order[]>([
     {
@@ -47,7 +66,8 @@ export class OrderAdminService {
       total: 2580,
       discount: 80,
       createdAt: '2026-07-03T05:10:00',
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1002',
@@ -65,7 +85,8 @@ export class OrderAdminService {
       total: 3625,
       discount: 120,
       createdAt: '2026-07-03T06:00:00',
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Pending'
     },
     {
       id: 'ORD-1003',
@@ -84,7 +105,8 @@ export class OrderAdminService {
       total: 2700,
       discount: 0,
       createdAt: '2026-07-03T05:45:00',
-      createdBy: 'Shop Owner'
+      createdBy: 'Shop Owner',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1004',
@@ -102,7 +124,8 @@ export class OrderAdminService {
       total: 2025,
       discount: 50,
       createdAt: '2026-07-02T05:15:00',
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Pending'
     },
     {
       id: 'ORD-1005',
@@ -120,7 +143,8 @@ export class OrderAdminService {
       total: 1350,
       discount: 0,
       createdAt: '2026-07-02T06:30:00',
-      createdBy: 'Shop Owner'
+      createdBy: 'Shop Owner',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1006',
@@ -138,7 +162,8 @@ export class OrderAdminService {
       total: 4450,
       discount: 200,
       createdAt: '2026-07-01T05:00:00',
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1007',
@@ -156,7 +181,8 @@ export class OrderAdminService {
       total: 10550,
       discount: 500,
       createdAt: '2026-07-03T04:30:00',
-      createdBy: 'Admin'
+      createdBy: 'Admin',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1008',
@@ -173,7 +199,8 @@ export class OrderAdminService {
       total: 2240,
       discount: 0,
       createdAt: '2026-07-03T05:30:00',
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Pending'
     },
     {
       id: 'ORD-1009',
@@ -191,7 +218,8 @@ export class OrderAdminService {
       total: 4610,
       discount: 150,
       createdAt: '2026-07-02T06:00:00',
-      createdBy: 'Shop Owner'
+      createdBy: 'Shop Owner',
+      paymentStatus: 'Paid'
     },
     {
       id: 'ORD-1010',
@@ -208,7 +236,8 @@ export class OrderAdminService {
       total: 11700,
       discount: 700,
       createdAt: '2026-07-03T04:45:00',
-      createdBy: 'Admin'
+      createdBy: 'Admin',
+      paymentStatus: 'Pending'
     },
   ]);
 
@@ -271,7 +300,8 @@ export class OrderAdminService {
       total: 3670,
       discount: 140,
       createdAt: new Date().toISOString(),
-      createdBy: 'Shop Manager'
+      createdBy: 'Shop Manager',
+      paymentStatus: 'Pending'
     };
   }
 
@@ -290,6 +320,60 @@ export class OrderAdminService {
       return num > max ? num : max;
     }, 1000);
     return `ORD-${maxId + 1}`;
+  }
+
+  // ── Reorder: Creates a new order with the same shop & items ──
+  reorderOrder(orderId: string, router: Router): void {
+    const source = this.getOrderById(orderId);
+    if (!source) return;
+
+    const prefill: OrderPrefill = {
+      mode: 'reorder',
+      sourceOrderId: source.id,
+      shopName: source.shop,
+      deliverySlot: source.slot,
+      orderDate: new Date().toISOString().split('T')[0],
+      orderType: source.orderType,
+      items: source.items.map((i: OrderItem) => ({
+        productId: i.id,
+        name: i.name,
+        category: i.category,
+        quantity: i.qty,
+        unit: i.unitLabel,
+        price: i.pricePerKg,
+        total: i.lineTotal
+      }))
+    };
+
+    this.prefillData.set(prefill);
+    router.navigate(['/orders/create'], { queryParams: { mode: 'reorder', source: orderId } });
+  }
+
+  // ── Duplicate: Creates an exact copy as a new order ──
+  duplicateOrder(orderId: string, router: Router): void {
+    const source = this.getOrderById(orderId);
+    if (!source) return;
+
+    const prefill: OrderPrefill = {
+      mode: 'duplicate',
+      sourceOrderId: source.id,
+      shopName: source.shop,
+      deliverySlot: source.slot,
+      orderDate: source.date,
+      orderType: source.orderType,
+      items: source.items.map((i: OrderItem) => ({
+        productId: i.id,
+        name: i.name,
+        category: i.category,
+        quantity: i.qty,
+        unit: i.unitLabel,
+        price: i.pricePerKg,
+        total: i.lineTotal
+      }))
+    };
+
+    this.prefillData.set(prefill);
+    router.navigate(['/orders/create'], { queryParams: { mode: 'duplicate', source: orderId } });
   }
 
   // ── Analytics helpers ──

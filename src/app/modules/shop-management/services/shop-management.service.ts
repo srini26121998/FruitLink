@@ -16,6 +16,8 @@ export interface Shop {
   assignedSalesman: string;
   createdAt: Date;
   updatedAt: Date;
+  username?: string;
+  password?: string;
 }
 
 @Injectable({

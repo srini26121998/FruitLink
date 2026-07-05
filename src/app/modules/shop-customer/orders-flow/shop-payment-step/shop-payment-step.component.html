@@ -42,7 +42,7 @@
 
       <label class="block text-sm mt-2 font-medium">Credit Days</label>
       <select formControlName="creditDays"
-              class="border p-2 rounded w-full focus:ring ring-blue-300">
+              class="animated-dropdown w-full">
         <option value="" disabled>Select days</option>
         @for(d of creditAllowedDays; track d){
           <option [value]="d">{{ d }} Days</option>

@@ -25,7 +25,7 @@
 
         <!-- Product -->
         <td class="p-2">
-          <select class="border p-2 rounded w-40"
+          <select class="animated-dropdown w-full"
                   [value]="row.productId"
                   (change)="update(i,'productId',$any($event.target).value)">
             <option value="">Select Product</option>
@@ -45,7 +45,7 @@
 
         <!-- Unit -->
         <td class="p-2">
-          <select class="border p-2 rounded w-28"
+          <select class="animated-dropdown w-full"
                   [value]="row.unitId"
                   (change)="update(i,'unitId',$any($event.target).value)">
             @for(u of unitSvc.globalUnits; track u.id) {
@@ -95,7 +95,7 @@
       💾 Save as Template
     </button>
 
-    <select class="border p-2 rounded"
+    <select class="animated-dropdown w-full"
             (change)="loadTemplate($any($event.target).value)">
       <option value="">Load Template</option>
 

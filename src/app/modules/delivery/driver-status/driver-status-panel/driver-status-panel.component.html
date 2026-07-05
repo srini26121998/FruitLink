@@ -1,5 +1,5 @@
-<div class="p-2">
-  <div class="flex items-center justify-between mb-2">
+<div class="p-5">
+  <div class="flex items-center justify-between mb-4">
     <div>
       <h2 class="text-base font-medium text-gray-800 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,7 +45,7 @@
     <!-- AVAILABLE -->
     <button
       (click)="updateStatus(statuses.AVAILABLE)"
-      class="flex-1 relative flex items-center justify-start p-2 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
+      class="flex-1 relative flex items-center justify-start p-3 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
       [ngClass]="currentStatus() === statuses.AVAILABLE ? 'border-green-500 ring-1 ring-green-500 shadow-md scale-[1.02]' : 'border-gray-100 hover:border-green-300 hover:shadow-sm hover:scale-[1.01]'">
       <div class="absolute inset-0 bg-green-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" [class.opacity-100]="currentStatus() === statuses.AVAILABLE"></div>
       
@@ -67,7 +67,7 @@
     <!-- ON TRIP -->
     <button
       (click)="updateStatus(statuses.ON_TRIP)"
-      class="flex-1 relative flex items-center justify-start p-2 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
+      class="flex-1 relative flex items-center justify-start p-3 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
       [ngClass]="currentStatus() === statuses.ON_TRIP ? 'border-green-600 ring-1 ring-blue-500 shadow-md scale-[1.02]' : 'border-gray-100 hover:border-blue-300 hover:shadow-sm hover:scale-[1.01]'">
       <div class="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" [class.opacity-100]="currentStatus() === statuses.ON_TRIP"></div>
       
@@ -89,7 +89,7 @@
     <!-- ON BREAK -->
     <button
       (click)="updateStatus(statuses.ON_BREAK)"
-      class="flex-1 relative flex items-center justify-start p-2 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
+      class="flex-1 relative flex items-center justify-start p-3 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
       [ngClass]="currentStatus() === statuses.ON_BREAK ? 'border-yellow-500 ring-1 ring-yellow-500 shadow-md scale-[1.02]' : 'border-gray-100 hover:border-yellow-300 hover:shadow-sm hover:scale-[1.01]'">
       <div class="absolute inset-0 bg-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" [class.opacity-100]="currentStatus() === statuses.ON_BREAK"></div>
       
@@ -111,7 +111,7 @@
     <!-- OFFLINE -->
     <button
       (click)="updateStatus(statuses.OFFLINE)"
-      class="flex-1 relative flex items-center justify-start p-2 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
+      class="flex-1 relative flex items-center justify-start p-3 rounded-2xl border bg-white transition-all duration-300 gap-2 group overflow-hidden"
       [ngClass]="currentStatus() === statuses.OFFLINE ? 'border-red-500 ring-1 ring-red-500 shadow-md scale-[1.02]' : 'border-gray-100 hover:border-red-300 hover:shadow-sm hover:scale-[1.01]'">
       <div class="absolute inset-0 bg-red-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" [class.opacity-100]="currentStatus() === statuses.OFFLINE"></div>
       

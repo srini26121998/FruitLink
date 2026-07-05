@@ -47,7 +47,7 @@
     <!-- Sorting -->
     <div class="flex items-center gap-2">
       <label class="text-xs text-gray-500 font-medium m-0">Sort by:</label>
-      <select [(ngModel)]="sortOption" (ngModelChange)="onSortChange()" class="px-2 py-1 border border-gray-200 rounded text-xs focus:outline-none focus:ring-1 focus:ring-green-500 bg-white shadow-sm">
+      <select [(ngModel)]="sortOption" (ngModelChange)="onSortChange()" class="animated-dropdown w-full">
         <option value="newest">Newest First</option>
         <option value="oldest">Oldest First</option>
         <option value="priorityDesc">Priority (High to Low)</option>
@@ -191,7 +191,7 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-medium text-gray-700 mb-1">Category</label>
-            <select [(ngModel)]="newTicketCategory" class="w-full px-3 py-1.5 border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent text-xs bg-white shadow-sm">
+            <select [(ngModel)]="newTicketCategory" class="animated-dropdown w-full">
               <option value="General">General</option>
               <option value="Payment">Payment</option>
               <option value="Delivery">Delivery</option>
@@ -201,7 +201,7 @@
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-700 mb-1">Priority</label>
-            <select [(ngModel)]="newTicketPriority" class="w-full px-3 py-1.5 border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent text-xs bg-white shadow-sm">
+            <select [(ngModel)]="newTicketPriority" class="animated-dropdown w-full">
               <option value="Low">Low</option>
               <option value="Normal">Normal</option>
               <option value="High">High</option>

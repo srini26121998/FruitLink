@@ -1,97 +1,90 @@
-<div class="p-2 md:p-4 max-w-7xl mx-auto space-y-2">
-  <div class="flex items-center justify-between">
+<div class="p-3 sm:p-4 md:p-6 max-w-7xl mx-auto space-y-4">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in-down">
     <div>
-      <h1 class="text-base font-medium text-gray-900 tracking-tight">Shop Dashboard</h1>
-      <p class="text-[11px] text-gray-500 mt-0.5 m-0">Overview of your shop network performance</p>
+      <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">Shop Dashboard</h1>
+      <p class="text-xs sm:text-sm text-gray-500 mt-0.5 font-medium">Overview of your shop network performance</p>
     </div>
-    <button (click)="navigateToShopList()" class="px-2 py-2.5 bg-green-600 hover:bg-green-600 text-white text-[11px] font-medium rounded-lg shadow-sm transition-colors flex items-center gap-2">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+    <button (click)="navigateToShopList()" class="btn-primary w-full sm:w-auto shrink-0">
+      <span class="material-symbols-rounded" style="font-size:18px;">storefront</span>
       Manage Shops
     </button>
   </div>
 
   <!-- Loading State -->
   <div *ngIf="loading" class="flex justify-center items-center h-64">
-    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+    <svg class="animate-spin h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
   </div>
 
   <ng-container *ngIf="!loading && stats">
     <!-- Key Metrics Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       
       <!-- Total Shops -->
-      <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-          <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-        </div>
-        <div class="relative z-10">
-          <p class="text-[11px] font-medium text-gray-500 mb-1">Total Shops</p>
-          <div class="flex items-end justify-between">
-            <h3 class="text-xs font-semibold text-gray-800">{{ stats.totalShops }}</h3>
-            <span class="flex items-center text-[11px] font-medium text-green-600 bg-green-50 px-2 py-1 rounded-md">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-              +3 This Month
-            </span>
+      <div class="kpi-card animate-fade-in-up delay-100">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="p-2 bg-blue-50 rounded-xl flex-shrink-0">
+            <span class="material-symbols-rounded text-blue-600" style="font-size:20px;">storefront</span>
           </div>
+          <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-md ml-auto flex items-center gap-0.5">
+            <span class="material-symbols-rounded" style="font-size:14px;">trending_up</span> +3
+          </span>
         </div>
+        <p class="kpi-value text-gray-900">{{ stats.totalShops }}</p>
+        <p class="kpi-label">Total Shops</p>
       </div>
 
       <!-- Active Shops -->
-      <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-          <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <div class="kpi-card animate-fade-in-up delay-150">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="p-2 bg-green-50 rounded-xl flex-shrink-0">
+            <span class="material-symbols-rounded text-green-600" style="font-size:20px;">check_circle</span>
+          </div>
+          <span class="text-xs font-medium text-gray-500 ml-auto">{{ (stats.activeShops / stats.totalShops) * 100 | number:'1.0-0' }}%</span>
         </div>
-        <div class="relative z-10">
-          <p class="text-[11px] font-medium text-gray-500 mb-1">Active Shops</p>
-          <div class="flex items-end justify-between">
-            <h3 class="text-xs font-semibold text-gray-800">{{ stats.activeShops }}</h3>
-            <span class="text-[11px] font-medium text-gray-500">
-              {{ (stats.activeShops / stats.totalShops) * 100 | number:'1.0-0' }}% of Total
-            </span>
-          </div>
-          <div class="w-full bg-gray-100 rounded-full h-1.5 mt-2">
-            <div class="bg-green-500 h-1.5 rounded-full" [style.width.%]="(stats.activeShops / stats.totalShops) * 100"></div>
-          </div>
+        <p class="kpi-value text-gray-900">{{ stats.activeShops }}</p>
+        <p class="kpi-label">Active Shops</p>
+        <div class="w-full bg-gray-100 rounded-full h-1 mt-2">
+          <div class="bg-green-500 h-1 rounded-full" [style.width.%]="(stats.activeShops / stats.totalShops) * 100"></div>
         </div>
       </div>
 
       <!-- Monthly Orders -->
-      <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
-          <svg class="w-16 h-16 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-        </div>
-        <div class="relative z-10">
-          <p class="text-[11px] font-medium text-gray-500 mb-1">Monthly Orders</p>
-          <div class="flex items-end justify-between">
-            <h3 class="text-xs font-semibold text-gray-800">{{ stats.monthlyOrders }}</h3>
-            <span class="flex items-center text-[11px] font-medium text-green-600 bg-green-50 px-2 py-1 rounded-md">
-              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
-              8.4%
-            </span>
+      <div class="kpi-card animate-fade-in-up delay-200">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="p-2 bg-purple-50 rounded-xl flex-shrink-0">
+            <span class="material-symbols-rounded text-purple-600" style="font-size:20px;">shopping_bag</span>
           </div>
+          <span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-md ml-auto flex items-center gap-0.5">
+            <span class="material-symbols-rounded" style="font-size:14px;">trending_up</span> 8.4%
+          </span>
         </div>
+        <p class="kpi-value text-gray-900">{{ stats.monthlyOrders }}</p>
+        <p class="kpi-label">Monthly Orders</p>
       </div>
 
       <!-- Delivery Stats -->
-      <div class="bg-white rounded-2xl border border-gray-100 p-2 shadow-sm hover:shadow-md transition-shadow">
-        <p class="text-[11px] font-medium text-gray-500 mb-2">Delivery Status (Today)</p>
-        <div class="space-y-2">
+      <div class="kpi-card animate-fade-in-up delay-300">
+        <p class="text-xs sm:text-sm text-gray-500 font-medium mb-3">Delivery Status (Today)</p>
+        <div class="space-y-3">
           <div>
-            <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-gray-700 font-medium">Delivered</span>
+            <div class="flex justify-between text-xs mb-1.5">
+              <span class="text-gray-600 font-medium">Delivered</span>
               <span class="text-gray-900 font-semibold">{{ stats.deliveredOrders }}</span>
             </div>
             <div class="w-full bg-gray-100 rounded-full h-1.5">
-              <div class="bg-blue-500 h-1.5 rounded-full" [style.width.%]="(stats.deliveredOrders / (stats.deliveredOrders + stats.pendingOrders)) * 100"></div>
+              <div class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" [style.width.%]="(stats.deliveredOrders / (stats.deliveredOrders + stats.pendingOrders)) * 100"></div>
             </div>
           </div>
           <div>
-            <div class="flex justify-between text-[11px] mb-1">
-              <span class="text-gray-700 font-medium">Pending</span>
+            <div class="flex justify-between text-xs mb-1.5">
+              <span class="text-gray-600 font-medium">Pending</span>
               <span class="text-gray-900 font-semibold">{{ stats.pendingOrders }}</span>
             </div>
             <div class="w-full bg-gray-100 rounded-full h-1.5">
-              <div class="bg-orange-500 h-1.5 rounded-full" [style.width.%]="(stats.pendingOrders / (stats.deliveredOrders + stats.pendingOrders)) * 100"></div>
+              <div class="bg-orange-400 h-1.5 rounded-full transition-all duration-500" [style.width.%]="(stats.pendingOrders / (stats.deliveredOrders + stats.pendingOrders)) * 100"></div>
             </div>
           </div>
         </div>
@@ -100,69 +93,77 @@
     </div>
 
     <!-- Additional Analytics Sections -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 mt-2">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 mt-2">
       
       <!-- Top Performing Shops -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="px-2 py-2 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-          <h3 class="text-xs font-semibold text-gray-800">Top Performing Shops</h3>
-          <button (click)="navigateToShopList()" class="text-[11px] font-medium text-green-600 hover:text-green-600">View Full List</button>
+      <div class="card lg:col-span-2 overflow-hidden animate-fade-in-up delay-200">
+        <div class="px-4 py-3.5 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+          <h3 class="text-sm font-semibold text-gray-800">Top Performing Shops</h3>
+          <button (click)="navigateToShopList()" class="text-xs font-semibold text-green-600 hover:text-green-700 transition-colors">View All</button>
         </div>
-        <div class="divide-y divide-gray-100">
-          <div *ngFor="let shop of stats.shopPerformance; let i = index" class="p-2 hover:bg-gray-50 transition-colors flex items-center justify-between group">
-            <div class="flex items-center gap-2">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg"
-                [class.bg-yellow-100]="i === 0" [class.text-yellow-700]="i === 0"
-                [class.bg-gray-200]="i === 1" [class.text-gray-700]="i === 1"
-                [class.bg-orange-100]="i === 2" [class.text-orange-700]="i === 2">
+        <div class="divide-y divide-gray-50">
+          <div *ngFor="let shop of stats.shopPerformance; let i = index" class="p-3 sm:p-4 hover:bg-green-50/30 transition-colors flex items-center justify-between group cursor-pointer" (click)="viewShop(shop.id)">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shadow-sm"
+                [class.bg-gradient-to-br]="true"
+                [class.from-yellow-100]="i === 0" [class.to-amber-200]="i === 0" [class.text-amber-700]="i === 0"
+                [class.from-gray-100]="i === 1" [class.to-gray-200]="i === 1" [class.text-gray-600]="i === 1"
+                [class.from-orange-100]="i === 2" [class.to-orange-200]="i === 2" [class.text-orange-700]="i === 2">
                 #{{ i + 1 }}
               </div>
-              <div>
-                <h4 class="text-xs font-semibold text-gray-800 cursor-pointer group-hover:text-blue-600 transition-colors" (click)="viewShop(shop.id)">{{ shop.name }}</h4>
-                <div class="flex items-center gap-3 mt-1 text-[11px] text-gray-500">
-                  <span class="flex items-center gap-1">
-                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <div class="min-w-0">
+                <h4 class="text-sm font-semibold text-gray-900 group-hover:text-green-700 transition-colors truncate">{{ shop.name }}</h4>
+                <div class="flex items-center gap-3 mt-0.5 text-xs text-gray-500">
+                  <span class="flex items-center gap-1 font-medium text-gray-600">
+                    <span class="material-symbols-rounded text-gray-400" style="font-size:14px;">shopping_bag</span>
                     {{ shop.orders }} Orders
                   </span>
                 </div>
               </div>
             </div>
-            <div class="flex flex-col items-end">
-              <div class="flex items-center gap-1 bg-green-50 px-2 py-1 rounded border border-green-100">
-                <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                <span class="text-[11px] font-semibold text-green-700">{{ shop.rating }}</span>
-              </div>
+            <div class="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-lg border border-green-100 shadow-sm shrink-0">
+              <span class="material-symbols-rounded text-green-500 filled" style="font-size:14px;">star</span>
+              <span class="text-xs font-bold text-green-700">{{ shop.rating }}</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Quick Actions / Alerts -->
-      <div class="space-y-2">
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-2">
-          <h3 class="text-xs font-semibold text-gray-800 mb-2">Action Needed</h3>
+      <div class="space-y-3 sm:space-y-4 animate-fade-in-up delay-300">
+        <div class="card p-4">
+          <h3 class="text-sm font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <span class="material-symbols-rounded text-gray-400" style="font-size:20px;">notification_important</span>
+            Action Needed
+          </h3>
           <div class="space-y-3">
-            <div class="flex items-start gap-2 p-2 rounded-xl bg-orange-50 border border-orange-100">
-              <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm text-orange-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-              </div>
-              <div>
-                <h4 class="text-[11px] font-medium text-gray-900">2 Shops Pending Approval</h4>
-                <p class="text-[11px] text-gray-600 mt-1">Review new shop registration applications from the portal.</p>
-                <button class="mt-2 text-[11px] font-medium text-orange-600 hover:text-orange-700">Review Applications &rarr;</button>
+            
+            <div class="p-3 rounded-xl bg-orange-50 border border-orange-100/60 shadow-sm hover:shadow transition-shadow">
+              <div class="flex items-start gap-3">
+                <div class="p-1.5 rounded-lg bg-orange-100 text-orange-600 shrink-0">
+                  <span class="material-symbols-rounded" style="font-size:18px;">pending_actions</span>
+                </div>
+                <div class="min-w-0">
+                  <h4 class="text-xs font-semibold text-gray-900">2 Shops Pending</h4>
+                  <p class="text-xs text-gray-600 mt-1 line-clamp-2">Review new shop registration applications from the portal.</p>
+                  <button class="mt-2 text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1">Review Applications <span class="material-symbols-rounded" style="font-size:14px;">arrow_forward</span></button>
+                </div>
               </div>
             </div>
 
-            <div class="flex items-start gap-2 p-2 rounded-xl bg-red-50 border border-red-100">
-              <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm text-red-500">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              </div>
-              <div>
-                <h4 class="text-[11px] font-medium text-gray-900">Credit Limit Exceeded</h4>
-                <p class="text-[11px] text-gray-600 mt-1">1 shop has exceeded their maximum credit limit.</p>
-                <button class="mt-2 text-[11px] font-medium text-red-600 hover:text-red-700">View Ledger &rarr;</button>
+            <div class="p-3 rounded-xl bg-red-50 border border-red-100/60 shadow-sm hover:shadow transition-shadow">
+              <div class="flex items-start gap-3">
+                <div class="p-1.5 rounded-lg bg-red-100 text-red-600 shrink-0">
+                  <span class="material-symbols-rounded" style="font-size:18px;">account_balance_wallet</span>
+                </div>
+                <div class="min-w-0">
+                  <h4 class="text-xs font-semibold text-gray-900">Credit Exceeded</h4>
+                  <p class="text-xs text-gray-600 mt-1 line-clamp-2">1 shop has exceeded their maximum credit limit.</p>
+                  <button class="mt-2 text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1">View Ledger <span class="material-symbols-rounded" style="font-size:14px;">arrow_forward</span></button>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

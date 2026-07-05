@@ -31,13 +31,17 @@
   --sidebar-active-bg: rgba(50, 195, 108, 0.15); /* primary/15 */
   --sidebar-text: #1f2937;     /* gray-800 */
   --sidebar-text-muted: #6b7280; /* gray-500 */
+
+  /* Safe Area Insets for notched devices */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .status-btn {
   @apply text-white py-3 rounded-lg font-medium text-sm transition active:scale-95;
 }
 
-/* Thin Scrollbar */
+/* ─── Thin Scrollbar ─── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -51,4 +55,208 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8; 
+}
+
+/* ─── Mobile: Hide scrollbar for cleaner look ─── */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+}
+
+/* ─── Global Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Animation Utility Classes ─── */
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; opacity: 0; }
+.animate-fade-in-up { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-fade-in-down { animation: fadeInDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-slide-in-right { animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-slide-in-left { animation: slideInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-scale-in { animation: scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+
+.delay-75 { animation-delay: 75ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* ─── Smooth loading skeleton ─── */
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+/* ─── Mobile-first Touch Enhancements ─── */
+@media (max-width: 768px) {
+  /* Better touch targets */
+  button, a, select, input[type="checkbox"], input[type="radio"] {
+    min-height: 36px;
+  }
+
+  /* Prevent text selection on interactive elements */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Smooth scroll on containers */
+  .overflow-x-auto, .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ─── Responsive Card System ─── */
+.card {
+  @apply bg-white rounded-2xl border border-gray-100 shadow-sm transition-shadow duration-300;
+}
+.card:hover {
+  @apply shadow-md;
+}
+
+/* ─── Mobile-friendly table wrapper ─── */
+.table-responsive {
+  @apply overflow-x-auto -mx-4 px-4;
+}
+@media (min-width: 768px) {
+  .table-responsive {
+    @apply mx-0 px-0;
+  }
+}
+
+/* ─── Page container with mobile-safe padding ─── */
+.page-container {
+  @apply p-3 sm:p-4 md:p-6 max-w-[1400px] mx-auto;
+}
+
+/* ─── Section titles ─── */
+.section-title {
+  @apply text-lg sm:text-xl font-semibold text-gray-900 tracking-tight;
+}
+
+.section-subtitle {
+  @apply text-xs sm:text-sm text-gray-500 mt-0.5 font-medium;
+}
+
+/* ─── Mobile Bottom Safe Area padding ─── */
+.safe-bottom {
+  padding-bottom: calc(1rem + var(--safe-area-bottom));
+}
+
+/* ─── Animated Dropdown Styles ─── */
+@layer components {
+  .animated-dropdown {
+    @apply block appearance-none bg-white border border-gray-200 text-gray-700 py-2.5 pl-4 pr-10 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 hover:border-emerald-400 hover:shadow-md transition-all duration-300 ease-in-out cursor-pointer relative;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+  }
+
+  /* Mobile: full-width dropdowns */
+  @media (max-width: 640px) {
+    .animated-dropdown {
+      @apply text-sm py-2 pl-3 pr-8;
+    }
+  }
+  
+  .animated-dropdown:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2310b981' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M14 12l-4-4-4 4'/%3e%3c/svg%3e");
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .animated-dropdown:disabled {
+    @apply bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed hover:shadow-none hover:border-gray-200 transform-none;
+  }
+
+  /* ─── Form input base style ─── */
+  .form-input {
+    @apply w-full border border-gray-200 bg-gray-50/50 rounded-xl px-4 py-3 text-gray-800 text-sm focus:bg-white focus:border-green-500 focus:ring-2 focus:ring-green-500/10 transition-all duration-200 outline-none;
+  }
+  @media (max-width: 640px) {
+    .form-input {
+      @apply py-2.5 px-3 text-sm;
+    }
+  }
+
+  /* ─── Form label ─── */
+  .form-label {
+    @apply block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5;
+  }
+
+  /* ─── Primary button ─── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-xl px-5 py-2.5 text-sm shadow-lg shadow-green-200/50 hover:from-green-600 hover:to-emerald-600 transition-all active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
+  }
+
+  /* ─── Secondary button ─── */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white text-gray-700 font-medium rounded-xl px-5 py-2.5 text-sm border border-gray-200 shadow-sm hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.97];
+  }
+
+  /* ─── KPI Card ─── */
+  .kpi-card {
+    @apply bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+  .kpi-value {
+    @apply text-2xl sm:text-3xl font-bold tracking-tight;
+  }
+  .kpi-label {
+    @apply text-xs sm:text-sm text-gray-500 font-medium mt-1;
+  }
+
+  /* ─── Empty state ─── */
+  .empty-state-box {
+    @apply bg-white rounded-2xl border border-gray-100 p-8 sm:p-12 text-center shadow-sm;
+  }
+}
+
+/* ─── Mobile Bottom Navigation Bar (when needed) ─── */
+@media (max-width: 1023px) {
+  /* Ensure main content doesn't hide behind fixed header */
+  .main-content-offset {
+    padding-top: 72px;
+  }
+}
+
+/* ─── Print styles ─── */
+@media print {
+  .no-print { display: none !important; }
 }
