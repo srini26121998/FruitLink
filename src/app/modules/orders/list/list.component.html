@@ -53,10 +53,18 @@
 <div class="p-3 sm:p-4 md:p-6 max-w-[1400px] mx-auto space-y-3 sm:space-y-4">
 
   <!-- Page Header -->
-  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 anim-up">
+  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 anim-up">
     <div>
       <h1 class="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight">Order Management</h1>
       <p class="text-xs sm:text-sm text-gray-500 mt-0.5 font-medium">Track, manage and fulfill all shop orders in one place</p>
+    </div>
+    <div class="flex-shrink-0">
+      <a routerLink="/orders/create" class="inline-flex items-center gap-2 px-4 py-1.5 sm:py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow transition-all active:scale-95">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Create Order
+      </a>
     </div>
   </div>
 

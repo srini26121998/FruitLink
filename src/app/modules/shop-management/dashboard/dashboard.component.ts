@@ -26,11 +26,19 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  navigateToShopList(): void {
-    this.router.navigate(['/shop-management/list']);
+  navigateToShopList(filter?: string): void {
+    if (filter) {
+      this.router.navigate(['/shop-management/list'], { queryParams: { status: filter } });
+    } else {
+      this.router.navigate(['/shop-management/list']);
+    }
   }
 
   viewShop(id: string): void {
     this.router.navigate(['/shop-management/details', id]);
+  }
+
+  viewLedgerDashboard(): void {
+    this.router.navigate(['/payments/ledger/dashboard']);
   }
 }

@@ -109,7 +109,6 @@ export class SidebarService {
         children: [
           { label: 'Dashboard', icon: 'dashboard', link: '/shop-management/dashboard' },
           { label: 'Shop List', icon: 'list', link: '/shop-management/list' },
-          { label: 'Create Shop', icon: 'add_business', link: '/shop-management/create', roles: ['admin', 'superadmin'] },
           { label: 'Analytics', icon: 'analytics', link: '/shop-management/analytics' },
           { label: 'Assign Salesman', icon: 'assignment_ind', link: '/shop-management/salesman-assign', roles: ['admin', 'superadmin'] },
           { label: 'Follow-ups', icon: 'support_agent', link: '/shop-management/follow-ups' },
@@ -126,9 +125,7 @@ export class SidebarService {
         roles: ['admin', 'superadmin'],
         children: [
           { label: 'Order List', icon: 'list', link: '/orders/list', permission: 'orders.view' },
-          { label: 'Create Order', icon: 'add', link: '/orders/create', permission: 'orders.create' },
-          { label: 'Manage Orders', icon: 'tune', link: '/orders/manage', permission: 'orders.view' },
-          { label: 'Delivery Update', icon: 'local_shipping', link: '/orders/delivery-update', permission: 'orders.delivery.update' }
+          { label: 'Manage Orders', icon: 'tune', link: '/orders/manage', permission: 'orders.view' }
         ]
       },
 

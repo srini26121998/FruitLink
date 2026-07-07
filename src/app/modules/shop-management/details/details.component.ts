@@ -52,4 +52,11 @@ export class DetailsComponent implements OnInit {
       this.router.navigate(['/shop-management/edit', this.shop.id]);
     }
   }
+
+  createOrder(): void {
+    if (this.shop) {
+      // Navigate to order creation, potentially passing the shop ID
+      this.router.navigate(['/orders/create'], { queryParams: { shopId: this.shop.id } });
+    }
+  }
 }

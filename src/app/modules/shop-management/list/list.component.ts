@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShopManagementService, Shop } from '../services/shop-management.service';
 
 @Component({
@@ -29,13 +29,19 @@ export class ListComponent implements OnInit {
 
   constructor(
     private shopService: ShopManagementService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.shopService.getShops().subscribe(data => {
-      this.shops = data;
-      this.applyFilters();
+    this.route.queryParams.subscribe(params => {
+      if (params['status'] && this.filterOptions.includes(params['status'])) {
+        this.activeFilter = params['status'] as 'All' | 'Active' | 'Inactive' | 'Suspended';
+      }
+      this.shopService.getShops().subscribe(data => {
+        this.shops = data;
+        this.applyFilters();
+      });
     });
   }
 

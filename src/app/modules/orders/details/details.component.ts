@@ -75,6 +75,28 @@ export class OrderDetailsComponent {
     }
   }
 
+  approve() {
+    if (!this.order) return;
+    this.admin.updateOrderStatus(this.order.id, 1);
+    this.order = this.admin.getOrderById(this.orderId);
+    this.logs.push({
+      text: 'Order Approved',
+      by: 'Admin',
+      time: new Date().toLocaleString()
+    });
+  }
+
+  rejectOrder() {
+    if (!this.order) return;
+    this.admin.updateOrderStatus(this.order.id, -1);
+    this.order = this.admin.getOrderById(this.orderId);
+    this.logs.push({
+      text: 'Order Rejected',
+      by: 'Admin',
+      time: new Date().toLocaleString()
+    });
+  }
+
   changeStatus(event: any) {
     if (!this.order) return;
     const newStatus = parseInt(event.target.value, 10);
